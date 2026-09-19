@@ -61,6 +61,8 @@ AutoCAD must be running. If it is not, the first call starts it.
 
 **Escape hatches** `cad_command` `cad_lisp` `cad_script` `cad_send`
 
+**Command reference** `command_search` `command_help`
+
 **Draw** `draw_line` `draw_polyline` `draw_rectangle` `draw_circle` `draw_arc`
 `draw_ellipse` `draw_spline` `draw_point` `draw_hatch` `draw_construction_line`
 
@@ -88,6 +90,52 @@ AutoCAD must be running. If it is not, the first call starts it.
 **Batch** `batch_preview` `batch_process` `batch_headless`
 
 ---
+
+## Command coverage
+
+Every command the AutoCAD interface can reach is in `docs/commands.json`,
+built by reading this machine's own CUIX files and then running the commands.
+
+| | |
+|---|---|
+| Commands the UI exposes | **918** |
+| Verified by running them, prompts captured | **473** |
+| Documented from AutoCAD's own UI definition | **443** |
+| Neither | **2** |
+| **Covered** | **99.8%** |
+| Reachable through `cad_command` | all of them |
+
+Of the verified set, **181 carry their option keywords**, extracted from the
+prompt text rather than guessed.
+
+Ask the registry before driving an unfamiliar command:
+
+```
+command_search("duplicate")   -> OVERKILL, "Cleans up overlapping geometry..."
+command_help("TRIM")          -> prompts, options {mOde: O}, default, its tool
+command_help("-LAYER")        -> 21 options incl. TRansparency: TR, stAte: A
+```
+
+`cad_command` consults it too, so a readable option name works:
+`cad_command("-OVERKILL", [..., "tolerance", 0.5])` sends `_O` by itself.
+
+### How the registry was built
+
+1. **Inventory** — every macro in `acad.cuix` and the other CUIX files, plus
+   `acad.pgp` aliases, plus the hyphen twin of every command. AutoCAD states
+   the command behind each button in a `<CLICommand>` element, which is more
+   reliable than parsing macro syntax; missing it initially cost 245 commands,
+   including REVCLOUD, whose macro reads `^C^C_^Rrevcloud`.
+2. **Probe** — 1,854 candidates run through `accoreconsole`, in batches, on one
+   script line. A pending command swallows the *next* line of a `.scr`, so a
+   line-per-command script dies at the first prompt; a single `foreach` keeps
+   control inside LISP. `(command "X")` starts a command and returns, and a
+   bare `(command)` cancels it, so the sweep never gets stuck.
+3. **Options** — parsed from the real prompt text. `[Ignore/tOlerance/Done]`
+   means the keyword is the capital letters: `tOlerance` is `O`, not `T`.
+4. **Descriptions** — the `<HelpString>` AutoCAD shows in its own status bar.
+
+`build/` holds the scripts; re-run them after an AutoCAD update.
 
 ## Things worth knowing
 
@@ -165,6 +213,20 @@ match the format or AutoCAD refuses outright.
 
 **`SetLayoutsToPlot` needs a `VT_BSTR` array**, and `BACKGROUNDPLOT` is set to
 0 during plotting so the PDF exists by the time the call returns.
+
+**Never send keystrokes without checking what has focus.** An early version of
+the command prober typed command names with `SendInput` after focusing AutoCAD
+once, then carried on regardless. Focus moved, and it typed a list of AutoCAD
+commands into the user's chat window. `winui.type_line` and `press_escape` now
+refuse to send anything unless AutoCAD is genuinely the frontmost window, and
+the prober was rewritten to use COM from a throwaway subprocess instead - if a
+command parks AutoCAD, the subprocess blocks and gets killed, and the session
+carries on.
+
+**Some AutoCAD dialogs are not `#32770`.** SuperHatch opens class
+`adesk_dlg0000`, so a dialog check that only looks for the standard class will
+miss it and wonder why COM has frozen. Posting `WM_CLOSE` clears these without
+needing to click.
 
 **Unicode round-trips cleanly.** `\U+XXXX` escapes are decoded by AutoCAD's
 file reader but *not* by `(read)`, so non-ASCII text is built with `(chr n)`
