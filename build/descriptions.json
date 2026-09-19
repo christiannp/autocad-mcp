@@ -1,0 +1,7081 @@
+{
+ "GRIPS": {
+  "help_topic": "GRIPS",
+  "source": "acad",
+  "ui_labels": [
+   "Grips Menu"
+  ]
+ },
+ "SNAP": {
+  "help_topic": "SNAP",
+  "source": "acad",
+  "ui_labels": [
+   "Snap Menu",
+   "Toggle Object Snap Mode",
+   "Object Snap Enforcement",
+   "Object Snap Override : Node"
+  ]
+ },
+ "COORDS": {
+  "help_topic": "coords",
+  "source": "acad",
+  "ui_labels": [
+   "Toggle Coords"
+  ]
+ },
+ "TT": {
+  "description": "Creates a temporary point used by Osnaps",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Temporary track point"
+  ]
+ },
+ "FROM": {
+  "description": "Locates a point offset from a reference point within a command",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, From"
+  ]
+ },
+ "M2P": {
+  "description": "Finds the mid between two points",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Mid Between 2 Points"
+  ]
+ },
+ "ENDP": {
+  "description": "Snaps to the closest endpoint of an object",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Endpoint"
+  ]
+ },
+ "MID": {
+  "description": "Snaps to the midpoint of an object",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Midpoint"
+  ]
+ },
+ "INT": {
+  "description": "Snaps to the intersection of two objects",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Intersection"
+  ]
+ },
+ "APPINT": {
+  "description": "Snaps to the apparent intersection of two objects",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Apparent Intersect"
+  ]
+ },
+ "EXT": {
+  "description": "Snaps to the phantom extension of an arc or line",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Extension"
+  ]
+ },
+ "CEN": {
+  "description": "Snaps to the center of an arc, circle, ellipse, or elliptical arc",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Center"
+  ]
+ },
+ "QUA": {
+  "description": "Snaps to a quadrant point of an arc, circle, ellipse, or elliptical arc",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Quadrant"
+  ]
+ },
+ "TAN": {
+  "description": "Snaps to the tangent of an arc, circle, ellipse, elliptical arc, or spline",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Tangent"
+  ]
+ },
+ "PER": {
+  "description": "Snaps to a point perpendicular to an object",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Perpendicular"
+  ]
+ },
+ "PAR": {
+  "description": "Snaps parallel to a specified line",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Parallel"
+  ]
+ },
+ "NOD": {
+  "description": "Snaps to a point object",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Node"
+  ]
+ },
+ "INS": {
+  "description": "Snaps to the insertion point of objects such as text, blocks, or attributes",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Insert"
+  ]
+ },
+ "NEA": {
+  "description": "Snaps to the nearest point on an object",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Nearest"
+  ]
+ },
+ "NON": {
+  "description": "Suppresses running object snap for the current selection",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, None"
+  ]
+ },
+ "OSNAP": {
+  "description": "Sets running object snap modes",
+  "source": "acad",
+  "help_topic": "OSNAP",
+  "ui_labels": [
+   "OSNAP",
+   "Snap, Osnap Settings..."
+  ]
+ },
+ "ZVER": {
+  "description": "Snaps to the closest vertex of an edge",
+  "source": "acad",
+  "ui_labels": [
+   "Vertex"
+  ]
+ },
+ "ZMID": {
+  "description": "Snaps to the midpoint of an edge",
+  "source": "acad",
+  "ui_labels": [
+   "Midpoint on Edge"
+  ]
+ },
+ "ZNEA": {
+  "description": "Snaps to the nearest point on a surface",
+  "source": "acad",
+  "ui_labels": [
+   "Nearest to Face"
+  ]
+ },
+ "ZKNO": {
+  "description": "Snaps to a point spline knot",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Node"
+  ]
+ },
+ "ZCEN": {
+  "description": "Snaps to the center of a surface",
+  "source": "acad",
+  "ui_labels": [
+   "Center of Face"
+  ]
+ },
+ "ZPER": {
+  "description": "Snaps to a point perpendicular to an object",
+  "source": "acad",
+  "ui_labels": [
+   "Perpendicular"
+  ]
+ },
+ "ZNON": {
+  "description": "Suppresses running 3D object snap for the current selection",
+  "source": "acad",
+  "ui_labels": [
+   "None"
+  ]
+ },
+ "3DOSNAP": {
+  "description": "Sets running 3D object snap modes",
+  "source": "acad",
+  "ui_labels": [
+   "3D Osnap Settings..."
+  ]
+ },
+ "PNOD": {
+  "description": "Snaps to closest point in point cloud",
+  "source": "acad",
+  "ui_labels": [
+   "Node of point cloud"
+  ]
+ },
+ "PNEA": {
+  "description": "Snaps to the nearest point on planar segment of point cloud",
+  "source": "acad",
+  "ui_labels": [
+   "Nearest plane of point cloud"
+  ]
+ },
+ "PPER": {
+  "description": "Snaps perpendicular to a planar segment of point cloud",
+  "source": "acad",
+  "ui_labels": [
+   "Perpendicular to point cloud"
+  ]
+ },
+ "PINT": {
+  "description": "Snaps to intersection point of section line vectors",
+  "source": "acad",
+  "ui_labels": [
+   "Intersection of point cloud"
+  ]
+ },
+ "PEDG": {
+  "description": "Snaps to nearest point on intersection line of two planes",
+  "source": "acad",
+  "ui_labels": [
+   "Nearest to edge of point cloud"
+  ]
+ },
+ "PPED": {
+  "description": "Snaps perpendicular to the intersection line of two planes",
+  "source": "acad",
+  "ui_labels": [
+   "Perpendicular to edge of point cloud"
+  ]
+ },
+ "PCL": {
+  "description": "Snaps to intersection point of 3 planes",
+  "source": "acad",
+  "ui_labels": [
+   "Intersection of 3 planes"
+  ]
+ },
+ "PCOR": {
+  "description": "Snaps nearest point on centerline of cylinder",
+  "source": "acad",
+  "ui_labels": [
+   "nearest point on centerline of cylinder"
+  ]
+ },
+ "POINTCLOUDCROPSTATE": {
+  "description": "Saves the current crop state to a name",
+  "source": "acad",
+  "ui_labels": [
+   "New Crop State"
+  ]
+ },
+ "NEW": {
+  "description": "Creates a new drawing file",
+  "source": "acad",
+  "ui_labels": [
+   "New",
+   "New...",
+   "TABLET4^C^C_new"
+  ]
+ },
+ "NEWSHEETSET": {
+  "description": "Creates a new sheet set",
+  "source": "acad",
+  "ui_labels": [
+   "New Sheet Set..."
+  ]
+ },
+ "OPEN": {
+  "description": "Opens an existing drawing file",
+  "source": "acad",
+  "ui_labels": [
+   "Open",
+   "Open...",
+   "TABLET4^C^C_open"
+  ]
+ },
+ "OPENSHEETSET": {
+  "description": "Opens a specified sheet set",
+  "source": "acad",
+  "ui_labels": [
+   "Open Sheet Set..."
+  ]
+ },
+ "OPENDWFMARKUP": {
+  "description": "Loads a DWF file that contains markups",
+  "source": "acad",
+  "ui_labels": [
+   "Load Markup Set..."
+  ]
+ },
+ "CLOSE": {
+  "description": "Exit Test Block Window and Return to the Block Editor",
+  "source": "acad",
+  "ui_labels": [
+   "Close",
+   "Close Test Block Window"
+  ]
+ },
+ "PARTIALOAD": {
+  "description": "Loads additional geometry into a partially opened drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Partial Load"
+  ]
+ },
+ "QSAVE": {
+  "description": "Saves the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Save",
+   "Qsave",
+   "TABLET4^C^C_qsave"
+  ]
+ },
+ "SAVE": {
+  "description": "Saves the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Save"
+  ]
+ },
+ "SAVEAS": {
+  "description": "Saves a copy of the current drawing under a new file name",
+  "source": "acad",
+  "ui_labels": [
+   "Saveas",
+   "Save As...",
+   "TABLET4^C^C_saveas"
+  ]
+ },
+ "ETRANSMIT": {
+  "description": "Creates a transmittal set of a drawing and related files",
+  "source": "acad",
+  "ui_labels": [
+   "eTransmit",
+   "eTransmit..."
+  ]
+ },
+ "EXPORT": {
+  "description": "Saves the objects in a drawing to a different file format",
+  "source": "acad",
+  "ui_labels": [
+   "Export",
+   "Export...",
+   "TABLET4^C^C_export"
+  ]
+ },
+ "PAGESETUP": {
+  "description": "Controls the page layout, plotting device, paper size, and other settings for each new layout",
+  "source": "acad",
+  "ui_labels": [
+   "Page Setup",
+   "TABLET4^C^C_pagesetup"
+  ]
+ },
+ "PLOTTERMANAGER": {
+  "description": "Displays the Plotter Manager, where you can add or edit a plotter configuration",
+  "source": "acad",
+  "ui_labels": [
+   "Plotter Manager..."
+  ]
+ },
+ "STYLESMANAGER": {
+  "description": "Opens a file folder, where you can add or edit a plot style table",
+  "source": "acad",
+  "ui_labels": [
+   "Plot Style Manager...",
+   "TABLET4^C^C_stylesmanager"
+  ]
+ },
+ "PREVIEW": {
+  "description": "Displays the drawing as it will be plotted",
+  "source": "acad",
+  "ui_labels": [
+   "Plot Preview",
+   "TABLET4^C^C_preview"
+  ]
+ },
+ "PLOT": {
+  "description": "Prints a drawing to a plotter, printer, or file",
+  "source": "acad",
+  "ui_labels": [
+   "Plot",
+   "Plot...",
+   "TABLET4^C^C_plot"
+  ]
+ },
+ "PUBLISH": {
+  "description": "Publishes drawings to an electronic sheet set (DWF, DWFx, or PDF files) or to a plotter",
+  "source": "acad",
+  "ui_labels": [
+   "Publish..."
+  ]
+ },
+ "VIEWPLOTDETAILS": {
+  "description": "Displays information about plot and publish jobs completed in the current session",
+  "source": "acad",
+  "ui_labels": [
+   "View Plot and Publish Details..."
+  ]
+ },
+ "AUDIT": {
+  "description": "Evaluates the integrity of a drawing and corrects some errors",
+  "source": "acad",
+  "ui_labels": [
+   "Audit",
+   "Audit:"
+  ]
+ },
+ "RECOVER": {
+  "description": "Repairs and then opens a damaged drawing file",
+  "source": "acad",
+  "ui_labels": [
+   "Recover",
+   "Recover..."
+  ]
+ },
+ "DRAWINGRECOVERY": {
+  "description": "Displays a list of drawing files that can be recovered after a program or system failure",
+  "source": "acad",
+  "ui_labels": [
+   "Drawing Recovery Manager..."
+  ]
+ },
+ "BLOCKICON": {
+  "description": "Generates preview images for blocks displayed in DesignCenter",
+  "source": "acad",
+  "ui_labels": [
+   "Update Block Icons"
+  ]
+ },
+ "PURGE": {
+  "description": "Removes unused named items, such as block definitions and layers, from the drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Purge...",
+   "TABLET4^C^C_purge",
+   "Drawing Utilities Purge"
+  ]
+ },
+ "PURGEDIALOG": {
+  "description": "Previews objects that you can't purge and finds those objects in the current drawing",
+  "help_topic": "PURGEDIALOG",
+  "source": "acad",
+  "ui_labels": [
+   "Find Non-Purgeable Items"
+  ]
+ },
+ "PERFANALYZER": {
+  "description": "Records and analyzes AutoCAD performance",
+  "help_topic": "PERFANALYZER",
+  "source": "acad",
+  "ui_labels": [
+   "Record Analyze"
+  ]
+ },
+ "EXPORTLAYOUT": {
+  "description": "Creates a visual representation of the current layout in the model space of a new drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Export Layout to Model..."
+  ]
+ },
+ "SENDMAIL": {
+  "description": "Sends the current drawing file as an email attachment or FAX",
+  "source": "acad",
+  "ui_labels": [
+   "Send..."
+  ]
+ },
+ "DWGPROPS": {
+  "description": "Sets and displays the file properties of the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Drawing Properties..."
+  ]
+ },
+ "QUIT": {
+  "description": "Quit the application; prompts to save documents",
+  "source": "acad",
+  "ui_labels": [
+   "Quit",
+   "Exit"
+  ]
+ },
+ "U": {
+  "description": "Reverses the most recent action",
+  "source": "acad",
+  "ui_labels": [
+   "Undo"
+  ]
+ },
+ "MREDO": {
+  "description": "Reverses the effects of the previous UNDO or U command",
+  "source": "acad",
+  "ui_labels": [
+   "Redo",
+   "TABLET4^C^C_mredo 1"
+  ]
+ },
+ "REDO": {
+  "description": "Reverses the effects of the previous UNDO or U command",
+  "source": "acad",
+  "ui_labels": [
+   "Redo"
+  ]
+ },
+ "CUTCLIP": {
+  "description": "Copies selected objects to the Clipboard and removes them from the drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Cut",
+   "TABLET4^C^C_cutclip"
+  ]
+ },
+ "COPYCLIP": {
+  "description": "Copies selected objects to the Clipboard",
+  "source": "acad",
+  "ui_labels": [
+   "Copy",
+   "Copy Clip",
+   "TABLET4^C^C_copyclip"
+  ]
+ },
+ "COPYBASE": {
+  "description": "Copies selected objects to the Clipboard along with a specified base point",
+  "source": "acad",
+  "ui_labels": [
+   "CopyBase",
+   "Copy with Base Point"
+  ]
+ },
+ "COPYLINK": {
+  "description": "Copies the current view to the Clipboard for linking to other OLE applications",
+  "source": "acad",
+  "ui_labels": [
+   "CopyLink",
+   "Copy Link"
+  ]
+ },
+ "PASTECLIP": {
+  "description": "Pastes objects from the Clipboard into the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Paste",
+   "TABLET4^C^C_pasteclip"
+  ]
+ },
+ "PASTEBLOCK": {
+  "description": "Pastes objects from the Clipboard into the current drawing as a block",
+  "source": "acad",
+  "ui_labels": [
+   "PasteBlk",
+   "Paste as Block"
+  ]
+ },
+ "PASTEASHYPERLINK": {
+  "description": "Creates a hyperlink to a file, and associates it with a selected object",
+  "source": "acad",
+  "ui_labels": [
+   "Paste as Hyperlink"
+  ]
+ },
+ "PASTEORIG": {
+  "description": "Pastes objects from the Clipboard into the current drawing using the original coordinates",
+  "source": "acad",
+  "ui_labels": [
+   "PasteOri",
+   "Paste to Original Coordinates"
+  ]
+ },
+ "PASTESPEC": {
+  "description": "Pastes objects from the Clipboard into the current drawing and controls the format of the data",
+  "source": "acad",
+  "ui_labels": [
+   "PasteSpc",
+   "Paste Special..."
+  ]
+ },
+ "ERASE": {
+  "description": "Removes objects from a drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Erase",
+   "Erase:",
+   "Delete\\tDel",
+   "TABLET4^C^C_erase"
+  ]
+ },
+ "AI_SELALL": {
+  "description": "Selects all objects in either model space or the current layout, except those objects on frozen or on locked layers",
+  "source": "acad",
+  "ui_labels": [
+   "Select All"
+  ]
+ },
+ "OLELINKS": {
+  "description": "Updates, changes, and cancels existing OLE links",
+  "source": "acad",
+  "ui_labels": [
+   "OLElinks",
+   "OLE Links..."
+  ]
+ },
+ "FIND": {
+  "description": "Finds, replaces, selects, or zooms to specified text",
+  "source": "acad",
+  "ui_labels": [
+   "Find...",
+   "TABLET4^C^C_find"
+  ]
+ },
+ "COUNT": {
+  "description": "count selected objects",
+  "source": "acad",
+  "ui_labels": [
+   "Count",
+   "Count Selection"
+  ]
+ },
+ "REDRAWALL": {
+  "description": "Refreshes the display of all viewports",
+  "source": "acad",
+  "ui_labels": [
+   "Redraw"
+  ]
+ },
+ "REGEN": {
+  "description": "Regenerates the entire drawing from the drawing database",
+  "source": "acad",
+  "ui_labels": [
+   "Regen",
+   "Regen:",
+   "Update",
+   "TABLET2^C^C_regen"
+  ]
+ },
+ "REGENALL": {
+  "source": "acad",
+  "ui_labels": [
+   "Regenall",
+   "Regen All",
+   "TABLET2^C^C_regenall"
+  ]
+ },
+ "ZOOM": {
+  "description": "Zooms to display one or more selected objects as large as possible and in the center of the view",
+  "source": "acad",
+  "help_topic": "ZOOM",
+  "ui_labels": [
+   "Zoom",
+   "Zoom In",
+   "Zoom Out",
+   "Zoom, In"
+  ]
+ },
+ "PAN": {
+  "description": "Moves the view by the specified distance",
+  "source": "acad",
+  "ui_labels": [
+   "Pan",
+   "Pan, Up",
+   "Pan, Down",
+   "Pan, Left"
+  ]
+ },
+ "CLEANSCREENON": {
+  "description": "Toggles clean screen mode on and off",
+  "help_topic": "CLEANSCREENON",
+  "source": "acad",
+  "ui_labels": [
+   "Clean Screen"
+  ]
+ },
+ "CLEANSCREENOFF": {
+  "description": "Toggles clean screen mode on and off",
+  "help_topic": "CLEANSCREENON",
+  "source": "acad",
+  "ui_labels": [
+   "Clean Screen"
+  ]
+ },
+ "+VPORTS": {
+  "description": "Displays the Viewports dialog box for creating new or restoring saved viewport configurations",
+  "help_topic": "VPORTS_CLI",
+  "source": "acad",
+  "ui_labels": [
+   "Viewports, New Viewports...",
+   "Viewports, Named Viewports..."
+  ]
+ },
+ "VPORTS_CLI": {
+  "description": "Specifies that the viewport plots with hidden lines removed regardless of the current display",
+  "help_topic": "VPORTS_CLI",
+  "source": "acad",
+  "ui_labels": [
+   "Clip, Viewport",
+   "Viewports, Join",
+   "Viewports, Object",
+   "Restore Viewports"
+  ]
+ },
+ "VPORTS": {
+  "description": "Creates a nonrectangular layout viewport from a closed polyline, ellipse, spline, region, or circle",
+  "help_topic": "VPORTS",
+  "source": "acad",
+  "ui_labels": [
+   "Vports:",
+   "Single viewport",
+   "Multiple viewports",
+   "TABLET2^C^C_vports"
+  ]
+ },
+ "-VPORTS": {
+  "description": "Creates a nonrectangular layout viewport from a closed polyline, ellipse, spline, region, or circle",
+  "help_topic": "VPORTS_CLI",
+  "source": "acad",
+  "ui_labels": [
+   "Vports",
+   "Viewports, Join",
+   "Single viewport",
+   "Viewports, Object"
+  ]
+ },
+ "VIEW": {
+  "description": "Manages Named Views. Allows creating, deleting, renaming, and editing named views.",
+  "source": "acad",
+  "ui_labels": [
+   "Ddview",
+   "Ddview:",
+   "View, Top",
+   "View, Back"
+  ]
+ },
+ "VPOINT": {
+  "description": "Sets the three-dimensional viewing direction",
+  "source": "acad",
+  "ui_labels": [
+   "Vpoint",
+   "TABLET2^C^C_vpoint",
+   "View, Viewpoint Presets..."
+  ]
+ },
+ "ANNOALLVISIBLE": {
+  "description": "Show current scale only",
+  "source": "acad",
+  "ui_labels": [
+   "View, AllScale",
+   "View, CurrentScale"
+  ]
+ },
+ "-VPOINT": {
+  "description": "Displays a compass and tripod for defining a view direction in model space",
+  "source": "acad",
+  "ui_labels": [
+   "-Vpoint",
+   "-Vpoint:",
+   "View, Viewpoint",
+   "TABLET2^C^C_-vpoint"
+  ]
+ },
+ "PLAN": {
+  "description": "Displays the plan view of a previously saved user coordinate system",
+  "source": "acad",
+  "ui_labels": [
+   "Plan",
+   "Plan:",
+   "Pspace",
+   "Plan, World UCS"
+  ]
+ },
+ "-VIEW": {
+  "description": "Sets the view point to southwest isometric",
+  "source": "acad",
+  "ui_labels": [
+   "View, Top",
+   "View, Back",
+   "View, Left",
+   "View, Front"
+  ]
+ },
+ "3DORBIT": {
+  "description": "Rotates the view in 3D space, but constrained to horizontal and vertical orbit only",
+  "source": "acad",
+  "ui_labels": [
+   "3D Orbit",
+   "3D Constrained Orbit"
+  ]
+ },
+ "HIDE": {
+  "description": "Regenerates a 3D model with hidden lines suppressed",
+  "source": "acad",
+  "ui_labels": [
+   "Hide",
+   "TABLET2^C^C_hide"
+  ]
+ },
+ "SHADEMODE": {
+  "description": "Set viewport to Gouraud shaded, edges on",
+  "help_topic": "SHADEMODE",
+  "source": "acad",
+  "ui_labels": [
+   "Shademode, Hidden",
+   "TABLET2^C^C_shademode",
+   "Shademode, Flat Shaded",
+   "Shademode, 3D Wireframe"
+  ]
+ },
+ "SHADEMODE 3": {
+  "description": "Set viewport to 3D wireframe",
+  "help_topic": "SHADEMODE",
+  "source": "acad",
+  "ui_labels": [
+   "Shademode, 3D Wireframe"
+  ]
+ },
+ "SCENE": {
+  "description": "Manages scenes in model space",
+  "source": "acad",
+  "ui_labels": [
+   "Scene",
+   "Scene...",
+   "TABLET2^C^C_scene"
+  ]
+ },
+ "LIGHT": {
+  "description": "Manages lights and lighting effects",
+  "source": "acad",
+  "ui_labels": [
+   "Light",
+   "Light...",
+   "TABLET2^C^C_light"
+  ]
+ },
+ "MATBROWSEROPEN": {
+  "description": "Opens and closes Materials Browser",
+  "help_topic": "MaterialsBrowser",
+  "source": "acad",
+  "ui_labels": [
+   "Materials Browser"
+  ]
+ },
+ "MATERIALSBROWSER": {
+  "description": "Opens and closes Materials Browser",
+  "help_topic": "MaterialsBrowser",
+  "source": "acad",
+  "ui_labels": [
+   "Materials Browser"
+  ]
+ },
+ "MATBROWSERCLOSE": {
+  "description": "Opens and closes Materials Browser",
+  "help_topic": "MaterialsBrowser",
+  "source": "acad",
+  "ui_labels": [
+   "Materials Browser"
+  ]
+ },
+ "MATERIALATTACH": {
+  "description": "Associates materials with layers",
+  "source": "acad",
+  "ui_labels": [
+   "Attach By Layer"
+  ]
+ },
+ "VSMATERIALMODE": {
+  "description": "Turns on materials and turns off textures",
+  "source": "acad",
+  "ui_labels": [
+   "Materials and Textures On",
+   "Materials On/Textures Off",
+   "Materials and Textures Off"
+  ]
+ },
+ "MATERIALMAP": {
+  "description": "Applies the mapping from the original object or face to the selected objects",
+  "help_topic": "MaterialMap",
+  "source": "acad",
+  "ui_labels": [
+   "Copy Mapping Coordinates",
+   "Material Map, Box Mapping",
+   "Reset Mapping Coordinates",
+   "Material Map, Planar Mapping"
+  ]
+ },
+ "MATLIB": {
+  "description": "Imports and exports materials to and from a library of materials",
+  "source": "acad",
+  "ui_labels": [
+   "Matlib",
+   "TABLET2^C^C_matlib",
+   "Materials Library..."
+  ]
+ },
+ "SETUV": {
+  "description": "Maps materials onto objects",
+  "source": "acad",
+  "ui_labels": [
+   "Mapping",
+   "Mapping...",
+   "TABLET2^C^C_setuv"
+  ]
+ },
+ "RENDEREXPOSURE": {
+  "description": "Launches the Render Environment and Exposure palette where lighting and background, dark/bright and cool/warm tones are applied to the scene.",
+  "source": "acad",
+  "ui_labels": [
+   "Adjust Environment and Exposure..."
+  ]
+ },
+ "RENDEREXPOSURECLOSE": {
+  "description": "Launches the Render Environment and Exposure palette where lighting and background, dark/bright and cool/warm tones are applied to the scene.",
+  "source": "acad",
+  "ui_labels": [
+   "Adjust Environment and Exposure..."
+  ]
+ },
+ "RENDERENVIRONMENTCLOSE": {
+  "description": "Launches the Render Environment and Exposure palette where lighting and background, dark/bright and cool/warm tones are applied to the scene.",
+  "source": "acad",
+  "ui_labels": [
+   "Adjust Environment and Exposure..."
+  ]
+ },
+ "RENDERENVIRONMENT": {
+  "description": "Launches the Render Environment and Exposure palette where lighting and background, dark/bright and cool/warm tones are applied to the scene.",
+  "source": "acad",
+  "ui_labels": [
+   "Render Environment",
+   "TABLET2^C^C_renderenvironment",
+   "Adjust Environment and Exposure..."
+  ]
+ },
+ "RPREF": {
+  "description": "Displays or hides the Render Preset Manager palette for access to the rendering settings",
+  "help_topic": "RPREF",
+  "source": "acad",
+  "ui_labels": [
+   "Rpref",
+   "TABLET2^C^C_rpref",
+   "Render Preset Manager"
+  ]
+ },
+ "RPREFCLOSE": {
+  "description": "Displays or hides the Render Preset Manager palette for access to the rendering settings",
+  "help_topic": "RPREF",
+  "source": "acad",
+  "ui_labels": [
+   "Render Preset Manager"
+  ]
+ },
+ "RENDERPRESETSCLOSE": {
+  "description": "Displays or hides the Render Preset Manager palette for access to the rendering settings",
+  "help_topic": "RPREF",
+  "source": "acad",
+  "ui_labels": [
+   "Render Preset Manager"
+  ]
+ },
+ "RENDERPRESETS": {
+  "description": "Displays or hides the Render Preset Manager palette for access to the rendering settings",
+  "help_topic": "RPREF",
+  "source": "acad",
+  "ui_labels": [
+   "Render Preset Manager"
+  ]
+ },
+ "STATS": {
+  "description": "Displays rendering statistics",
+  "source": "acad",
+  "ui_labels": [
+   "Stats",
+   "Statistics..."
+  ]
+ },
+ "UCSICON": {
+  "description": "Displays the UCS icon at the origin of the user coordinate system",
+  "help_topic": "UCSICON",
+  "source": "acad",
+  "ui_labels": [
+   "UCSicon",
+   "UCSicon:",
+   "UCS Icon, On",
+   "UCS Icon, Origin"
+  ]
+ },
+ "ATTDISP": {
+  "description": "Restores the original visibility settings for all attributes in a drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Attribute Display, Normal"
+  ]
+ },
+ "ATTDISP ON": {
+  "description": "Makes all attributes visible, overriding the original visibility settings",
+  "source": "acad",
+  "ui_labels": [
+   "Attribute Display, On"
+  ]
+ },
+ "ATTDISP OFF": {
+  "description": "Makes all attributes invisible, overriding the original visibility settings",
+  "source": "acad",
+  "ui_labels": [
+   "Attribute Display, Off"
+  ]
+ },
+ "TEXTSCR": {
+  "description": "Opens the text window",
+  "source": "acad",
+  "ui_labels": [
+   "Text Window"
+  ]
+ },
+ "TOOLBAR": {
+  "description": "Displays, hides, and customizes toolbars",
+  "source": "acad",
+  "ui_labels": [
+   "Toolbar",
+   "Toolbars...",
+   "TABLET2^C^C_toolbar"
+  ]
+ },
+ "BLOCKSPALETTECLOSE": {
+  "description": "Inserts a block or a drawing in the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Block...",
+   "Close Blocks Palette"
+  ]
+ },
+ "BLOCKSPALETTE": {
+  "description": "Inserts a block or a drawing in the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Blocks",
+   "Block..."
+  ]
+ },
+ "INSERT": {
+  "description": "Inserts a block or a drawing into the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Ddinsert",
+   "Block...",
+   "Insert Block",
+   "TABLET4^C^C_insert"
+  ]
+ },
+ "COUNTLIST": {
+  "description": "Count palette",
+  "source": "acad",
+  "ui_labels": [
+   "Count..."
+  ]
+ },
+ "COUNTLISTCLOSE": {
+  "description": "Count palette",
+  "source": "acad",
+  "ui_labels": [
+   "Count..."
+  ]
+ },
+ "XATTACH": {
+  "description": "Attaches an external reference to the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Attach Xref",
+   "DWG Reference..."
+  ]
+ },
+ "IMAGEATTACH": {
+  "description": "Inserts images in many formats into an AutoCAD drawing file",
+  "source": "acad",
+  "ui_labels": [
+   "Attach Image",
+   "Raster Image Reference..."
+  ]
+ },
+ "FIELD": {
+  "description": "Inserts a string of text that can be updated automatically as the field value changes",
+  "source": "acad",
+  "ui_labels": [
+   "Field..."
+  ]
+ },
+ "LAYOUT": {
+  "description": "Inserts a new layout based on an existing layout template",
+  "source": "acad",
+  "ui_labels": [
+   "Layout, New Layout",
+   "Layout, Layout from Template..."
+  ]
+ },
+ "LAYOUTWIZARD": {
+  "description": "Creates a new Layout tab and specifies page and plot settings",
+  "source": "acad",
+  "ui_labels": [
+   "Create Layout...",
+   "Layout, Create Layout Wizard"
+  ]
+ },
+ "3DSIN": {
+  "description": "Imports an Autodesk 3ds MAX (3DS) file",
+  "source": "acad",
+  "ui_labels": [
+   "3D Studio..."
+  ]
+ },
+ "ACISIN": {
+  "description": "Imports an ACIS (SAT) file and creates 3D solid, body, or region objects",
+  "source": "acad",
+  "ui_labels": [
+   "ACISin",
+   "ACIS File..."
+  ]
+ },
+ "DXBIN": {
+  "description": "Imports an AutoCAD DXB (drawing interchange binary) file",
+  "source": "acad",
+  "ui_labels": [
+   "DXBin",
+   "Drawing Exchange Binary..."
+  ]
+ },
+ "WMFIN": {
+  "description": "Imports a Windows metafile",
+  "source": "acad",
+  "ui_labels": [
+   "WMFin",
+   "Windows Metafile..."
+  ]
+ },
+ "INSERTOBJ": {
+  "description": "Inserts a linked or embedded object",
+  "source": "acad",
+  "ui_labels": [
+   "Insertob",
+   "OLE Object...",
+   "TABLET4^C^C_insertobj"
+  ]
+ },
+ "IMAGE": {
+  "description": "Inserts images in many formats into an AutoCAD drawing file",
+  "source": "acad",
+  "ui_labels": [
+   "Image",
+   "Attach Image",
+   "TABLET4^C^C_image"
+  ]
+ },
+ "HYPERLINK": {
+  "description": "Attaches a hyperlink to an object or modifies an existing hyperlink",
+  "source": "acad",
+  "ui_labels": [
+   "Hyperlink..."
+  ]
+ },
+ "LAYER": {
+  "description": "Manages layers and layer properties",
+  "help_topic": "LAYER",
+  "source": "acad",
+  "ui_labels": [
+   "Layer Properties",
+   "Layer Properties Manager"
+  ]
+ },
+ "COLOR": {
+  "description": "Sets the color for new objects",
+  "source": "acad",
+  "ui_labels": [
+   "Color..."
+  ]
+ },
+ "LINETYPE": {
+  "description": "Loads and sets linetypes",
+  "source": "acad",
+  "ui_labels": [
+   "Linetype..."
+  ]
+ },
+ "LWEIGHT": {
+  "description": "Sets the current lineweight, lineweight display options, and lineweight units",
+  "source": "acad",
+  "ui_labels": [
+   "Lineweight..."
+  ]
+ },
+ "CETRANSPARENCY": {
+  "description": "Sets the current transparency",
+  "source": "acad",
+  "ui_labels": [
+   "Transparency"
+  ]
+ },
+ "SCALELISTEDIT": {
+  "description": "Controls the list of scales available for layout viewports, page layouts, and plotting",
+  "source": "acad",
+  "ui_labels": [
+   "Scale List..."
+  ]
+ },
+ "STYLE": {
+  "description": "Creates, modifies, or specifies text styles",
+  "source": "acad",
+  "ui_labels": [
+   "Text Style..."
+  ]
+ },
+ "DIMSTYLE": {
+  "description": "Creates and modifies dimension styles",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Dimension Style..."
+  ]
+ },
+ "TABLESTYLE": {
+  "description": "Creates, modifies, or specifies table styles",
+  "source": "acad",
+  "ui_labels": [
+   "Table Style..."
+  ]
+ },
+ "PLOTSTYLE": {
+  "description": "Sets the current plot style for new objects, or the assigned plot style for selected objects",
+  "source": "acad",
+  "ui_labels": [
+   "Plot Style..."
+  ]
+ },
+ "PTYPE": {
+  "description": "Specifies the display style and size of point objects",
+  "source": "acad",
+  "ui_labels": [
+   "Point Style..."
+  ]
+ },
+ "MLSTYLE": {
+  "description": "Manages styles for multiple parallel lines",
+  "source": "acad",
+  "ui_labels": [
+   "Mlstyle",
+   "Mlstyle:",
+   "Multiline Style...",
+   "TABLET4^C^C_mlstyle"
+  ]
+ },
+ "UNITS": {
+  "description": "Controls the displayed precision and format for coordinates and angles",
+  "source": "acad",
+  "ui_labels": [
+   "Units..."
+  ]
+ },
+ "THICKNESS": {
+  "description": "Sets the current 3D thickness",
+  "source": "acad",
+  "ui_labels": [
+   "Thickness"
+  ]
+ },
+ "LIMITS": {
+  "description": "Sets and controls the limits of the grid display in the current Model or Layout tab",
+  "source": "acad",
+  "ui_labels": [
+   "Drawing Limits"
+  ]
+ },
+ "RENAME": {
+  "description": "Changes the names assigned to items such as layers and dimension styles",
+  "source": "acad",
+  "ui_labels": [
+   "Ddrename",
+   "Rename...",
+   "TABLET4^C^C_rename"
+  ]
+ },
+ "SPELL": {
+  "description": "Checks for spelling errors in all or part of a drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Spell Check"
+  ]
+ },
+ "QSELECT": {
+  "description": "Creates a selection set based on filtering criteria",
+  "source": "acad",
+  "ui_labels": [
+   "Quick Select...",
+   "TABLET4^C^C_qselect"
+  ]
+ },
+ "DRAWORDER": {
+  "description": "Forces selected objects to be displayed in front of specified reference objects",
+  "help_topic": "DRAWORDER",
+  "source": "acad",
+  "ui_labels": [
+   "Draword:",
+   "Drawordr",
+   "Draw Order",
+   "TABLET4^C^C_draworder"
+  ]
+ },
+ "TEXTTOFRONT": {
+  "description": "Force All Annotation objects to be displayed in the front of all other objects.",
+  "source": "acad",
+  "ui_labels": [
+   "Draw Order, Leaders Only",
+   "Draw Order, Text Objects Only",
+   "Draw Order, All Annotation Objects",
+   "Draw Order, Dimension Objects Only"
+  ]
+ },
+ "MEASUREGEOM": {
+  "description": "Displays measurements of the geometry near the cursor in a 2D plan view",
+  "source": "acad",
+  "ui_labels": [
+   "Measure Area",
+   "Quick Measure",
+   "Measure Angle",
+   "Measure Radius"
+  ]
+ },
+ "MASSPROP": {
+  "description": "Calculates the mass properties of regions or 3D solids",
+  "source": "acad",
+  "ui_labels": [
+   "Massprop",
+   "TABLET4^C^C_massprop",
+   "Region/Mass Properties"
+  ]
+ },
+ "LIST": {
+  "description": "Displays property data for selected objects",
+  "source": "acad",
+  "ui_labels": [
+   "List",
+   "TABLET4^C^C_list"
+  ]
+ },
+ "ID": {
+  "description": "Displays the UCS coordinate values of a specified location",
+  "source": "acad",
+  "ui_labels": [
+   "ID Point",
+   "Locate Point"
+  ]
+ },
+ "TIME": {
+  "description": "Displays the date and time statistics of a drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Time"
+  ]
+ },
+ "STATUS": {
+  "description": "Displays drawing statistics, modes, and extents",
+  "source": "acad",
+  "ui_labels": [
+   "Status"
+  ]
+ },
+ "SETVAR": {
+  "description": "Lists or changes the values of system variables",
+  "source": "acad",
+  "ui_labels": [
+   "Set Variable"
+  ]
+ },
+ "UPDATEFIELD": {
+  "description": "Manually updates the fields in selected objects to the current value",
+  "source": "acad",
+  "ui_labels": [
+   "Update Fields"
+  ]
+ },
+ "BEDIT": {
+  "description": "Opens the block definition in the Block Editor",
+  "source": "acad",
+  "help_topic": "BEDIT",
+  "ui_labels": [
+   "Block Editor",
+   "Block - Double Click",
+   "Dynamic Block - Double Click"
+  ]
+ },
+ "BSAVE": {
+  "description": "Save Block Definition",
+  "source": "acad",
+  "ui_labels": [
+   "Save"
+  ]
+ },
+ "BSAVEAS": {
+  "description": "Saves a copy of the block definition under a new name",
+  "source": "acad",
+  "ui_labels": [
+   "Save Block As"
+  ]
+ },
+ "BPARAMETER": {
+  "description": "Adds an alignment parameter to the block definition",
+  "source": "acad",
+  "ui_labels": [
+   "Parameter",
+   "Block Parameter, XY",
+   "Block Parameter, Flip",
+   "Block Parameter, Point"
+  ]
+ },
+ "BACTION": {
+  "description": "Action",
+  "source": "acad",
+  "ui_labels": [
+   "Action"
+  ]
+ },
+ "ATTDEF": {
+  "description": "Creates an attribute definition for storing data in a block",
+  "source": "acad",
+  "ui_labels": [
+   "Attdef",
+   "Define Attribute",
+   "Block, Define Attributes..."
+  ]
+ },
+ "BVMODE": {
+  "description": "Controls how objects that are made invisible for the current visibility state are displayed in the Block Editor",
+  "help_topic": "BVMODE",
+  "source": "acad",
+  "ui_labels": [
+   "Visibility Mode"
+  ]
+ },
+ "BVSHOW": {
+  "description": "Makes objects visible for the current visibility state or all visibility states",
+  "source": "acad",
+  "ui_labels": [
+   "Make Visible"
+  ]
+ },
+ "BVHIDE": {
+  "description": "Makes objects invisible for the current visibility state or all visibility states",
+  "source": "acad",
+  "ui_labels": [
+   "Make Invisible"
+  ]
+ },
+ "BVSTATE": {
+  "description": "Creates, sets, or deletes a visibility state in a dynamic block",
+  "source": "acad",
+  "ui_labels": [
+   "Visibility States"
+  ]
+ },
+ "BCLOSE": {
+  "description": "Exit Block Editor and Return to Drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Close"
+  ]
+ },
+ "XOPEN": {
+  "description": "Opens the block or external reference in a separate window",
+  "source": "acad",
+  "ui_labels": [
+   "Open Xref",
+   "Xref and Block, Open Reference"
+  ]
+ },
+ "REFEDIT": {
+  "description": "Edits a block or an external reference directly within the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Refedit",
+   "Edit Block In-place",
+   "Xref and Block, Edit Reference In-Place"
+  ]
+ },
+ "REFSET": {
+  "description": "Transfers objects from the host drawing to the REFEDIT working set",
+  "help_topic": "REFSET",
+  "source": "acad",
+  "ui_labels": [
+   "Xref and Block, Add to Working set",
+   "Xref and Block, Remove from Working set"
+  ]
+ },
+ "REFCLOSE": {
+  "description": "Discards REFEDIT working set changes",
+  "help_topic": "REFCLOSE",
+  "source": "acad",
+  "ui_labels": [
+   "Xref and Block, Close Reference",
+   "Xref and Block, Save Reference Edits"
+  ]
+ },
+ "DATAEXTRACTION": {
+  "description": "Extracts drawing data and merges data from an external source to a data extraction table or external file",
+  "source": "acad",
+  "ui_labels": [
+   "Data Extraction..."
+  ]
+ },
+ "PROPERTIES": {
+  "description": "Opens the block definition in the Block Editor",
+  "help_topic": "PROPERTIES",
+  "source": "acad",
+  "ui_labels": [
+   "Property",
+   "Propchek",
+   "Properties",
+   "Block - Double Click"
+  ]
+ },
+ "PROPERTIESCLOSE": {
+  "description": "Controls properties of existing objects",
+  "help_topic": "PROPERTIES",
+  "source": "acad",
+  "ui_labels": [
+   "Properties",
+   "Close Properties Palette"
+  ]
+ },
+ "ADCENTER": {
+  "description": "Manages and inserts content such as blocks, xrefs, and hatch patterns",
+  "help_topic": "ADCENTER",
+  "source": "acad",
+  "ui_labels": [
+   "DesignCenter"
+  ]
+ },
+ "TOOLPALETTES": {
+  "description": "Opens and closes the Tool Palettes window",
+  "help_topic": "TOOLPALETTES",
+  "source": "acad",
+  "ui_labels": [
+   "Tool Palettes"
+  ]
+ },
+ "SHEETSET": {
+  "description": "Opens the Sheet Set Manager",
+  "help_topic": "SHEETSET",
+  "source": "acad",
+  "ui_labels": [
+   "Sheet Set Manager"
+  ]
+ },
+ "DBCCLOSE": {
+  "description": "Provides an AutoCAD interface to external database tables",
+  "help_topic": "DBCONNECT",
+  "source": "acad",
+  "ui_labels": [
+   "dbConnect"
+  ]
+ },
+ "DBCONNECT": {
+  "description": "Provides an AutoCAD interface to external database tables",
+  "help_topic": "DBCONNECT",
+  "source": "acad",
+  "ui_labels": [
+   "dbConnect",
+   "TABLET4^C^C_dbconnect"
+  ]
+ },
+ "MARKUPCLOSE": {
+  "description": "Displays information about loaded markup sets and their status",
+  "help_topic": "MARKUP",
+  "source": "acad",
+  "ui_labels": [
+   "Markup Set Manager"
+  ]
+ },
+ "MARKUP": {
+  "description": "Displays information about loaded markup sets and their status",
+  "help_topic": "MARKUP",
+  "source": "acad",
+  "ui_labels": [
+   "Markup Set Manager"
+  ]
+ },
+ "QUICKCALC": {
+  "description": "Displays or hides the QuickCalc calculator",
+  "help_topic": "QUICKCALC",
+  "source": "acad",
+  "ui_labels": [
+   "QuickCalc"
+  ]
+ },
+ "COMMANDLINE": {
+  "description": "Displays or hides the Command Line window",
+  "help_topic": "COMMANDLINE",
+  "source": "acad",
+  "ui_labels": [
+   "Command Line"
+  ]
+ },
+ "COMMANDLINEHIDE": {
+  "description": "Displays or hides the Command Line window",
+  "help_topic": "COMMANDLINE",
+  "source": "acad",
+  "ui_labels": [
+   "Command Line",
+   "Hide Command Line"
+  ]
+ },
+ "LAYLOCKFADECTL": {
+  "description": "Controls whether objects on locked layers are faded",
+  "help_topic": "LAYLOCKFADECTL",
+  "source": "acad",
+  "ui_labels": [
+   "Locked Layer Fading"
+  ]
+ },
+ "XDWGFADECTL": {
+  "description": "Enables or disables the xref fading",
+  "source": "acad",
+  "ui_labels": [
+   "Xref fading"
+  ]
+ },
+ "VSEDGEOVERHANG": {
+  "description": "Makes edges on 3D solids extend beyond their intersection for a hand-drawn effect",
+  "source": "acad",
+  "ui_labels": [
+   "Edge Overhang"
+  ]
+ },
+ "VSEDGEJITTER": {
+  "description": "Makes edges on 3D solids appear wavy, as though they were sketched with a pencil",
+  "source": "acad",
+  "ui_labels": [
+   "Edge Jitter"
+  ]
+ },
+ "VSSILHEDGES": {
+  "description": "Controls the display of silhouette edges on 3D solids and surfaces",
+  "source": "acad",
+  "help_topic": "VSSILHEDGES",
+  "ui_labels": [
+   "Silouette Edges",
+   "Visual Styles, Silhouette Edges"
+  ]
+ },
+ "VSFACEOPACITY": {
+  "description": "Turns on and off a preset level of transparency for 3D solids and surfaces",
+  "source": "acad",
+  "help_topic": "VSFACEOPACITY",
+  "ui_labels": [
+   "X-Ray",
+   "Visual Styles, X-ray mode"
+  ]
+ },
+ "APPLOAD": {
+  "description": "Loads and unloads applications and defines which applications to load at startup",
+  "source": "acad",
+  "ui_labels": [
+   "Appload",
+   "TABLET4^C^C_appload",
+   "Load Application..."
+  ]
+ },
+ "SCRIPT": {
+  "description": "Executes a sequence of commands from a script file",
+  "source": "acad",
+  "ui_labels": [
+   "Run Script..."
+  ]
+ },
+ "VBARUN": {
+  "description": "Runs a VBA macro",
+  "source": "acad",
+  "ui_labels": [
+   "VBA, Macros..."
+  ]
+ },
+ "VBALOAD": {
+  "description": "Loads a global VBA project into the current work session",
+  "source": "acad",
+  "ui_labels": [
+   "VBA, Load Project..."
+  ]
+ },
+ "VBAMAN": {
+  "description": "Manages VBA project operations using a dialog box",
+  "source": "acad",
+  "ui_labels": [
+   "VBA, VBA Manager..."
+  ]
+ },
+ "VBAIDE": {
+  "description": "Displays the Visual Basic Editor",
+  "source": "acad",
+  "ui_labels": [
+   "VBA, Visual Basic Editor"
+  ]
+ },
+ "VLISP": {
+  "description": "Displays the Visual LISP interactive development environment",
+  "source": "acad",
+  "ui_labels": [
+   "Visual LISP Editor"
+  ]
+ },
+ "VLIDE": {
+  "description": "Displays the Visual LISP interactive development environment",
+  "source": "acad",
+  "ui_labels": [
+   "Visual LISP Editor"
+  ]
+ },
+ "REPLAY": {
+  "description": "Displays a BMP, TGA, or TIFF image",
+  "source": "acad",
+  "ui_labels": [
+   "Replay",
+   "View...",
+   "TABLET4^C^C_replay"
+  ]
+ },
+ "SAVEIMG": {
+  "description": "Saves a rendered image to a file",
+  "source": "acad",
+  "ui_labels": [
+   "Saveimg",
+   "TABLET4^C^C_saveimg",
+   "Display Image, Save..."
+  ]
+ },
+ "UCSMAN": {
+  "description": "Manages defined user coordinate systems",
+  "source": "acad",
+  "ui_labels": [
+   "Preset...",
+   "UCS, Named UCS...",
+   "UCS, UCS Settings"
+  ]
+ },
+ "UCS": {
+  "description": "Sets the current user coordinate system to the world coordinate system",
+  "source": "acad",
+  "ui_labels": [
+   "Z",
+   "X",
+   "Y",
+   "UCS"
+  ]
+ },
+ "STANDARDS": {
+  "description": "Manages the association of standards files with drawings",
+  "source": "acad",
+  "ui_labels": [
+   "CAD Standards, Configure..."
+  ]
+ },
+ "CHECKSTANDARDS": {
+  "description": "Checks the current drawing for standards violations",
+  "source": "acad",
+  "ui_labels": [
+   "CAD Standards, Check..."
+  ]
+ },
+ "LAYTRANS": {
+  "description": "Translates the layers in the current drawing to specified layer standards",
+  "source": "acad",
+  "ui_labels": [
+   "CAD Standards, Layer Translator..."
+  ]
+ },
+ "R14PENWIZARD": {
+  "description": "Creates a color-dependent plot style table",
+  "source": "acad",
+  "ui_labels": [
+   "Add Color-Dependent Plot Style Table..."
+  ]
+ },
+ "PCINWIZARD": {
+  "description": "Displays a wizard to import PCP and PC2 configuration file plot settings into the Model tab or current layout",
+  "source": "acad",
+  "ui_labels": [
+   "Import Plot Settings..."
+  ]
+ },
+ "DSETTINGS": {
+  "description": "Sets grid and snap, polar tracking, and object snap modes",
+  "source": "acad",
+  "ui_labels": [
+   "Drafting Settings..."
+  ]
+ },
+ "TABLET": {
+  "description": "Calibrates, configures, and turns on and off an attached digitizing tablet",
+  "source": "acad",
+  "ui_labels": [
+   "Tablet",
+   "TABLET",
+   "Tablet:",
+   "Tablet, On"
+  ]
+ },
+ "CUI": {
+  "description": "Manages customized user interface elements in the product",
+  "source": "acad",
+  "ui_labels": [
+   "Customize...",
+   "Customize, Interface..."
+  ]
+ },
+ "QUICKCUI": {
+  "description": "Manages customized user interface elements in the product",
+  "source": "acad",
+  "ui_labels": [
+   "Customize, Interface..."
+  ]
+ },
+ "CUSTOMIZE": {
+  "description": "Customizes tool palettes and tool palette groups",
+  "source": "acad",
+  "ui_labels": [
+   "Customize, Tool Palettes..."
+  ]
+ },
+ "AI_EDITCUSTFILE": {
+  "description": "Opens the Program Parameters (PGP) text file that defines command abbreviations",
+  "help_topic": "AI_EDITCUSTFILE",
+  "source": "acad",
+  "ui_labels": [
+   "Customize, Edit Synonym List",
+   "Customize, Edit AutoCorrect List",
+   "Customize, Edit Program Parameters (acad.pgp)"
+  ]
+ },
+ "OPTIONS": {
+  "description": "Opens the Options dialog to the Display tab.",
+  "source": "acad",
+  "ui_labels": [
+   "Options",
+   "Options...",
+   "TABLET4^C^C_options",
+   "Options, Display Tab"
+  ]
+ },
+ "LINE": {
+  "description": "Creates straight line segments",
+  "source": "acad",
+  "ui_labels": [
+   "Line",
+   "Line:",
+   "1 Line:",
+   "LinCont:"
+  ]
+ },
+ "RAY": {
+  "description": "Creates a line that starts at a point and continues to infinity",
+  "source": "acad",
+  "ui_labels": [
+   "Ray",
+   "Ray:",
+   "TABLET2^C^C_ray"
+  ]
+ },
+ "XLINE": {
+  "description": "Creates a line of infinite length",
+  "source": "acad",
+  "ui_labels": [
+   "Xline",
+   "Xline:",
+   "Construction Line",
+   "TABLET2^C^C_xline"
+  ]
+ },
+ "MLINE": {
+  "description": "Creates multiple parallel lines",
+  "source": "acad",
+  "ui_labels": [
+   "Mline",
+   "Mline:",
+   "Multiline",
+   "TABLET2^C^C_mline"
+  ]
+ },
+ "PLINE": {
+  "description": "Creates a 2D polyline",
+  "source": "acad",
+  "ui_labels": [
+   "Pline",
+   "Pline:",
+   "Polyline",
+   "TABLET2^C^C_pline"
+  ]
+ },
+ "3DPOLY": {
+  "description": "Creates a 3D polyline",
+  "source": "acad",
+  "ui_labels": [
+   "3D Polyline"
+  ]
+ },
+ "POLYGON": {
+  "description": "Creates an equilateral closed polyline",
+  "source": "acad",
+  "ui_labels": [
+   "Polygon",
+   "Polygon:",
+   "TABLET2^C^C_polygon"
+  ]
+ },
+ "RECTANG": {
+  "description": "Creates a rectangular polyline",
+  "source": "acad",
+  "ui_labels": [
+   "Rectang",
+   "Rectangle",
+   "TABLET2^C^C_rectang"
+  ]
+ },
+ "ARC": {
+  "description": "Creates an arc using a center point, start point, and a third point that determines the endpoint",
+  "source": "acad",
+  "ui_labels": [
+   "Arc",
+   "Arc:",
+   "ArcCont:",
+   "Arc, Continue"
+  ]
+ },
+ "CIRCLE": {
+  "description": "Creates a circle with a specified radius tangent to two objects",
+  "source": "acad",
+  "ui_labels": [
+   "Circle",
+   "Circle:",
+   "Circle, 2 Points",
+   "Circle, 3 Points"
+  ]
+ },
+ "DONUT": {
+  "description": "Creates a filled circle or a wide ring",
+  "source": "acad",
+  "ui_labels": [
+   "Donut",
+   "TABLET2^C^C_donut"
+  ]
+ },
+ "SPLINE": {
+  "description": "Creates a smooth curve that passes through or near specified points",
+  "source": "acad",
+  "ui_labels": [
+   "Spline",
+   "Spline Knot"
+  ]
+ },
+ "ELLIPSE": {
+  "description": "Creates an ellipse using a specified center point",
+  "source": "acad",
+  "ui_labels": [
+   "Ellipse",
+   "Ellipse:",
+   "Ellipse Arc",
+   "Ellipse, Arc"
+  ]
+ },
+ "BLOCK": {
+  "description": "Creates a block definition from selected objects",
+  "source": "acad",
+  "ui_labels": [
+   "Block",
+   "Make Block",
+   "Block, Make...",
+   "TABLET2^C^C_block"
+  ]
+ },
+ "BASE": {
+  "description": "Sets the insertion base point for the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Block, Base",
+   "Grips, Base Point"
+  ]
+ },
+ "TABLE": {
+  "description": "Creates an empty table object",
+  "source": "acad",
+  "ui_labels": [
+   "Table..."
+  ]
+ },
+ "POINT": {
+  "description": "Creates multiple point objects",
+  "source": "acad",
+  "ui_labels": [
+   "Point",
+   "Point:",
+   "TABLET2*^C^C_point",
+   "Point, Single Point"
+  ]
+ },
+ "DIVIDE": {
+  "description": "Creates evenly spaced point objects or blocks along the length or perimeter of an object",
+  "source": "acad",
+  "ui_labels": [
+   "Divide",
+   "Divide:",
+   "TABLET4^C^C_divide"
+  ]
+ },
+ "MEASURE": {
+  "description": "Creates point objects or blocks at measured intervals along the length or perimeter of an object",
+  "source": "acad",
+  "ui_labels": [
+   "Measure",
+   "Measure:",
+   "TABLET4^C^C_measure"
+  ]
+ },
+ "HATCH": {
+  "description": "Fills an enclosed area or selected objects with a hatch pattern or fill",
+  "source": "acad",
+  "ui_labels": [
+   "Hatch",
+   "Hatch...",
+   "TABLET2^C^C_hatch"
+  ]
+ },
+ "BHATCH": {
+  "description": "Fills an enclosed area or selected objects with a hatch pattern or fill",
+  "source": "acad",
+  "ui_labels": [
+   "Hatch..."
+  ]
+ },
+ "GRADIENT": {
+  "description": "Fills an enclosed area or selected objects with a gradient fill",
+  "source": "acad",
+  "ui_labels": [
+   "Gradient..."
+  ]
+ },
+ "BOUNDARY": {
+  "description": "Creates a region or a polyline from an enclosed area",
+  "source": "acad",
+  "ui_labels": [
+   "Boundary",
+   "Boundar:",
+   "Boundary...",
+   "TABLET2^C^C_boundary"
+  ]
+ },
+ "REGION": {
+  "description": "Converts an object that encloses an area into a region object",
+  "source": "acad",
+  "ui_labels": [
+   "Region",
+   "TABLET2^C^C_region"
+  ]
+ },
+ "WIPEOUT": {
+  "description": "Creates a wipeout object",
+  "source": "acad",
+  "ui_labels": [
+   "Wipeout"
+  ]
+ },
+ "REVCLOUD": {
+  "description": "Creates a revision cloud drawing a freeform polyline.",
+  "source": "acad",
+  "ui_labels": [
+   "Freehand Revision Cloud",
+   "Polygonal Revision Cloud",
+   "Rectangular Revision Cloud"
+  ]
+ },
+ "MTEXT": {
+  "description": "Creates a multiline text object",
+  "source": "acad",
+  "ui_labels": [
+   "Mtext",
+   "Mtext:",
+   "Multiline Text...",
+   "TABLET2^C^C_mtext"
+  ]
+ },
+ "TEXT": {
+  "description": "Displays text on screen as it is entered",
+  "source": "acad",
+  "ui_labels": [
+   "Single Line Text"
+  ]
+ },
+ "SOLID": {
+  "description": "Creates solid-filled triangles and quadrilaterals",
+  "source": "acad",
+  "help_topic": "SOLID",
+  "ui_labels": [
+   "Solid:",
+   "SOLIDS",
+   "TABLET2^C^C_solid",
+   "Modeling, Meshes, 2D Solid"
+  ]
+ },
+ "3DFACE": {
+  "description": "Creates a three-sided or four-sided surface in 3D space",
+  "source": "acad",
+  "ui_labels": [
+   "Modeling, Meshes, 3D Face"
+  ]
+ },
+ "HELP": {
+  "description": "Creates three-dimensional surface objects using a dialog box",
+  "help_topic": "help",
+  "source": "acad",
+  "ui_labels": [
+   "LAST",
+   "EDIT",
+   "HELP",
+   "FILE"
+  ]
+ },
+ "EDGE": {
+  "description": "Changes the visibility of 3D face edges",
+  "source": "acad",
+  "ui_labels": [
+   "Edge:",
+   "Modeling, Meshes, Edge"
+  ]
+ },
+ "3DMESH": {
+  "description": "Creates a free-form polygon mesh",
+  "source": "acad",
+  "ui_labels": [
+   "Modeling, Meshes, 3D Mesh"
+  ]
+ },
+ "REVSURF": {
+  "description": "Creates a mesh by revolving a profile about an axis",
+  "source": "acad",
+  "ui_labels": [
+   "Revsurf:",
+   "TABLET2^C^C_revsurf",
+   "Modeling, Meshes, Revolved Surface"
+  ]
+ },
+ "TABSURF": {
+  "description": "Creates a mesh from a line or curve that is swept along a straight path",
+  "source": "acad",
+  "ui_labels": [
+   "Tabsurf:",
+   "TABLET2^C^C_tabsurf",
+   "Modeling, Meshes, Tabulated Surface"
+  ]
+ },
+ "RULESURF": {
+  "description": "Creates a mesh that represents the surface between two lines or curves",
+  "source": "acad",
+  "ui_labels": [
+   "Rulsurf:",
+   "TABLET2^C^C_rulesurf",
+   "Modeling, Meshes, Ruled Surface"
+  ]
+ },
+ "EDGESURF": {
+  "description": "Creates a mesh between four contiguous edges or curves",
+  "source": "acad",
+  "ui_labels": [
+   "Edgsurf:",
+   "TABLET2^C^C_edgesurf",
+   "Modeling, Meshes, Edge Surface"
+  ]
+ },
+ "BOX": {
+  "description": "Creates a 3D solid box",
+  "source": "acad",
+  "ui_labels": [
+   "Box",
+   "TABLET2^C^C_box"
+  ]
+ },
+ "SPHERE": {
+  "description": "Creates a 3D solid sphere",
+  "source": "acad",
+  "ui_labels": [
+   "Sphere",
+   "TABLET2^C^C_sphere"
+  ]
+ },
+ "CYLINDER": {
+  "description": "Creates a 3D solid cylinder",
+  "source": "acad",
+  "ui_labels": [
+   "Cylinder",
+   "TABLET2^C^C_cylinder"
+  ]
+ },
+ "CONE": {
+  "description": "Creates a 3D solid cone",
+  "source": "acad",
+  "ui_labels": [
+   "Cone",
+   "TABLET2^C^C_cone"
+  ]
+ },
+ "WEDGE": {
+  "description": "Creates a 3D solid wedge",
+  "source": "acad",
+  "ui_labels": [
+   "Wedge",
+   "TABLET2^C^C_wedge"
+  ]
+ },
+ "TORUS": {
+  "description": "Creates a donut-shaped 3D solid",
+  "source": "acad",
+  "ui_labels": [
+   "Torus",
+   "TABLET2^C^C_torus"
+  ]
+ },
+ "EXTRUDE": {
+  "description": "Creates a 3D solid or surface by extruding a 2D or 3D curve",
+  "source": "acad",
+  "ui_labels": [
+   "Extrude"
+  ]
+ },
+ "REVOLVE": {
+  "description": "Creates a 3D solid or surface by sweeping a 2D or 3D curve around an axis",
+  "source": "acad",
+  "ui_labels": [
+   "Revolve"
+  ]
+ },
+ "SLICE": {
+  "description": "Creates new 3D solids and surfaces by slicing, or dividing, existing objects",
+  "source": "acad",
+  "ui_labels": [
+   "Slice",
+   "Slice:"
+  ]
+ },
+ "SECTION": {
+  "description": "Uses the intersection of a plane and solids to create a region",
+  "source": "acad",
+  "ui_labels": [
+   "Section",
+   "Section:"
+  ]
+ },
+ "INTERFERE": {
+  "description": "Extract edges from a temporary 3D solid from the interferences between two sets of selected 3D solids",
+  "source": "acad",
+  "help_topic": "INTERFERE_CLI",
+  "ui_labels": [
+   "Interfere",
+   "Extract Intersection",
+   "Interference Checking"
+  ]
+ },
+ "INTERFERE_CLI": {
+  "description": "Extract edges from a temporary 3D solid from the interferences between two sets of selected 3D solids",
+  "help_topic": "INTERFERE_CLI",
+  "source": "acad",
+  "ui_labels": [
+   "Extract Intersection"
+  ]
+ },
+ "SELECT": {
+  "description": "Extract edges from a temporary 3D solid from the interferences between two sets of selected 3D solids",
+  "help_topic": "INTERFERE_CLI",
+  "source": "acad",
+  "ui_labels": [
+   "Select Add",
+   "Select All",
+   "Select Last",
+   "Select Fence"
+  ]
+ },
+ "SOLDRAW": {
+  "description": "Generates profiles and sections in layout viewports created with SOLVIEW",
+  "source": "acad",
+  "ui_labels": [
+   "Soldraw",
+   "Modeling, Setup, Drawing"
+  ]
+ },
+ "SOLVIEW": {
+  "description": "Creates orthographic views, layers, and layout viewports automatically for 3D solids",
+  "source": "acad",
+  "ui_labels": [
+   "Solview",
+   "Modeling, Setup, View"
+  ]
+ },
+ "SOLPROF": {
+  "description": "Creates 2D profile images of 3D solids for display in a layout viewport",
+  "source": "acad",
+  "ui_labels": [
+   "Solprof",
+   "Modeling, Setup, Profile"
+  ]
+ },
+ "QDIM": {
+  "description": "Quickly creates a series of dimensions from selected objects",
+  "source": "acad",
+  "ui_labels": [
+   "TABLET4^C^C_qdim",
+   "Dimension, Quick Dimension"
+  ]
+ },
+ "DIMLINEAR": {
+  "description": "Creates a linear dimension",
+  "source": "acad",
+  "ui_labels": [
+   "DimLinr:",
+   "Dimension, Linear",
+   "TABLET4^C^C_dimlinear"
+  ]
+ },
+ "DIMALIGNED": {
+  "description": "Creates an aligned linear dimension",
+  "source": "acad",
+  "ui_labels": [
+   "DimAlin:",
+   "Dimension, Aligned",
+   "TABLET4^C^C_dimaligned"
+  ]
+ },
+ "DIMARC": {
+  "description": "Creates an arc length dimension",
+  "source": "acad",
+  "ui_labels": [
+   "Arc Len",
+   "Dimension, Arc Length"
+  ]
+ },
+ "DIMORDINATE": {
+  "description": "Creates ordinate dimensions",
+  "source": "acad",
+  "ui_labels": [
+   "DimOrdin",
+   "Dimension, Ordinate",
+   "TABLET4^C^C_dimordinate",
+   "Dimension, Ordinate, X-Datum"
+  ]
+ },
+ "DIMRADIUS": {
+  "description": "Creates a radius dimension for a circle or an arc",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Radius",
+   "TABLET4^C^C_dimradius"
+  ]
+ },
+ "DIMJOGGED": {
+  "description": "Creates jogged dimensions for circles and arcs",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Jogged"
+  ]
+ },
+ "DIMDIAMETER": {
+  "description": "Creates a diameter dimension for a circle or an arc",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Diameter",
+   "TABLET4^C^C_dimdiameter"
+  ]
+ },
+ "DIMANGULAR": {
+  "description": "Creates an angular dimension",
+  "source": "acad",
+  "ui_labels": [
+   "DimAngl:",
+   "Dimension, Angular",
+   "TABLET4^C^C_dimangular"
+  ]
+ },
+ "DIMBASELINE": {
+  "description": "Continues a linear, angular, or ordinate dimension from the baseline of the previous or selected dimension",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Baseline"
+  ]
+ },
+ "DIMCONTINUE": {
+  "description": "Creates a dimension that starts from an extension line of a previously created dimension",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Continue"
+  ]
+ },
+ "QLEADER": {
+  "description": "Creates a leader and annotation:",
+  "source": "acad",
+  "ui_labels": [
+   "Leader:",
+   "Quick Leader",
+   "Dimension, Leader",
+   "TABLET2^C^C_qleader"
+  ]
+ },
+ "TOLERANCE": {
+  "description": "Creates geometric tolerances contained in a feature control frame",
+  "source": "acad",
+  "ui_labels": [
+   "Toleranc",
+   "TABLET4^C^C_tolerance",
+   "Dimension, Tolerance..."
+  ]
+ },
+ "DIMCENTER": {
+  "description": "Creates the center mark or the centerlines of circles and arcs",
+  "source": "acad",
+  "ui_labels": [
+   "Center",
+   "TABLET4^C^C_dimcenter",
+   "Dimension, Center Mark"
+  ]
+ },
+ "DIMEDIT": {
+  "description": "Makes the extension lines of linear dimensions oblique",
+  "source": "acad",
+  "ui_labels": [
+   "Dimedit",
+   "DimEdit:",
+   "Dimension Edit",
+   "Dimension, Oblique"
+  ]
+ },
+ "DIMTEDIT": {
+  "description": "Moves and rotates dimension text and relocates the dimension line",
+  "source": "acad",
+  "ui_labels": [
+   "DimTedt:",
+   "Dimtedit",
+   "Dimension Text Edit",
+   "TABLET4^C^C_dimtedit"
+  ]
+ },
+ "DIMOVERRIDE": {
+  "description": "Controls overrides of system variables used in selected dimensions",
+  "source": "acad",
+  "ui_labels": [
+   "DimOver:",
+   "Dimension, Override",
+   "TABLET4^C^C_dimoverride"
+  ]
+ },
+ "DIMREASSOCIATE": {
+  "description": "Associates or reassociates selected dimensions to objects or points on objects",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Reassociate Dimensions"
+  ]
+ },
+ "CHPROP": {
+  "description": "Controls properties of existing objects",
+  "source": "acad",
+  "ui_labels": [
+   "Chprop"
+  ]
+ },
+ "CHANGE": {
+  "description": "Controls properties of existing objects",
+  "source": "acad",
+  "ui_labels": [
+   "Change"
+  ]
+ },
+ "MATCHPROP": {
+  "description": "Applies the properties of a selected object to other objects",
+  "source": "acad",
+  "ui_labels": [
+   "Match Properties"
+  ]
+ },
+ "XBIND": {
+  "description": "Binds dependent symbols of an xref to the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Xbind",
+   "Xref, Bind...",
+   "TABLET4^C^C_xbind"
+  ]
+ },
+ "XCLIPFRAME": {
+  "description": "Controls the visibility of the xref or block clipping boundaries",
+  "help_topic": "XCLIPFRAME",
+  "source": "acad",
+  "ui_labels": [
+   "Xref, Frame"
+  ]
+ },
+ "IMAGEADJUST": {
+  "description": "Controls the image display of the brightness, contrast, and fade values of images",
+  "source": "acad",
+  "ui_labels": [
+   "Imageadj",
+   "Image, Adjust...",
+   "TABLET4^C^C_imageadjust"
+  ]
+ },
+ "IMAGEQUALITY": {
+  "description": "Controls the display quality of images",
+  "source": "acad",
+  "ui_labels": [
+   "Imagqua:",
+   "Imagequa",
+   "Image, Quality"
+  ]
+ },
+ "TRANSPARENCY": {
+  "description": "Controls whether background pixels in an image are transparent or opaque",
+  "source": "acad",
+  "ui_labels": [
+   "Transpar",
+   "TABLET4^C^C_transparency",
+   "Image, Background Transparency"
+  ]
+ },
+ "IMAGEFRAME": {
+  "description": "Controls whether image frames are displayed or hidden from view",
+  "source": "acad",
+  "ui_labels": [
+   "Imagefrm",
+   "Image, Frame"
+  ]
+ },
+ "HATCHEDIT": {
+  "description": "Modifies an existing hatch object",
+  "source": "acad",
+  "ui_labels": [
+   "Recreate",
+   "Hatchedt",
+   "Edit Hatch",
+   "Hatch Edit"
+  ]
+ },
+ "PEDIT": {
+  "description": "Fits pairs of arcs through and between the vertices of a polyline",
+  "source": "acad",
+  "ui_labels": [
+   "Pedit",
+   "Pedit:",
+   "Edit Polyline",
+   "Polyline Edit"
+  ]
+ },
+ "SPLINEDIT": {
+  "description": "Edits a spline or spline-fit polyline",
+  "source": "acad",
+  "ui_labels": [
+   "Spline Edit",
+   "Edit Spline"
+  ]
+ },
+ "MLEDIT": {
+  "description": "Edits multiple parallel lines",
+  "source": "acad",
+  "ui_labels": [
+   "Mledit",
+   "Mledit:",
+   "Multiline Edit...",
+   "TABLET4^C^C_mledit"
+  ]
+ },
+ "EATTEDIT": {
+  "description": "Edits attributes in a block reference",
+  "source": "acad",
+  "ui_labels": [
+   "Edit Attribute...",
+   "Attribute, Single..."
+  ]
+ },
+ "-ATTEDIT": {
+  "description": "Edits the variable attributes of a block individually or globally",
+  "source": "acad",
+  "ui_labels": [
+   "-Attedit",
+   "-Attedit:",
+   "Attribute, Global"
+  ]
+ },
+ "BATTMAN": {
+  "description": "Manages the attributes for a selected block definition",
+  "source": "acad",
+  "ui_labels": [
+   "Attribute, Block Attribute Manager..."
+  ]
+ },
+ "TEXTEDIT": {
+  "description": "Edits text, dimension text, and attribute definitions",
+  "source": "acad",
+  "ui_labels": [
+   "TEXTEDIT",
+   "Textedit",
+   "Text, Edit...",
+   "Edit Constraint"
+  ]
+ },
+ "SCALETEXT": {
+  "description": "Enlarges or reduces selected text objects without changing their locations",
+  "source": "acad",
+  "ui_labels": [
+   "Text, Scale"
+  ]
+ },
+ "JUSTIFYTEXT": {
+  "description": "Changes the justification point of selected text objects without changing their locations",
+  "source": "acad",
+  "ui_labels": [
+   "Text, Justify"
+  ]
+ },
+ "IMAGECLIP": {
+  "description": "Allows you to delete the old clipping boundary and create a new one",
+  "source": "acad",
+  "ui_labels": [
+   "Imageclp",
+   "Imagclp:",
+   "Clip, Image",
+   "TABLET4^C^C_imageclip"
+  ]
+ },
+ "XCLIP": {
+  "description": "Clips the display of a selected xref or block reference to a specified boundary",
+  "source": "acad",
+  "ui_labels": [
+   "Xclip",
+   "Xclip:",
+   "Clip, Xref",
+   "TABLET4^C^C_xclip"
+  ]
+ },
+ "VPCLIP": {
+  "description": "Clips layout viewport objects and reshapes the viewport border",
+  "help_topic": "VPORTS_CLI",
+  "source": "acad",
+  "ui_labels": [
+   "Viewport Clip",
+   "Clip, Viewport",
+   "Clip existing viewport"
+  ]
+ },
+ "COPY": {
+  "description": "Copies objects a specified distance in a specified direction",
+  "help_topic": "COPY",
+  "source": "acad",
+  "ui_labels": [
+   "Copy",
+   "Copy:",
+   "Grips, Copy",
+   "Copy Selection"
+  ]
+ },
+ "MIRROR": {
+  "description": "Creates a mirrored copy of selected objects",
+  "help_topic": "MIRROR",
+  "source": "acad",
+  "ui_labels": [
+   "Mirror",
+   "Mirror:",
+   "Grips, Mirror",
+   "TABLET4$M=$(if,$(eq,$(substr,$(getvar,cmdnames),1,4),GRIP),_mirror,^C^C_mirror)"
+  ]
+ },
+ "OFFSET": {
+  "description": "Creates concentric circles, parallel lines, and parallel curves",
+  "source": "acad",
+  "ui_labels": [
+   "Offset",
+   "Offset:",
+   "TABLET4^C^C_offset"
+  ]
+ },
+ "ARRAY": {
+  "description": "Creates multiple copies of objects in a pattern",
+  "source": "acad",
+  "ui_labels": [
+   "Array...",
+   "TABLET4^C^C_array"
+  ]
+ },
+ "MOVE": {
+  "description": "Displaces objects a specified distance in a specified direction",
+  "help_topic": "MOVE",
+  "source": "acad",
+  "ui_labels": [
+   "Move",
+   "Grips, Move",
+   "TABLET4$M=$(if,$(eq,$(substr,$(getvar,cmdnames),1,4),GRIP),_move,^C^C_move)"
+  ]
+ },
+ "ROTATE": {
+  "description": "Rotates objects around a base point",
+  "help_topic": "ROTATE",
+  "source": "acad",
+  "ui_labels": [
+   "Rotate",
+   "Rotate:",
+   "Grips, Rotate",
+   "TABLET4$M=$(if,$(eq,$(substr,$(getvar,cmdnames),1,4),GRIP),_rotate,^C^C_rotate)"
+  ]
+ },
+ "SCALE": {
+  "description": "Enlarges or reduces selected objects, keeping the proportions of the object the same after scaling",
+  "help_topic": "SCALE",
+  "source": "acad",
+  "ui_labels": [
+   "Scale",
+   "Scale:",
+   "Grips, Scale",
+   "TABLET4$M=$(if,$(eq,$(substr,$(getvar,cmdnames),1,4),GRIP),_scale,^C^C_scale)"
+  ]
+ },
+ "STRETCH": {
+  "description": "Stretches objects crossed by a selection window or polygon",
+  "help_topic": "STRETCH",
+  "source": "acad",
+  "ui_labels": [
+   "Stretch",
+   "Grips, Stretch",
+   "TABLET4$M=$(if,$(eq,$(substr,$(getvar,cmdnames),1,4),GRIP),_stretch,^C^C_stretch)"
+  ]
+ },
+ "LENGTHEN": {
+  "description": "Changes the length of objects and the included angle of arcs",
+  "source": "acad",
+  "ui_labels": [
+   "Lengthn:",
+   "Lengthen",
+   "TABLET4^C^C_lengthen"
+  ]
+ },
+ "TRIM": {
+  "description": "Trims objects to meet the edges of other objects",
+  "source": "acad",
+  "ui_labels": [
+   "Trim",
+   "Trim:",
+   "TABLET4^C^C_trim"
+  ]
+ },
+ "EXTEND": {
+  "description": "Extends objects to meet the edges of other objects",
+  "source": "acad",
+  "ui_labels": [
+   "Extend",
+   "Extend:",
+   "TABLET4^C^C_extend"
+  ]
+ },
+ "BREAK": {
+  "description": "Breaks the selected object between two points",
+  "source": "acad",
+  "ui_labels": [
+   "Break",
+   "Break:",
+   "TABLET4^C^C_break"
+  ]
+ },
+ "JOIN": {
+  "description": "Joins similar objects to form a single, unbroken object",
+  "source": "acad",
+  "ui_labels": [
+   "Join"
+  ]
+ },
+ "CHAMFER": {
+  "description": "Bevels the edges of objects",
+  "source": "acad",
+  "ui_labels": [
+   "Chamfer",
+   "Chamfer:",
+   "TABLET4^C^C_chamfer"
+  ]
+ },
+ "FILLET": {
+  "description": "Rounds and fillets the edges of objects",
+  "source": "acad",
+  "ui_labels": [
+   "Fillet",
+   "Fillet:",
+   "TABLET4^C^C_fillet"
+  ]
+ },
+ "3DARRAY": {
+  "description": "Creates a 3D matrix of objects in a rectangular or polar arrangement",
+  "source": "acad",
+  "ui_labels": [
+   "3D Array"
+  ]
+ },
+ "MIRROR3D": {
+  "description": "Creates a mirrored copy of selected objects across a mirroring plane",
+  "source": "acad",
+  "ui_labels": [
+   "Mirror3D",
+   "Mirror3:",
+   "3D Mirror",
+   "TABLET4^C^C_mirror3d"
+  ]
+ },
+ "ROTATE3D": {
+  "description": "Moves objects about a three-dimensional axis",
+  "source": "acad",
+  "ui_labels": [
+   "Rotat3d:",
+   "Rotate3:",
+   "Rotate3D",
+   "Rotate 3D"
+  ]
+ },
+ "3DALIGN": {
+  "description": "Aligns objects with other objects in 2D and 3D",
+  "source": "acad",
+  "ui_labels": [
+   "3D Align"
+  ]
+ },
+ "UNION": {
+  "description": "Combines selected 3D solids or 2D regions by addition",
+  "source": "acad",
+  "ui_labels": [
+   "Union",
+   "TABLET4^C^C_union"
+  ]
+ },
+ "SUBTRACT": {
+  "description": "Combines selected 3D solids or 2D regions by subtraction",
+  "source": "acad",
+  "ui_labels": [
+   "Subtract",
+   "TABLET4^C^C_subtract"
+  ]
+ },
+ "INTERSECT": {
+  "description": "Creates a 3D solid or 2D region from selected overlapping solids or regions",
+  "source": "acad",
+  "ui_labels": [
+   "Intrsect",
+   "Intersect",
+   "TABLET4^C^C_intersect"
+  ]
+ },
+ "SOLIDEDIT": {
+  "description": "Separates a 3D solid object with several non-continuous volumes into independent 3D solids",
+  "source": "acad",
+  "ui_labels": [
+   "Shell",
+   "Check",
+   "Clean",
+   "Separate"
+  ]
+ },
+ "IMPRINT": {
+  "description": "Imprints 2D geometry on a 3D solid, creating additional edges on planar faces",
+  "source": "acad",
+  "ui_labels": [
+   "Imprint"
+  ]
+ },
+ "OFFSETEDGE": {
+  "source": "acad",
+  "ui_labels": [
+   "Offset Edge"
+  ]
+ },
+ "EXPLODE": {
+  "description": "Breaks a compound object into its component objects",
+  "source": "acad",
+  "ui_labels": [
+   "Explode",
+   "TABLET4^C^C_explode"
+  ]
+ },
+ "CLOSEALL": {
+  "source": "acad",
+  "description": "Closes all open drawings",
+  "express_tool": true,
+  "ui_labels": [
+   "Close All",
+   "Close All Drawings"
+  ]
+ },
+ "CLOSEALLOTHER": {
+  "source": "acad",
+  "ui_labels": [
+   "Close All Other"
+  ]
+ },
+ "LOCKUI": {
+  "description": "Unlocks all toolbars and windows",
+  "help_topic": "LOCKUI",
+  "source": "acad",
+  "ui_labels": [
+   "Lock, All, Locked",
+   "Lock, All, Unlocked",
+   "Lock, Docked Windows",
+   "Lock, Docked Toolbars"
+  ]
+ },
+ "SYSWINDOWS": {
+  "description": "Arranges windows and icons in horizontal, non-overlapping tiles",
+  "source": "acad",
+  "ui_labels": [
+   "Cascade",
+   "Arrange Icons",
+   "Tile Vertically",
+   "Tile Horizontally"
+  ]
+ },
+ "ACCESS_SUBCTR": {
+  "description": "Connects to the Subscription Center and provides self-paced, interactive lessons to subscription customers",
+  "source": "acad",
+  "ui_labels": [
+   "Subscription e-Learning Catalog"
+  ]
+ },
+ "ABOUT": {
+  "description": "Displays information about this product",
+  "source": "acad",
+  "ui_labels": [
+   "About"
+  ]
+ },
+ "REFERENCE": {
+  "description": "Sets the reference point",
+  "source": "acad",
+  "ui_labels": [
+   "Grips, Reference"
+  ]
+ },
+ "EXIT": {
+  "description": "Cancels grip edit mode and returns to the command line",
+  "source": "acad",
+  "ui_labels": [
+   "Grips, Exit",
+   "TABLET4^C^C_exit"
+  ]
+ },
+ "UNDO": {
+  "description": "Reverses the most recent action",
+  "source": "acad",
+  "ui_labels": [
+   "Undo"
+  ]
+ },
+ "AI_DESELECT": {
+  "description": "Removes all objects from the selection set",
+  "source": "acad",
+  "ui_labels": [
+   "Deselect All"
+  ]
+ },
+ "AI_DIM_TEXTABOVE": {
+  "description": "Move dimension text above dimension line",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Text, Above dim line"
+  ]
+ },
+ "AI_DIM_TEXTCENTER": {
+  "description": "Moves dimension text to center position",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Text, Centered"
+  ]
+ },
+ "AI_DIM_TEXTHOME": {
+  "description": "Move dimension text back to its default position",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Text, Home text"
+  ]
+ },
+ "AIDIMTEXTMOVE": {
+  "description": "Moves dimension text with dimension line",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Text, Move text alone",
+   "Dimension, Text, Move with leader",
+   "Dimension, Text, Move with dim line"
+  ]
+ },
+ "AIDIMPREC": {
+  "description": "Sets the dimension value to 0 decimal places",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension Precision",
+   "Dimension, Precision, 0",
+   "Dimension, Precision, 0.0",
+   "Dimension, Precision, 0.00"
+  ]
+ },
+ "AIDIMSTYLE": {
+  "description": "Saves the properties of the selected dimension as a new dimension style",
+  "source": "acad",
+  "ui_labels": [
+   "Dim Style, MRU2",
+   "Dim Style, MRU1",
+   "Dim Style, MRU4",
+   "Dim Style, MRU5"
+  ]
+ },
+ "AIDIMFLIPARROW": {
+  "description": "Flips the dimension arrow to the adjacent side of an extension line",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Flip Arrow"
+  ]
+ },
+ "WBLOCK": {
+  "description": "Saves selected objects or converts a block to a specified drawing file",
+  "source": "acad",
+  "ui_labels": [
+   "Write Block"
+  ]
+ },
+ "VPMAX": {
+  "description": "Maximizes the viewport",
+  "source": "acad",
+  "ui_labels": [
+   "Maximize Viewport"
+  ]
+ },
+ "MTEDIT": {
+  "description": "Opens the Mulitline Text Editor for the selected mtext object",
+  "source": "acad",
+  "ui_labels": [
+   "Mtext Edit..."
+  ]
+ },
+ "RESETBLOCK": {
+  "description": "Resets block references to match the original definition:",
+  "source": "acad",
+  "ui_labels": [
+   "Reset Block"
+  ]
+ },
+ "VPMIN": {
+  "description": "Minimizes the maximized viewport",
+  "source": "acad",
+  "ui_labels": [
+   "Minimize Viewport"
+  ]
+ },
+ "IMPORT": {
+  "description": "Imports files of different formats such as PDF and DGN into the current drawing.",
+  "source": "acad",
+  "ui_labels": [
+   "Import",
+   "Import...",
+   "TABLET4^C^C_import",
+   "Import other file formats"
+  ]
+ },
+ "BREAKATPOINT": {
+  "description": "Breaks the selected object at a single point",
+  "source": "acad",
+  "ui_labels": [
+   "Break at Point"
+  ]
+ },
+ "ATTSYNC": {
+  "description": "Updates block references with new and changed attributes from a specified block definition",
+  "source": "acad",
+  "ui_labels": [
+   "Synchronize Attributes"
+  ]
+ },
+ "LAYMCUR": {
+  "description": "Sets the current layer to that of a selected object",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Make Object's Layer Current"
+  ]
+ },
+ "LAYERP": {
+  "description": "Undoes the last change or set of changes made to layer settings",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Layer Previous"
+  ]
+ },
+ "3DPAN": {
+  "description": "Starts the 3DORBIT command and enables you to drag the view horizontally and vertically",
+  "source": "acad",
+  "ui_labels": [
+   "3D Pan"
+  ]
+ },
+ "3DZOOM": {
+  "description": "Starts the 3DORBIT command and allows you to zoom in and out on the view",
+  "source": "acad",
+  "ui_labels": [
+   "3D Zoom"
+  ]
+ },
+ "3DCORBIT": {
+  "description": "Rotates the view in 3D space with continuous motion",
+  "source": "acad",
+  "ui_labels": [
+   "3D Continuous Orbit"
+  ]
+ },
+ "3DSWIVEL": {
+  "description": "Starts the 3DSWIVEL command and simulates the effect of turning the camera",
+  "source": "acad",
+  "ui_labels": [
+   "3D Swivel"
+  ]
+ },
+ "3DDISTANCE": {
+  "description": "Starts the 3DORBIT command and makes objects appear closer or farther away",
+  "source": "acad",
+  "ui_labels": [
+   "3D Adjust Distance"
+  ]
+ },
+ "3DCLIP": {
+  "description": "Starts 3DORBIT and opens the Adjust Clipping Planes window",
+  "source": "acad",
+  "ui_labels": [
+   "3D Adjust Clip Planes"
+  ]
+ },
+ "DVIEW": {
+  "description": "Toggles the front clipping plane on or off in the 3D Orbit Adjust Clipping Planes window",
+  "help_topic": "DVIEW",
+  "source": "acad",
+  "ui_labels": [
+   "Dview:",
+   "Dvwblok:",
+   "Back Clip On/Off",
+   "Front Clip On/Off"
+  ]
+ },
+ "QNEW": {
+  "description": "Creates a blank drawing file",
+  "source": "acad",
+  "ui_labels": [
+   "QNew"
+  ]
+ },
+ "VIEWFORWARD": {
+  "description": "Forward view navigation",
+  "source": "acad",
+  "ui_labels": [
+   "View Forward"
+  ]
+ },
+ "VIEWBACK": {
+  "description": "Backward view navigation",
+  "source": "acad",
+  "ui_labels": [
+   "View Back"
+  ]
+ },
+ "SPACETRANS": {
+  "description": "Converts distances or heights between model space and paper space",
+  "source": "acad",
+  "ui_labels": [
+   "Convert PS to MS",
+   "Convert distance between spaces"
+  ]
+ },
+ "WSSETTINGS": {
+  "description": "Displays the Workspace Settings dialog",
+  "source": "acad",
+  "ui_labels": [
+   "Workspaces, Workspace Settings..."
+  ]
+ },
+ "CAMERA": {
+  "description": "Creates a camera object in model space",
+  "source": "acad",
+  "ui_labels": [
+   "Create Camera"
+  ]
+ },
+ "HYPERLINKBACK": {
+  "description": "Navigates to the previous hyperlinked document",
+  "source": "acad",
+  "ui_labels": [
+   "Go Back"
+  ]
+ },
+ "HYPERLINKFWD": {
+  "description": "Navigates to the next hyperlinked document",
+  "source": "acad",
+  "ui_labels": [
+   "Go Forward"
+  ]
+ },
+ "HYPERLINKSTOP": {
+  "description": "Cancels the current navigation selection",
+  "source": "acad",
+  "ui_labels": [
+   "Stop Navigation"
+  ]
+ },
+ "BROWSER": {
+  "description": "Launches the default Web browser defined in your system's registry",
+  "source": "acad",
+  "ui_labels": [
+   "Browser",
+   "Browse the Web",
+   "TABLET4^C^C_browser ;"
+  ]
+ },
+ "-TOOLBAR": {
+  "source": "acad",
+  "ui_labels": [
+   "Draw Toolbar",
+   "Modify Toolbar",
+   "Standard Toolbar",
+   "Dimensioning Toolbar"
+  ]
+ },
+ "MESH": {
+  "source": "acad",
+  "description": "Creates a 3D mesh primitive cylinder",
+  "ui_labels": [
+   "Mesh",
+   "Mesh Box",
+   "Mesh Cone",
+   "Mesh Torus"
+  ]
+ },
+ "GROUP": {
+  "source": "acad",
+  "description": "Creates a group of objects",
+  "ui_labels": [
+   "Group",
+   "TABLET4^C^C_group"
+  ]
+ },
+ "CONFIG": {
+  "source": "acad",
+  "ui_labels": [
+   "Config"
+  ]
+ },
+ "-PURGE": {
+  "source": "acad",
+  "ui_labels": [
+   "Purge",
+   "Purge:"
+  ]
+ },
+ "REDRAW": {
+  "source": "acad",
+  "ui_labels": [
+   "Redraw"
+  ]
+ },
+ "TILEMODE": {
+  "source": "acad",
+  "ui_labels": [
+   "Tilemode",
+   "TABLET2^C^C_tilemode 1"
+  ]
+ },
+ "MSPACE": {
+  "source": "acad",
+  "ui_labels": [
+   "Mspace"
+  ]
+ },
+ "PSPACE": {
+  "source": "acad",
+  "description": "In a layout, switches from model space in a viewport to paper space",
+  "ui_labels": [
+   "Pspace",
+   "Paper Space"
+  ]
+ },
+ "MVIEW": {
+  "source": "acad",
+  "ui_labels": [
+   "Mview",
+   "Mview:"
+  ]
+ },
+ "-SHADEMODE": {
+  "source": "acad",
+  "ui_labels": [
+   "Shade",
+   "Shade:"
+  ]
+ },
+ "RENDER": {
+  "source": "acad",
+  "ui_labels": [
+   "Render",
+   "TABLET2^C^C_render"
+  ]
+ },
+ "LSNEW": {
+  "source": "acad",
+  "ui_labels": [
+   "Lsnew"
+  ]
+ },
+ "LSEDIT": {
+  "source": "acad",
+  "ui_labels": [
+   "Lsedit"
+  ]
+ },
+ "LSLIB": {
+  "source": "acad",
+  "ui_labels": [
+   "Lslib"
+  ]
+ },
+ "RMAT": {
+  "source": "acad",
+  "ui_labels": [
+   "Rmat",
+   "TABLET2^C^C_rmat"
+  ]
+ },
+ "XREF": {
+  "source": "acad",
+  "ui_labels": [
+   "Xref",
+   "TABLET4^C^C_xref"
+  ]
+ },
+ "DIST": {
+  "source": "acad",
+  "ui_labels": [
+   "Dist"
+  ]
+ },
+ "CUILOAD": {
+  "source": "acad",
+  "ui_labels": [
+   "Cuiload",
+   "TABLET4^C^C_cuiload"
+  ]
+ },
+ "DTEXT": {
+  "source": "acad",
+  "ui_labels": [
+   "Dtext",
+   "Dtext:",
+   "TABLET2^C^C_dtext"
+  ]
+ },
+ "3D": {
+  "help_topic": "3D",
+  "source": "acad",
+  "ui_labels": [
+   "SURFACES"
+  ]
+ },
+ "-DIMSTYLE": {
+  "source": "acad",
+  "description": "Updates dimension objects with the current dimension style",
+  "help_topic": "dimstyle_cli",
+  "ui_labels": [
+   "Dimstyle",
+   "Dimension, Update",
+   "TABLET4^C^C_-dimstyle _apply"
+  ]
+ },
+ "DIM": {
+  "source": "acad",
+  "description": "Creates multiple types of dimensions within a single command session.",
+  "ui_labels": [
+   "Dim",
+   "Update",
+   "Dimension"
+  ]
+ },
+ "ATTEDIT": {
+  "source": "acad",
+  "ui_labels": [
+   "Attedit",
+   "Attedit:",
+   "TABLET4^C^C_attedit"
+  ]
+ },
+ "-ARRAY": {
+  "source": "acad",
+  "ui_labels": [
+   "Array",
+   "Array:"
+  ]
+ },
+ "AREA": {
+  "source": "acad",
+  "ui_labels": [
+   "Area:",
+   "TABLET4^C^C_area"
+  ]
+ },
+ "CIRCLERAD": {
+  "source": "acad",
+  "ui_labels": [
+   "CopyRad:"
+  ]
+ },
+ "OOPS": {
+  "source": "acad",
+  "ui_labels": [
+   "Oops:"
+  ]
+ },
+ "CAL": {
+  "source": "acad",
+  "ui_labels": [
+   "Calibrat"
+  ]
+ },
+ "SHADE": {
+  "source": "acad",
+  "ui_labels": [
+   "TABLET2^C^C_shade"
+  ]
+ },
+ "ALIGN": {
+  "source": "acad",
+  "description": "Aligns objects with other objects in 2D and 3D",
+  "ui_labels": [
+   "Align",
+   "TABLET4^C^C_align"
+  ]
+ },
+ "GOTOSTART": {
+  "source": "acad",
+  "ui_labels": [
+   "CTRL+HOME"
+  ]
+ },
+ "PICKSTYLE": {
+  "help_topic": "pickstyle",
+  "source": "acad",
+  "description": "Turns group selection on and off",
+  "ui_labels": [
+   "CTRL+H",
+   "Group Selection On/Off"
+  ]
+ },
+ "ORTHOMODE": {
+  "help_topic": "orthomode",
+  "source": "acad",
+  "ui_labels": [
+   "Toggle Orthogonal Mode"
+  ]
+ },
+ "OSMODE": {
+  "help_topic": "osmode",
+  "source": "acad",
+  "ui_labels": [
+   "Toggle Object Snap Mode"
+  ]
+ },
+ "AUTOSNAP": {
+  "help_topic": "autosnap",
+  "source": "acad",
+  "ui_labels": [
+   "Toggle Polar Mode"
+  ]
+ },
+ "POLARMODE": {
+  "help_topic": "POLARMODE",
+  "source": "acad",
+  "ui_labels": [
+   "Toggle Polar Mode"
+  ]
+ },
+ "SNAPMODE": {
+  "help_topic": "snapmode",
+  "source": "acad",
+  "ui_labels": [
+   "Toggle Snap Mode"
+  ]
+ },
+ "DYNMODE": {
+  "description": "Holding down the assigned Temporary Override shortcut will temporarily suppress Dynamic Input (i.e. DYNMODE=0). For example, if the DYNMODE sysvar is set to 1, then it will be temporarily reset to 0.",
+  "help_topic": "dynmode",
+  "source": "acad",
+  "ui_labels": [
+   "Suppress Dynamic Input"
+  ]
+ },
+ "CUIIMPORT": {
+  "description": "Imports customized settings from an enterprise or partial CUI file to the main CUI file",
+  "source": "acad",
+  "ui_labels": [
+   "Customize, Import Customizations..."
+  ]
+ },
+ "CUIEXPORT": {
+  "description": "Exports customized settings from the main CUI file to an enterprise or partial CUI file",
+  "source": "acad",
+  "ui_labels": [
+   "Customize, Export Customizations..."
+  ]
+ },
+ "WSCURRENT": {
+  "description": "Sets the current workspace to the 3D Modeling Workspace",
+  "source": "acad",
+  "ui_labels": [
+   "My Workspace",
+   "Workspace 3D Modeling"
+  ]
+ },
+ "BEDIT_CLI": {
+  "description": "Opens the block definition in the Block Editor",
+  "help_topic": "BEDIT_CLI",
+  "source": "acad",
+  "ui_labels": [
+   "Block Editor"
+  ]
+ },
+ "-BEDIT": {
+  "description": "Opens the block definition in the Block Editor",
+  "help_topic": "BEDIT_CLI",
+  "source": "acad",
+  "ui_labels": [
+   "Block Editor",
+   "Block - Double Click",
+   "Dynamic Block - Double Click"
+  ]
+ },
+ "WSSAVE": {
+  "description": "Saves the current workspace",
+  "source": "acad",
+  "ui_labels": [
+   "Workspaces, Save Current As..."
+  ]
+ },
+ "WORKSPACELABEL": {
+  "description": "Determines whether workspace label is displayed for the workspace switch in the status bar",
+  "source": "acad",
+  "ui_labels": [
+   "Display Workspace Label"
+  ]
+ },
+ "DIMSTYLE_CLI": {
+  "description": "Updates dimension objects with the current dimension style",
+  "help_topic": "dimstyle_cli",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Update"
+  ]
+ },
+ "LAYMCH": {
+  "description": "Changes the layer of a selected object to match the destination layer",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Layer Match"
+  ]
+ },
+ "LAYCUR": {
+  "description": "Changes the layer property of selected objects to the current layer",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Change to Current Layer"
+  ]
+ },
+ "LAYISO": {
+  "description": "Hides or locks all layers except those of the selected objects",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Layer Isolate"
+  ]
+ },
+ "COPYTOLAYER": {
+  "description": "Copies one or more objects to another layer",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Copy Objects to New Layer"
+  ]
+ },
+ "LAYWALK": {
+  "description": "Displays objects on selected layers and hides objects on all other layers",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Layer Walk..."
+  ]
+ },
+ "LAYFRZ": {
+  "description": "Freezes the layer of selected objects",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Layer Freeze"
+  ]
+ },
+ "LAYOFF": {
+  "description": "Turns off the layer of a selected object",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Layer Off"
+  ]
+ },
+ "LAYLCK": {
+  "description": "Locks the layer of a selected object",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Layer Lock"
+  ]
+ },
+ "LAYULK": {
+  "description": "Unlocks the layer of a selected object",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Layer Unlock"
+  ]
+ },
+ "LAYVPI": {
+  "description": "Freezes selected layers in all layout viewports except the current viewport",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, VP Freeze in All Viewports except Current"
+  ]
+ },
+ "LAYON": {
+  "description": "Turns on all layers in the drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Turn All Layers On"
+  ]
+ },
+ "LAYTHW": {
+  "description": "Thaws all layers in the drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Thaw All Layers"
+  ]
+ },
+ "LAYMRG": {
+  "description": "Merges selected layers into a target layer, removing the previous layers from the drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Layer Merge"
+  ]
+ },
+ "LAYDEL": {
+  "description": "Deletes all objects on a layer and purges the layer",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Layer Delete"
+  ]
+ },
+ "CHSPACE": {
+  "description": "Moves objects between model space and paper space",
+  "source": "acad",
+  "ui_labels": [
+   "Change Space"
+  ]
+ },
+ "PYRAMID": {
+  "description": "Creates a 3D solid pyramid",
+  "source": "acad",
+  "ui_labels": [
+   "Pyramid"
+  ]
+ },
+ "LOFT": {
+  "description": "Creates a 3D solid or surface in the space between several cross sections",
+  "source": "acad",
+  "ui_labels": [
+   "Loft"
+  ]
+ },
+ "SWEEP": {
+  "description": "Creates a 3D solid or surface by sweeping a 2D or 3D curve along a path",
+  "source": "acad",
+  "ui_labels": [
+   "Sweep"
+  ]
+ },
+ "UCSDETECT": {
+  "help_topic": "ucsdetect",
+  "source": "acad",
+  "ui_labels": [
+   "Command5",
+   "Command1",
+   "Command3"
+  ]
+ },
+ "ANIPATH": {
+  "description": "Saves an animation file of a camera moving or panning in a 3D model",
+  "source": "acad",
+  "ui_labels": [
+   "Animation Motion Path"
+  ]
+ },
+ "CAMERADISPLAY": {
+  "description": "Shows or hides the camera objects in the drawing",
+  "help_topic": "CAMERADISPLAY",
+  "source": "acad",
+  "ui_labels": [
+   "Camera Display"
+  ]
+ },
+ "3DWALK": {
+  "description": "Changes the 3D view in a drawing interactively to create the appearance of walking through the model",
+  "source": "acad",
+  "ui_labels": [
+   "3D Walk"
+  ]
+ },
+ "WALKTHROUGHANIMATIONSETTINGSDIALOG": {
+  "help_topic": "WALKTHROUGHANIMATIONSETTINGSDIALOG",
+  "source": "acad",
+  "ui_labels": [
+   "Animation Settings"
+  ]
+ },
+ "WALKFLYSETTINGS": {
+  "description": "Controls the walk and fly navigation settings",
+  "source": "acad",
+  "ui_labels": [
+   "3D Walk and Fly Settings"
+  ]
+ },
+ "POINTLIGHT": {
+  "description": "Creates a point light that radiates light in all directions from its location",
+  "source": "acad",
+  "ui_labels": [
+   "Light, New Point Light"
+  ]
+ },
+ "SPOTLIGHT": {
+  "description": "Creates a spotlight that emits a directional cone of light",
+  "source": "acad",
+  "ui_labels": [
+   "Light, New Spotlight"
+  ]
+ },
+ "DISTANTLIGHT": {
+  "description": "Creates a distant light",
+  "source": "acad",
+  "ui_labels": [
+   "Light, New Distant Light"
+  ]
+ },
+ "LIGHTLISTCLOSE": {
+  "description": "Turns on and off the Lights in Model palette that lists all lights in the model",
+  "help_topic": "LIGHTLIST",
+  "source": "acad",
+  "ui_labels": [
+   "Lights in Model"
+  ]
+ },
+ "LIGHTLIST": {
+  "description": "Turns on and off the Lights in Model palette that lists all lights in the model",
+  "help_topic": "LIGHTLIST",
+  "source": "acad",
+  "ui_labels": [
+   "Lights in Model"
+  ]
+ },
+ "GEOGRAPHICLOCATION": {
+  "description": "Assigns geographic location using Esri maps from Esri online map service",
+  "source": "acad",
+  "ui_labels": [
+   "Geographic Location from File",
+   "Geographic Location from Esri Maps",
+   "Geographic Location from Bing Maps"
+  ]
+ },
+ "GEOREORIENTMARKER": {
+  "description": "Changes the location and north direction property of the geographic marker, which identifies the latitude and longitude coordinates",
+  "source": "acad",
+  "ui_labels": [
+   "Reorient Marker"
+  ]
+ },
+ "GEOREMOVE": {
+  "description": "Removes all geographic location information from a drawing file",
+  "source": "acad",
+  "ui_labels": [
+   "Remove Location"
+  ]
+ },
+ "GEOMAP": {
+  "description": "Selects the map type",
+  "source": "acad",
+  "ui_labels": [
+   "Map Type"
+  ]
+ },
+ "GEOMARKPOSITION": {
+  "description": "Places a position marker in the current drawing.",
+  "source": "acad",
+  "ui_labels": [
+   "Place a Marker"
+  ]
+ },
+ "GEOMARKME": {
+  "description": "Places a position marker corresponding to your current location",
+  "source": "acad",
+  "ui_labels": [
+   "My Location"
+  ]
+ },
+ "GEOMARKPOINT": {
+  "description": "Places a position marker at a specified point",
+  "source": "acad",
+  "ui_labels": [
+   "Point"
+  ]
+ },
+ "GEOMARKLATLONG": {
+  "description": "Places a position marker for a location defined by latitude and longitude coordinates",
+  "source": "acad",
+  "ui_labels": [
+   "Lat-Long"
+  ]
+ },
+ "GEOMAPIMAGE": {
+  "description": "Creates an image object from the background map based on the extents of the current viewport",
+  "source": "acad",
+  "ui_labels": [
+   "Geo Map Image"
+  ]
+ },
+ "GEOMAPIMAGEUPDATE": {
+  "description": "Updates image with latest map imagery and optimizes resolution",
+  "source": "acad",
+  "ui_labels": [
+   "Geo Map Image Update"
+  ]
+ },
+ "SUNPROPERTIES": {
+  "description": "Displays the Sun Properties window",
+  "help_topic": "SUNPROPERTIES",
+  "source": "acad",
+  "ui_labels": [
+   "Sun Properties"
+  ]
+ },
+ "SUNPROPERTIESCLOSE": {
+  "description": "Displays the Sun Properties window",
+  "help_topic": "SUNPROPERTIES",
+  "source": "acad",
+  "ui_labels": [
+   "Sun Properties"
+  ]
+ },
+ "SUNSTATUS": {
+  "description": "Turns on and off the lighting effects of the sun in the current viewport",
+  "source": "acad",
+  "ui_labels": [
+   "Sun Status"
+  ]
+ },
+ "SKYSTATUS": {
+  "description": "Turns off a visual representation and the lighting effects of the sky in the current viewport",
+  "source": "acad",
+  "ui_labels": [
+   "Lights, Sky Off",
+   "Lights, Sky Background",
+   "Lights, Sky Background and Illumination"
+  ]
+ },
+ "DEFAULTLIGHTING": {
+  "description": "Turns on and off default lighting in place of other lighting",
+  "source": "acad",
+  "ui_labels": [
+   "Default Lighting"
+  ]
+ },
+ "LIGHTGLYPHDISPLAY": {
+  "description": "Turns on and off the display of light glyphs",
+  "help_topic": "LIGHTGLYPHDISPLAY",
+  "source": "acad",
+  "ui_labels": [
+   "Light Glyphs"
+  ]
+ },
+ "SHADOWDRAG": {
+  "source": "acad",
+  "ui_labels": [
+   "Shadow Drag"
+  ]
+ },
+ "3DFORBIT": {
+  "description": "Rotates the view in 3D space without constraining roll",
+  "source": "acad",
+  "ui_labels": [
+   "3D Free Orbit"
+  ]
+ },
+ "3DORBITTRANSPARENT": {
+  "source": "acad",
+  "ui_labels": [
+   "Transparent Orbit"
+  ]
+ },
+ "3DWALKTRANSPARENT": {
+  "source": "acad",
+  "ui_labels": [
+   "Transparent Walk"
+  ]
+ },
+ "3DSWIVELTRANSPARENT": {
+  "source": "acad",
+  "ui_labels": [
+   "Transparent Swivel"
+  ]
+ },
+ "PERSPECTIVE": {
+  "description": "Changes the current viewport display to a perspective view",
+  "help_topic": "perspective",
+  "source": "acad",
+  "ui_labels": [
+   "Parallel Projection",
+   "Perspective Projection"
+  ]
+ },
+ "3DFLY": {
+  "description": "Changes the 3D view in a drawing interactively to create the appearance of flying around the model",
+  "source": "acad",
+  "ui_labels": [
+   "3D Fly"
+  ]
+ },
+ "3DDWF": {
+  "description": "Launches 3D DWF Publish Interface",
+  "source": "acad",
+  "ui_labels": [
+   "3DDWF"
+  ]
+ },
+ "DWFATTACH": {
+  "description": "Inserts a reference to a DWF or DWFx file as an underlay",
+  "help_topic": "DWFATTACH",
+  "source": "acad",
+  "ui_labels": [
+   "DWF Underlay..."
+  ]
+ },
+ "DWFCLIP": {
+  "description": "Clips the display of a selected DWF or DWFx underlay to a specified boundary",
+  "source": "acad",
+  "ui_labels": [
+   "DWF Clip...",
+   "DWF, New Clipping Boundary",
+   "DWF, Delete Clipping Boundary"
+  ]
+ },
+ "DWFOSNAP": {
+  "description": "Enable snapping to objects in DWF underlay",
+  "help_topic": "DWFOSNAP",
+  "source": "acad",
+  "ui_labels": [
+   "DWF Object Snap"
+  ]
+ },
+ "SUBOBJSELECTIONMODE (0)": {
+  "description": "Turns off all subobject filters with CTRL+click",
+  "source": "acad",
+  "ui_labels": [
+   "Subobject Selection, No Filter"
+  ]
+ },
+ "SUBOBJSELECTIONMODE": {
+  "description": "Turns on filtering so you can select subobject components within a drawing view.",
+  "help_topic": "SUBOBJSELECTIONMODE",
+  "source": "acad",
+  "ui_labels": [
+   "Solid History",
+   "Drawing View Component",
+   "Subobject Selection, Face",
+   "Subobject Selection, Edge"
+  ]
+ },
+ "SUBOBJSELECTIONMODE (1)": {
+  "description": "Selects only vertices with CTRL+click",
+  "help_topic": "SUBOBJSELECTIONMODE",
+  "source": "acad",
+  "ui_labels": [
+   "Subobject Selection, Vertex"
+  ]
+ },
+ "SUBOBJSELECTIONMODE (2)": {
+  "description": "Selects only edges with CTRL+click",
+  "help_topic": "SUBOBJSELECTIONMODE",
+  "source": "acad",
+  "ui_labels": [
+   "Subobject Selection, Edge"
+  ]
+ },
+ "SUBOBJSELECTIONMODE (3)": {
+  "description": "Selects only faces with CTRL+click",
+  "help_topic": "SUBOBJSELECTIONMODE",
+  "source": "acad",
+  "ui_labels": [
+   "Subobject Selection, Face"
+  ]
+ },
+ "SUBOBJSELECTIONMODE (4)": {
+  "description": "Selects only history subobjects with CTRL+click",
+  "help_topic": "SUBOBJSELECTIONMODE",
+  "source": "acad",
+  "ui_labels": [
+   "Solid History"
+  ]
+ },
+ "DEFAULTGIZMO(0)": {
+  "description": "Sets the 3D Move gizmo as the default",
+  "help_topic": "DEFAULTGIZMO",
+  "source": "acad",
+  "ui_labels": [
+   "Move"
+  ]
+ },
+ "DEFAULTGIZMO": {
+  "description": "Sets the 3D Scale gizmo as the default",
+  "help_topic": "DEFAULTGIZMO",
+  "source": "acad",
+  "ui_labels": [
+   "Move",
+   "Scale",
+   "No Gizmo"
+  ]
+ },
+ "DEFAULTGIZMO (1)": {
+  "description": "Sets the 3D Rotate gizmo as the default",
+  "source": "acad",
+  "ui_labels": [
+   "Rotate"
+  ]
+ },
+ "DEFAULTGIZMO (2)": {
+  "description": "Sets the 3D Scale gizmo as the default",
+  "help_topic": "DEFAULTGIZMO",
+  "source": "acad",
+  "ui_labels": [
+   "Scale"
+  ]
+ },
+ "DEFAULTGIZMO (3)": {
+  "description": "No gizmo as the default",
+  "help_topic": "DEFAULTGIZMO",
+  "source": "acad",
+  "ui_labels": [
+   "No Gizmo"
+  ]
+ },
+ "HELIX": {
+  "description": "Creates a 2D spiral or 3D spring",
+  "source": "acad",
+  "ui_labels": [
+   "Helix"
+  ]
+ },
+ "POLYSOLID": {
+  "description": "Creates a 3D wall-like polysolid",
+  "source": "acad",
+  "ui_labels": [
+   "Polysolid"
+  ]
+ },
+ "PLANESURF": {
+  "description": "Creates a planar surface",
+  "source": "acad",
+  "ui_labels": [
+   "Planar Surface"
+  ]
+ },
+ "THICKEN": {
+  "description": "Converts a surface into a 3D solid with a specified thickness",
+  "source": "acad",
+  "ui_labels": [
+   "Thicken"
+  ]
+ },
+ "CONVTOSOLID": {
+  "description": "Converts meshes and objects with thickness to faceted 3D solids",
+  "source": "acad",
+  "ui_labels": [
+   "Convert to Solid",
+   "Convert to Smooth Solid",
+   "Convert to Faceted Solid"
+  ]
+ },
+ "CONVTOSURFACE": {
+  "description": "Converts meshes and objects with thickness to faceted surfaces",
+  "source": "acad",
+  "ui_labels": [
+   "Convert to Surface",
+   "Convert to Smooth Surface",
+   "Convert to Faceted Surface"
+  ]
+ },
+ "XEDGES": {
+  "description": "Creates wireframe geometry from the edges of a 3D solid, surface, mesh, region, or subobject",
+  "source": "acad",
+  "ui_labels": [
+   "Extract Edges"
+  ]
+ },
+ "3DMOVE": {
+  "description": "In a 3D view, displays the 3D Move gizmo to aid in moving 3D objects a specified distance in a specified direction",
+  "source": "acad",
+  "ui_labels": [
+   "3D Move"
+  ]
+ },
+ "3DROTATE": {
+  "description": "In a 3D view, displays the 3D Rotate gizmo to aid in revolving 3D objects around a base point",
+  "source": "acad",
+  "ui_labels": [
+   "3D Rotate"
+  ]
+ },
+ "FLATSHOT": {
+  "description": "Creates a 2D representation of all 3D objects based on the current view",
+  "source": "acad",
+  "ui_labels": [
+   "Flatshot"
+  ]
+ },
+ "VSSHADOWS": {
+  "description": "Turns on the display of ground shadows only in a visual style",
+  "help_topic": "vsshadows",
+  "source": "acad",
+  "ui_labels": [
+   "Visual Styles, Shadows, Off",
+   "Visual Styles, Shadows, Full",
+   "Visual Styles, Shadows, Ground"
+  ]
+ },
+ "EXTERNALREFERENCES": {
+  "description": "Opens or closes the External References palette",
+  "source": "acad",
+  "help_topic": "EXTERNALREFERENCES",
+  "ui_labels": [
+   "External References"
+  ]
+ },
+ "VISUALSTYLESCLOSE": {
+  "description": "Shows or hides the visual styles manager",
+  "help_topic": "VISUALSTYLES",
+  "source": "acad",
+  "ui_labels": [
+   "Visual Styles"
+  ]
+ },
+ "VISUALSTYLES": {
+  "description": "Shows or hides the visual styles manager",
+  "help_topic": "VISUALSTYLES",
+  "source": "acad",
+  "ui_labels": [
+   "Visual Styles",
+   "Visual Style Manager..."
+  ]
+ },
+ "EXTERNALREFERENCESCLOSE": {
+  "description": "Opens or closes the External References palette",
+  "help_topic": "EXTERNALREFERENCES",
+  "source": "acad",
+  "ui_labels": [
+   "External References"
+  ]
+ },
+ "RIBBON": {
+  "description": "Shows or hides the ribbon",
+  "help_topic": "RIBBON",
+  "source": "acad",
+  "ui_labels": [
+   "Ribbon"
+  ]
+ },
+ "RIBBONCLOSE": {
+  "description": "Shows or hides the ribbon",
+  "help_topic": "RIBBON",
+  "source": "acad",
+  "ui_labels": [
+   "Ribbon",
+   "Close Ribbon"
+  ]
+ },
+ "VSEDGES": {
+  "description": "Displays curved 3D solids and surfaces using an evenly-spaced mesh",
+  "help_topic": "VSEDGES",
+  "source": "acad",
+  "ui_labels": [
+   "Visual Styles, Edges, No edges",
+   "Visual Styles, Edges, Isolines",
+   "Visual Styles, Edges, Facet edges"
+  ]
+ },
+ "VSFACECOLORMODE": {
+  "description": "Displays all faces on 3D solids and surfaces using the layer color or applied color and material",
+  "help_topic": "VSFACECOLORMODE",
+  "source": "acad",
+  "ui_labels": [
+   "Visual Styles, Face Color Mode, Tint",
+   "Visual Styles, Face Color Mode, Regular",
+   "Visual Styles, Face Color Mode, Monochrome",
+   "Visual Styles, Face Color Mode, Desaturate"
+  ]
+ },
+ "3DCONFIG": {
+  "description": "Sets options that affect 3D display performance",
+  "source": "acad",
+  "ui_labels": [
+   "Visual Styles, Tuning Dialog"
+  ]
+ },
+ "VSFACESTYLE": {
+  "description": "Displays 3D solids and surfaces realistically, using the layer color or applied color, material, and shading",
+  "help_topic": "VSFACESTYLE",
+  "source": "acad",
+  "ui_labels": [
+   "Visual Styles, Face Style, None",
+   "Visual Styles, Face Style, Gooch",
+   "Visual Styles, Face Style, Realistic"
+  ]
+ },
+ "VSLIGHTINGQUALITY": {
+  "description": "Displays 3D solids and surfaces by computing color gradients between the vertexes on each face",
+  "help_topic": "VSLIGHTINGQUALITY",
+  "source": "acad",
+  "ui_labels": [
+   "Visual Styles, Facet Lighting",
+   "Visual Styles, Smooth Lighting",
+   "Visual Styles, Smoothest Lighting"
+  ]
+ },
+ "VSQUALITYLIGHTING": {
+  "description": "Facet lighting",
+  "help_topic": "VSLIGHTINGQUALITY",
+  "source": "acad",
+  "ui_labels": [
+   "Visual Styles, Facet Lighting"
+  ]
+ },
+ "VSOBSCUREDEDGES": {
+  "description": "Toggles obscured edges on or off",
+  "help_topic": "VSOBSCUREDEDGES",
+  "source": "acad",
+  "ui_labels": [
+   "Visual Styles, Obscured Edges"
+  ]
+ },
+ "VSINTERSECTIONEDGES": {
+  "description": "Toggles intersection edges on or off",
+  "help_topic": "VSINTERSECTIONEDGES",
+  "source": "acad",
+  "ui_labels": [
+   "Visual Styles, Intersection Edges"
+  ]
+ },
+ "SECTIONPLANE": {
+  "description": "Creates a section object by specifying points or clicking on a solid face or point cloud segment.",
+  "source": "acad",
+  "ui_labels": [
+   "section plane top",
+   "Section plane left",
+   "section plane back",
+   "section plane front"
+  ]
+ },
+ "RENDERWINDOW": {
+  "description": "Displays the Render window without starting a rendering operation",
+  "source": "acad",
+  "ui_labels": [
+   "Show Render Window..."
+  ]
+ },
+ "VSCURRENT": {
+  "description": "Sets the visual style in the current viewport",
+  "help_topic": "VSCURRENT",
+  "source": "acad",
+  "ui_labels": [
+   "Current Visual Style",
+   "Visual Styles, X-Ray",
+   "Visual Styles, Hidden",
+   "Visual Styles, Shaded"
+  ]
+ },
+ "RENDERCROP": {
+  "description": "Renders a specified rectangular area, called a crop window, within a viewport",
+  "source": "acad",
+  "ui_labels": [
+   "Render Region"
+  ]
+ },
+ "LIVESECTION": {
+  "description": "Toggles the live section state on or off for the section object",
+  "source": "acad",
+  "ui_labels": [
+   "Live Section"
+  ]
+ },
+ "SECTIONPLANEJOG": {
+  "description": "Adds a jog to the section object",
+  "source": "acad",
+  "ui_labels": [
+   "Modeling, Section Plane Jog"
+  ]
+ },
+ "PRESSPULL": {
+  "description": "Presses or pulls bounded areas",
+  "source": "acad",
+  "ui_labels": [
+   "Presspull"
+  ]
+ },
+ "LAYUNISO": {
+  "description": "Restores all layers that were hidden or locked with the LAYISO command",
+  "source": "acad",
+  "ui_labels": [
+   "Layer, Layer Unisolate"
+  ]
+ },
+ "DWFLAYERS": {
+  "description": "Controls the display of layers in a DWF underlay",
+  "source": "acad",
+  "ui_labels": [
+   "Edit Layers"
+  ]
+ },
+ "ATTIPEDIT": {
+  "source": "acad",
+  "ui_labels": [
+   "ATTIPEDIT"
+  ]
+ },
+ "DGNATTACH": {
+  "description": "Inserts a reference to a DGN file as an underlay",
+  "help_topic": "DGNATTACH",
+  "source": "acad",
+  "ui_labels": [
+   "DGN Underlay..."
+  ]
+ },
+ "DGNCLIP": {
+  "description": "Clips the display of a selected DGN underlay to a specified boundary",
+  "source": "acad",
+  "ui_labels": [
+   "DGN Clip...",
+   "DGN, New Clipping Boundary",
+   "DGN, Delete Clipping Boundary"
+  ]
+ },
+ "DGNOSNAP": {
+  "description": "Enable snapping to objects in a DGN underlay",
+  "help_topic": "DGNOSNAP",
+  "source": "acad",
+  "ui_labels": [
+   "DGN Object Snap"
+  ]
+ },
+ "SETBYLAYER": {
+  "description": "Changes the property overrides of selected objects to ByLayer",
+  "source": "acad",
+  "ui_labels": [
+   "Change to ByLayer"
+  ]
+ },
+ "OBJECTSCALE": {
+  "description": "Adds the current annotation scale to the selected annotative objects",
+  "help_topic": "OBJECTSCALE",
+  "source": "acad",
+  "ui_labels": [
+   "Add Current Scale",
+   "Add/Delete Scales...",
+   "Delete Current Scale"
+  ]
+ },
+ "AIOBJECTSCALEADD": {
+  "description": "Adds the current annotation scale to the selected annotative objects",
+  "help_topic": "OBJECTSCALE",
+  "source": "acad",
+  "ui_labels": [
+   "Annotation Scale",
+   "Add Current Scale"
+  ]
+ },
+ "AIOBJECTSCALEREMOVE": {
+  "description": "Removes the current annotation scale from the selected objects",
+  "help_topic": "OBJECTSCALE",
+  "source": "acad",
+  "ui_labels": [
+   "Delete Current Scale"
+  ]
+ },
+ "ANNORESET": {
+  "description": "Resets the locations of all alternate scale representations of the selected annotative objects",
+  "source": "acad",
+  "ui_labels": [
+   "Synchronize Multiple-scale Positions"
+  ]
+ },
+ "DIMSPACE": {
+  "description": "Adjusts the spacing between linear dimensions or angular dimensions",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Dimspace"
+  ]
+ },
+ "DIMBREAK": {
+  "description": "Breaks or restores dimension and extension lines where they cross other objects",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Dimbreak"
+  ]
+ },
+ "DIMINSPECT": {
+  "description": "Adds or removes inspection information for a selected dimension",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Diminspect"
+  ]
+ },
+ "DIMJOGLINE": {
+  "description": "Adds or removes a jog line on a linear or aligned dimension",
+  "source": "acad",
+  "ui_labels": [
+   "Dimension, Dimjogline"
+  ]
+ },
+ "LAYERSTATE": {
+  "description": "Saves, restores, and manages named layer states",
+  "source": "acad",
+  "ui_labels": [
+   "Layer States Manager"
+  ]
+ },
+ "RECOVERALL": {
+  "description": "Repairs a damaged drawing file along with all attached xrefs",
+  "source": "acad",
+  "ui_labels": [
+   "Recover drawing and xrefs..."
+  ]
+ },
+ "DATALINK": {
+  "description": "Displays the Data Link Manager",
+  "source": "acad",
+  "ui_labels": [
+   "Data Link Manager"
+  ]
+ },
+ "DATALINKUPDATE _W": {
+  "description": "Updates linked data from a table in the current drawing to an external data file",
+  "source": "acad",
+  "ui_labels": [
+   "Update Data Links"
+  ]
+ },
+ "DATALINKUPDATE": {
+  "description": "Updates linked data from a table in the current drawing to an external data file",
+  "source": "acad",
+  "ui_labels": [
+   "Update Data Links"
+  ]
+ },
+ "MLEADER": {
+  "description": "Creates a multileader object",
+  "source": "acad",
+  "ui_labels": [
+   "Multileader"
+  ]
+ },
+ "MLEADEREDIT": {
+  "description": "Removes a leader line from an existing multileader object",
+  "source": "acad",
+  "ui_labels": [
+   "Add Leader",
+   "Remove Leader",
+   "Multileader Edit",
+   "Multileader Edit Remove"
+  ]
+ },
+ "MLEADERALIGN": {
+  "description": "Aligns and spaces selected multileader objects",
+  "source": "acad",
+  "ui_labels": [
+   "Multileader Align",
+   "Multileader Align Parallel",
+   "Multileader Align Distributed",
+   "Multileader Align Set Spacing"
+  ]
+ },
+ "MLEADERCOLLECT": {
+  "description": "Organizes selected multileaders that contain blocks into rows or columns, and displays the result with a single leader line",
+  "source": "acad",
+  "ui_labels": [
+   "Wrap",
+   "Collect Vertical",
+   "Collect Horizontal",
+   "Multileader Collect"
+  ]
+ },
+ "MLEADERSTYLE": {
+  "description": "Creates and modifies multileader styles",
+  "source": "acad",
+  "ui_labels": [
+   "Multileader Style Manager"
+  ]
+ },
+ "LIGHTINGUNITS": {
+  "description": "Turns on international lighting units (SI) and photometric lighting",
+  "source": "acad",
+  "ui_labels": [
+   "Lighting Units, SI",
+   "Lighting Units, American"
+  ]
+ },
+ "ACTRECORD": {
+  "description": "Creates an action macro",
+  "source": "acad",
+  "ui_labels": [
+   "Action Recorder, Record"
+  ]
+ },
+ "ACTSTOP": {
+  "description": "Stops the recording or playback of an action macro",
+  "source": "acad",
+  "ui_labels": [
+   "Action Recorder, Stop"
+  ]
+ },
+ "QUICKPROPERTIES": {
+  "description": "Toggles Quick Properties",
+  "source": "acad",
+  "ui_labels": [
+   "Quick Properties",
+   "Toggles Quick Properties"
+  ]
+ },
+ "TOGGLEQPMODE": {
+  "description": "Toggle QPMODE",
+  "source": "acad",
+  "ui_labels": [
+   "Toggle QPMODE"
+  ]
+ },
+ "SELECTIONCYCLING": {
+  "description": "Toggles Selection Cycling",
+  "source": "acad",
+  "ui_labels": [
+   "Toggles Selection Cycling"
+  ]
+ },
+ "HIDEPALETTES": {
+  "description": "Toggles the palette state.",
+  "help_topic": "SHOWPALETTES",
+  "source": "acad",
+  "ui_labels": [
+   "Toggle HIDEPALETTES"
+  ]
+ },
+ "SHOW/HIDE PALETTE": {
+  "description": "Toggles the palette state.",
+  "help_topic": "SHOWPALETTES",
+  "source": "acad",
+  "ui_labels": [
+   "Toggle HIDEPALETTES"
+  ]
+ },
+ "SHOWPALETTES": {
+  "description": "Toggles the palette state.",
+  "help_topic": "SHOWPALETTES",
+  "source": "acad",
+  "ui_labels": [
+   "Toggle HIDEPALETTES"
+  ]
+ },
+ "NAVSWHEEL": {
+  "description": "Provides access to the general navigation tools Zoom, Orbit, Pan, and Rewind, and specialized navigation tools Center, Up/Down, Walk, and Look with the mouse cursor-size wheel. The wheel is optimized for experienced 3D users",
+  "source": "acad",
+  "ui_labels": [
+   "SteeringWheels",
+   "Steering Wheel, 2D Navigation wheel",
+   "Steering Wheel, Big View Object wheel",
+   "Steering Wheel, Mini View Object wheel"
+  ]
+ },
+ "NAVSMOTION": {
+  "description": "Show ShowMotion",
+  "source": "acad",
+  "ui_labels": [
+   "ShowMotion"
+  ]
+ },
+ "NAVVCUBE": {
+  "description": "Controls the visibility of the ViewCube",
+  "help_topic": "NAVVCUBE",
+  "source": "acad",
+  "ui_labels": [
+   "ViewCube Display",
+   "Viewcube, Settings..."
+  ]
+ },
+ "NAVBAR": {
+  "description": "Set the visibility of NavBar",
+  "source": "acad",
+  "ui_labels": [
+   "NavBar Display"
+  ]
+ },
+ "MESHSMOOTHMORE": {
+  "description": "Increases the level smoothness for mesh objects by one level",
+  "source": "acad",
+  "ui_labels": [
+   "Smooth More"
+  ]
+ },
+ "MESHSMOOTHLESS": {
+  "description": "Decreases the level of smoothness for mesh objects by one level",
+  "source": "acad",
+  "ui_labels": [
+   "Smooth Less"
+  ]
+ },
+ "MESHREFINE": {
+  "description": "Multiplies the number of faces in selected mesh objects or mesh faces",
+  "source": "acad",
+  "ui_labels": [
+   "Mesh Refine"
+  ]
+ },
+ "MESHCREASE": {
+  "description": "Sharpens selected mesh faces, edges, or vertices",
+  "source": "acad",
+  "ui_labels": [
+   "Add Crease"
+  ]
+ },
+ "MESHUNCREASE": {
+  "description": "Removes the crease from selected mesh faces, edges, or vertices",
+  "source": "acad",
+  "ui_labels": [
+   "Remove Crease"
+  ]
+ },
+ "MESHSMOOTH": {
+  "description": "Converts 3D object to mesh object",
+  "source": "acad",
+  "ui_labels": [
+   "Smooth Object"
+  ]
+ },
+ "MESHSPLIT": {
+  "description": "Splits a mesh face into two faces",
+  "source": "acad",
+  "ui_labels": [
+   "Split Mesh Face"
+  ]
+ },
+ "MESHEXTRUDE": {
+  "description": "Extends a mesh face into 3D space",
+  "source": "acad",
+  "ui_labels": [
+   "Extrude Face"
+  ]
+ },
+ "MESHMERGE": {
+  "description": "Merges adjacent faces into a single face",
+  "source": "acad",
+  "ui_labels": [
+   "Merge Face"
+  ]
+ },
+ "MESHSPIN": {
+  "description": "Spins the adjoining edge of two triangular mesh faces",
+  "source": "acad",
+  "ui_labels": [
+   "Spin Triangle Face"
+  ]
+ },
+ "MESHCAP": {
+  "description": "Creates a mesh face that connects open edges",
+  "source": "acad",
+  "ui_labels": [
+   "Close Hole"
+  ]
+ },
+ "MESHCOLLAPSE": {
+  "description": "Merges the vertices of selected mesh faces or edges",
+  "source": "acad",
+  "ui_labels": [
+   "Collapse Face or Edge"
+  ]
+ },
+ "SMOOTHMESHCREASELEV": {
+  "description": "Sets the default crease level",
+  "source": "acad",
+  "ui_labels": [
+   "Default Crease Level"
+  ]
+ },
+ "MESHPRIMITIVEOPTIONS": {
+  "description": "Display the Mesh Primitives Options dialog box",
+  "source": "acad",
+  "ui_labels": [
+   "Mesh Primitive Options"
+  ]
+ },
+ "MESHOPTIONS": {
+  "description": "Display the Mesh Tessellation Options dialog box",
+  "source": "acad",
+  "ui_labels": [
+   "Mesh Options",
+   "Mesh Tessellation Options"
+  ]
+ },
+ "SURFNETWORK": {
+  "description": "Creates a 3D surface in the space between several curves in the U and V directions",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Network"
+  ]
+ },
+ "SURFBLEND": {
+  "description": "Creates a continuous blend surface between two existing surfaces",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Blend"
+  ]
+ },
+ "SURFPATCH": {
+  "description": "Creates a new surface or cap to close an open edge of an existing surface",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Patch"
+  ]
+ },
+ "SURFOFFSET": {
+  "description": "Creates a parallel surface a specified distance from the original surface",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Offset"
+  ]
+ },
+ "SURFFILLET": {
+  "description": "Creates a new, rounded surface in the space between existing surfaces",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Fillet"
+  ]
+ },
+ "SURFTRIM": {
+  "description": "Trims portions of a surface where it meets another surface or type of geometry",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Trim"
+  ]
+ },
+ "SURFUNTRIM": {
+  "description": "Replaces surface areas removed by the SURFTRIM command",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Untrim"
+  ]
+ },
+ "SURFACEMODELINGMODE": {
+  "description": "Sets if you create a procedural surface or a NURBS surface",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Modeling Mode"
+  ]
+ },
+ "CONVTONURBS": {
+  "description": "Converts a surface, solid, or mesh to a NURBS surface",
+  "source": "acad",
+  "ui_labels": [
+   "Convert to NURBS"
+  ]
+ },
+ "SURFSCULPT": {
+  "description": "Trims and unions surfaces that bound a region to create a watertight solid",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Sculpt"
+  ]
+ },
+ "SURFEXTEND": {
+  "description": "Lengthens a surface to meet another object",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Extend"
+  ]
+ },
+ "SKETCH": {
+  "description": "Draws a freehand spline",
+  "source": "acad",
+  "ui_labels": [
+   "Spline Freehand"
+  ]
+ },
+ "3DEDITBAR": {
+  "description": "Adds and edits control vertices on a NURBS surface or spline",
+  "source": "acad",
+  "ui_labels": [
+   "Surface CV Edit Bar"
+  ]
+ },
+ "CVSHOW": {
+  "description": "Displays the control vertices of a NURBS surface or spline",
+  "source": "acad",
+  "ui_labels": [
+   "Surface CV - Show"
+  ]
+ },
+ "CVHIDE": {
+  "description": "Hides the control vertices for NURBS surfaces or splines",
+  "source": "acad",
+  "ui_labels": [
+   "Surface CV - Hide"
+  ]
+ },
+ "CVREBUILD": {
+  "description": "Allows you to rebuild the control vertices of a NURBS surface or spline",
+  "source": "acad",
+  "ui_labels": [
+   "Surface CV - Rebuilt"
+  ]
+ },
+ "CVADD": {
+  "description": "Adds control vertices to a NURBS surface or spline",
+  "source": "acad",
+  "ui_labels": [
+   "Surface CV - Add"
+  ]
+ },
+ "CVREMOVE": {
+  "description": "Removes control vertices from a NURBS surface or spline",
+  "source": "acad",
+  "ui_labels": [
+   "Surface CV - Remove"
+  ]
+ },
+ "ANALYSISZEBRA": {
+  "description": "Projects parallel lines onto a model to help you analyze surface continuity",
+  "source": "acad",
+  "ui_labels": [
+   "Analysis Zebra"
+  ]
+ },
+ "ANALYSISOPTIONS": {
+  "description": "Displays the Analysis Options dialog box",
+  "source": "acad",
+  "ui_labels": [
+   "Analysis Options"
+  ]
+ },
+ "ANALYSISDRAFT": {
+  "description": "Displays a color gradient onto surfaces so that you evaluate if a model has adequate draft between a part and its mold",
+  "source": "acad",
+  "ui_labels": [
+   "Analysis Draft"
+  ]
+ },
+ "ANALYSISCURVATURE": {
+  "description": "Displays a color gradient onto surface parts so that you can evaluate the high and low areas of curvature",
+  "source": "acad",
+  "ui_labels": [
+   "Analysis Curvature"
+  ]
+ },
+ "SURFACEAUTOTRIM": {
+  "description": "Sets whether surfaces are automatically trimmed when you project geometry",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Auto Trimming"
+  ]
+ },
+ "PROJECTGEOMETRY": {
+  "description": "Projects a line or curve onto any type of surface from different angles",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Projection UCS",
+   "Surface Projection View",
+   "Surface Projection Vector"
+  ]
+ },
+ "SURFACEASSOCIATIVITY": {
+  "description": "Turns associativity on when creating new surfaces",
+  "source": "acad",
+  "ui_labels": [
+   "Surface Associativity"
+  ]
+ },
+ "SOLIDHIST": {
+  "description": "Toggles solid history",
+  "help_topic": "SOLIDHIST",
+  "source": "acad",
+  "ui_labels": [
+   "Solid History"
+  ]
+ },
+ "FILLETEDGE": {
+  "description": "Rounds and fillets the edges of solid objects",
+  "source": "acad",
+  "ui_labels": [
+   "Fillet Edge"
+  ]
+ },
+ "CHAMFEREDGE": {
+  "description": "Bevels the edges of solid objects",
+  "source": "acad",
+  "ui_labels": [
+   "Chamfer Edge"
+  ]
+ },
+ "WEBLIGHT": {
+  "description": "Web light",
+  "source": "acad",
+  "ui_labels": [
+   "Weblight"
+  ]
+ },
+ "DGNLAYERS": {
+  "description": "Controls the display of layers in a DGN underlay",
+  "source": "acad",
+  "ui_labels": [
+   "DGN Layers..."
+  ]
+ },
+ "EDITTABLECELL": {
+  "description": "Establishes a link between the data in a table cell with data in a Microsoft Excel file",
+  "source": "acad",
+  "ui_labels": [
+   "Sum",
+   "Text",
+   "Cell",
+   "Date"
+  ]
+ },
+ "MATCHCELL": {
+  "description": "Applies the properties of a selected table cell to other table cells",
+  "source": "acad",
+  "ui_labels": [
+   "Match Cell"
+  ]
+ },
+ "QVDRAWING": {
+  "description": "Launches quick view drawings",
+  "source": "acad",
+  "ui_labels": [
+   "QVDrawing"
+  ]
+ },
+ "QVLAYOUT": {
+  "description": "Launches quick view layouts",
+  "source": "acad",
+  "ui_labels": [
+   "QVLayout"
+  ]
+ },
+ "QVDRAWINGCLOSE": {
+  "description": "Close quick view drawings",
+  "source": "acad",
+  "ui_labels": [
+   "QVDrawingClose"
+  ]
+ },
+ "QVLAYOUTCLOSE": {
+  "description": "Close quick view layouts",
+  "source": "acad",
+  "ui_labels": [
+   "QVLayoutClose"
+  ]
+ },
+ "GCCOINCIDENT": {
+  "description": "Constrains two points to coincide, or a point to lie anywhere on an object or the extension of an object",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Coincident"
+  ]
+ },
+ "GEOMCONSTRAINT": {
+  "description": "Constrains two lines or polyline segments to maintain equal lengths, or arcs and circles to maintain equal radius values",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Fix",
+   "Geometric Constraint, Equal",
+   "Geometric Constraint, Smooth",
+   "Geometric Constraint, Tangent"
+  ]
+ },
+ "GCPERPENDICULAR": {
+  "description": "Constrains two lines, or polyline segments to maintain a 90-degree angle to each another",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Perpendicular"
+  ]
+ },
+ "GCPARALLEL": {
+  "description": "Constrains two lines to maintain the same angle",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Parallel"
+  ]
+ },
+ "GCTANGENT": {
+  "description": "Constrains two curves to maintain a point of tangency to each other or their extensions",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Tangent"
+  ]
+ },
+ "GCHORIZONTAL": {
+  "description": "Constrains a line or pairs of points to lie parallel to the X-axis of the current UCS",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Horizontal"
+  ]
+ },
+ "GCVERTICAL": {
+  "description": "Constrains lines or pairs of points to lie parallel to the Y-axis of the current UCS",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Vertical"
+  ]
+ },
+ "GCCOLLINEAR": {
+  "description": "Constrains two lines to lie on the same infinite line",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Collinear"
+  ]
+ },
+ "GCCONCENTRIC": {
+  "description": "Constrains selected circles, arcs, or ellipses to maintain the same center point",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Concentric"
+  ]
+ },
+ "GCSMOOTH": {
+  "description": "Constrains a spline to be contiguous and maintain G2 continuity with another spline, line, arc, or polyline",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Smooth"
+  ]
+ },
+ "GCSYMMETRIC": {
+  "description": "Constrains two curves or points on objects to maintain symmetry about a selected line",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Symmetric"
+  ]
+ },
+ "GCEQUAL": {
+  "description": "Constrains two lines or polyline segments to maintain equal lengths, or arcs and circles to maintain equal radius values",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Equal"
+  ]
+ },
+ "GCFIX": {
+  "description": "Constrains a point or a curve to a fixed location and orientation relative to the World Coordinate System",
+  "source": "acad",
+  "ui_labels": [
+   "Geometric Constraint, Fix"
+  ]
+ },
+ "DCALIGNED": {
+  "description": "Constrains the distance between two points on an object or between two points on different objects",
+  "source": "acad",
+  "ui_labels": [
+   "Dimensional Constraint, Aligned"
+  ]
+ },
+ "DIMCONSTRAINT": {
+  "description": "Constrains the angle between line or polyline segments, the angle swept out by an arc or a polyline arc segment, or the angle between three points on objects",
+  "source": "acad",
+  "ui_labels": [
+   "Dimensional Constraint, Radius",
+   "Dimensional Constraint, Aligned",
+   "Dimensional Constraint, Convert",
+   "Dimensional Constraint, Angular"
+  ]
+ },
+ "DCHORIZONTAL": {
+  "description": "Constrains the X-distance between points on an object, or between two points on different objects",
+  "source": "acad",
+  "ui_labels": [
+   "Dimensional Constraint, Horizontal"
+  ]
+ },
+ "DCVERTICAL": {
+  "description": "Constrains the Y-distance between points on an object, or between two points on different objects",
+  "source": "acad",
+  "ui_labels": [
+   "Dimensional Constraint, Vertical"
+  ]
+ },
+ "DCANGULAR": {
+  "description": "Constrains the angle between line or polyline segments, the angle swept out by an arc or a polyline arc segment, or the angle between three points on objects",
+  "source": "acad",
+  "ui_labels": [
+   "Dimensional Constraint, Angular"
+  ]
+ },
+ "DCRADIUS": {
+  "description": "Constrains the radius of a circle or arc",
+  "source": "acad",
+  "ui_labels": [
+   "Dimensional Constraint, Radius"
+  ]
+ },
+ "DCDIAMETER": {
+  "description": "Constrains the diameter of a circle or arc",
+  "source": "acad",
+  "ui_labels": [
+   "Dimensional Constraint, Diameter"
+  ]
+ },
+ "DELCONSTRAINT": {
+  "description": "Removes all constraints from the selected objects",
+  "source": "acad",
+  "ui_labels": [
+   "Delete Constraints"
+  ]
+ },
+ "CONSTRAINTBAR": {
+  "description": "Displays or hides geometric constraints for selected objects",
+  "source": "acad",
+  "ui_labels": [
+   "Show Geometric Constraints",
+   "Hide All Geometric Constraints",
+   "Show All Geometric Constraints"
+  ]
+ },
+ "CONSTRAINTSETTINGS": {
+  "description": "Opens the Constraint Settings dialog to the Geometric tab.",
+  "source": "acad",
+  "help_topic": "ConstraintDisplaySettings",
+  "ui_labels": [
+   "Constraint Settings...",
+   "Constraint Settings, Geometric",
+   "Constraint Settings, Dimensional"
+  ]
+ },
+ "PARAMETERSCLOSE": {
+  "description": "Opens or closes the Parameters Manager",
+  "source": "acad",
+  "ui_labels": [
+   "Parameters Manager",
+   "Parameters Manager Menu Macro"
+  ]
+ },
+ "PARAMETERS": {
+  "description": "Opens or closes the Parameters Manager",
+  "source": "acad",
+  "ui_labels": [
+   "Parameters Manager",
+   "Parameters Manager Menu Macro"
+  ]
+ },
+ "AUTOCONSTRAIN": {
+  "description": "Applies multiple geometric constraints to the selected objects",
+  "source": "acad",
+  "ui_labels": [
+   "AutoConstrain"
+  ]
+ },
+ "BTESTBLOCK": {
+  "description": "Opens a window to test the block",
+  "source": "acad",
+  "ui_labels": [
+   "Test Block"
+  ]
+ },
+ "BCONSTRUCTION": {
+  "description": "Converts objects to construction geometry",
+  "source": "acad",
+  "ui_labels": [
+   "Construction Geometry"
+  ]
+ },
+ "BTABLE": {
+  "description": "Creates a Block Properties table and grip",
+  "source": "acad",
+  "ui_labels": [
+   "Block Table"
+  ]
+ },
+ "BACTIONTOOL": {
+  "description": "Adds a polar stretch action to the block definition",
+  "source": "acad",
+  "ui_labels": [
+   "Block Action, Flip",
+   "Block Action, Move",
+   "Block Action, Scale",
+   "Block Action, Array"
+  ]
+ },
+ "BCPARAMETER": {
+  "description": "Constrains the length of a line, or the distance between two lines, a point on an object and a line, or two points on different objects",
+  "source": "acad",
+  "ui_labels": [
+   "Block Constraint Parameter, Linear",
+   "Block Constraint Parameter, Radius",
+   "Block Constraint Parameter, Angular",
+   "Block Constraint Parameter, Convert"
+  ]
+ },
+ "BACTIONBAR": {
+  "description": "Displays action bars for selected parameter objects",
+  "source": "acad",
+  "ui_labels": [
+   "Hide All Actions",
+   "Show All Actions"
+  ]
+ },
+ "DCLINEAR": {
+  "description": "Constrains the horizontal or vertical distance between points",
+  "source": "acad",
+  "ui_labels": [
+   "Dimensional Constraint, Linear"
+  ]
+ },
+ "-HATCHEDIT": {
+  "source": "acad",
+  "description": "Exits the Hatch Editor and closes the contextual tab",
+  "ui_labels": [
+   "Pick Points",
+   "Select Objects",
+   "Remove boundary",
+   "Close Hatch Editor"
+  ]
+ },
+ "3DPRINTSERVICE": {
+  "description": "Sends solid objects and watertight meshes to a 3D print service",
+  "source": "acad",
+  "ui_labels": [
+   "Publish, Send to 3D Print Service"
+  ]
+ },
+ "SECTIONPLANETOBLOCK": {
+  "description": "Opens the Generate Section/Elevation dialog box",
+  "source": "acad",
+  "ui_labels": [
+   "Generate Section Block"
+  ]
+ },
+ "SECTIONPLANESETTINGS": {
+  "description": "Set display options for the selected section plane.",
+  "source": "acad",
+  "ui_labels": [
+   "Section Plane Settings",
+   "Section, Section Plane Settings"
+  ]
+ },
+ "SECTIONSPINNERS": {
+  "description": "Sets the distance increment for section offset and slice thickness spinner controls in the ribbon",
+  "source": "acad",
+  "ui_labels": [
+   "Section Spinner Increment"
+  ]
+ },
+ "NAVSWHEELMODE": {
+  "description": "Provides access to the general navigation tools Zoom, Orbit, Pan, and Rewind, and specialized navigation tools Center, Up/Down, Walk, and Look with the mouse cursor-size wheel. The wheel is optimized for experienced 3D users",
+  "source": "acad",
+  "ui_labels": [
+   "Steering Wheel, 2D Navigation wheel",
+   "Steering Wheel, Big View Object wheel",
+   "Steering Wheel, Mini View Object wheel",
+   "Steering Wheel, Big Tour Building wheel"
+  ]
+ },
+ "PDFCLIP": {
+  "description": "PDFCLIP command - allows the user to specify a clipping boundary for their PDF underlay",
+  "source": "acad",
+  "ui_labels": [
+   "Pdf Clip...",
+   "PDF, New Clipping Boundary",
+   "PDF, Delete Clipping Boundary"
+  ]
+ },
+ "EXPORTEPLOTFORMAT": {
+  "description": "Export to DWFx",
+  "source": "acad",
+  "ui_labels": [
+   "Export to DWF",
+   "Export to PDF",
+   "Export to DWFx"
+  ]
+ },
+ "EXPORTDWF": {
+  "description": "Export to DWF",
+  "source": "acad",
+  "ui_labels": [
+   "Export to DWF"
+  ]
+ },
+ "EXPORTPDF": {
+  "description": "Export to PDF",
+  "source": "acad",
+  "ui_labels": [
+   "Export to PDF"
+  ]
+ },
+ "EXPORTDWFX": {
+  "description": "Export to DWFx",
+  "source": "acad",
+  "ui_labels": [
+   "Export to DWFx"
+  ]
+ },
+ "EXPORTSETTINGS": {
+  "description": "Opens the drawing in a preview window",
+  "help_topic": "EXPORTPREVIEW",
+  "source": "acad",
+  "ui_labels": [
+   "Publish Option",
+   "Publish Preview",
+   "Publish PDF Option"
+  ]
+ },
+ "EXPORTPREVIEW": {
+  "description": "Opens the drawing in a preview window",
+  "help_topic": "EXPORTPREVIEW",
+  "source": "acad",
+  "ui_labels": [
+   "Publish Preview"
+  ]
+ },
+ "ATTACH": {
+  "description": "Inserts references to external files such as other drawings, raster images, and underlays.",
+  "source": "acad",
+  "ui_labels": [
+   "Attach",
+   "Attach..."
+  ]
+ },
+ "CLIP": {
+  "description": "Clip a block, externally referenced file, or viewport to a specified boundary",
+  "source": "acad",
+  "ui_labels": [
+   "Clip"
+  ]
+ },
+ "ADJUST": {
+  "description": "Adjust the fade, contrast, brightness and monochrome settings of an image or underlay (DWF, DWFx, PDF, or DGN)",
+  "source": "acad",
+  "ui_labels": [
+   "Adjust"
+  ]
+ },
+ "ULAYERS": {
+  "description": "Controls the display of layers in an underlay",
+  "source": "acad",
+  "ui_labels": [
+   "Ulayers"
+  ]
+ },
+ "PDFIMPORT": {
+  "description": "Imports data from a page of a PDF file into the current drawing as AutoCAD objects.",
+  "source": "acad",
+  "ui_labels": [
+   "PDFIMPORT",
+   "Import PDF file"
+  ]
+ },
+ "DGNIMPORT": {
+  "description": "Imports data from a DGN file into the current drawing as AutoCAD objects.",
+  "source": "acad",
+  "ui_labels": [
+   "Import DGN file"
+  ]
+ },
+ "PDFSHXTEXT": {
+  "description": "Specifies the SHX fonts to compare against when converting imported PDF text geometry to text",
+  "source": "acad",
+  "ui_labels": [
+   "PDF SHX Recognition",
+   "PDF SHX Recog Settings"
+  ]
+ },
+ "PDFSHXTEXTSETTINGS": {
+  "description": "Specifies the SHX fonts to compare against when converting imported PDF text geometry to text",
+  "source": "acad",
+  "ui_labels": [
+   "PDF SHX Recog Settings"
+  ]
+ },
+ "TXT2MTXT": {
+  "description": "Combines multiple text objects into a single multiline text object",
+  "source": "acad",
+  "help_topic": "TXT2MTXT",
+  "express_tool": true,
+  "ui_labels": [
+   "Convert Text to Mtext"
+  ]
+ },
+ "FRAME": {
+  "description": "Determines the display status of all frames including Image frames, XClip frames and Underlay frames",
+  "source": "acad",
+  "ui_labels": [
+   "Frame On",
+   "Frame Off",
+   "Frame Varies",
+   "Frame DispalyNoPlot"
+  ]
+ },
+ "UOSNAP": {
+  "description": "Turn Object Snap for all Underlay objects ON/OFF.",
+  "source": "acad",
+  "ui_labels": [
+   "UOsnap On",
+   "UOsnap off",
+   "UOsnap Varies"
+  ]
+ },
+ "PDFLAYERS": {
+  "description": "Controls the display of layers in a PDF underlay",
+  "source": "acad",
+  "ui_labels": [
+   "Pdf Layers..."
+  ]
+ },
+ "PDFOSNAP": {
+  "description": "PDFOSNAP command - allows users to toggle on/off the ability to OSNAP to PDF vector geometry. A check mark is placed next to this item only if PDFOSNAP is 1",
+  "source": "acad",
+  "ui_labels": [
+   "Pdf Object Snap..."
+  ]
+ },
+ "PDFATTACH": {
+  "description": "Attaches a new PDF to the current drawing",
+  "help_topic": "PDFATTACH",
+  "source": "acad",
+  "ui_labels": [
+   "PDF Underlay..."
+  ]
+ },
+ "REVERSE": {
+  "description": "Reverses the direction of line, polyline, spline and helix objects",
+  "source": "acad",
+  "ui_labels": [
+   "Reverse"
+  ]
+ },
+ "CONSTRAINTNAMEFORMAT": {
+  "description": "Display name and expression for dimensional constraints",
+  "source": "acad",
+  "ui_labels": [
+   "Name",
+   "Value",
+   "Name and Expression"
+  ]
+ },
+ "3DSCALE": {
+  "description": "In a 3D view, displays the 3D Scale gizmo to aid in scaling 3D objects",
+  "source": "acad",
+  "ui_labels": [
+   "3D Scale"
+  ]
+ },
+ "CONSTRAINTDISPLAYSETTINGS": {
+  "description": "Opens the Constraint Settings dialog to the Geometric tab.",
+  "help_topic": "ConstraintDisplaySettings",
+  "source": "acad",
+  "ui_labels": [
+   "Constraint Settings, Geometric",
+   "Constraint Settings, Dimensional"
+  ]
+ },
+ "DCCONVERT": {
+  "description": "Convert dimensions to dimensional constraints",
+  "source": "acad",
+  "ui_labels": [
+   "Dimensional Constraint, Convert"
+  ]
+ },
+ "BESETTINGS": {
+  "description": "Manages Block Editor settings",
+  "source": "acad",
+  "ui_labels": [
+   "Block Editor, Settings"
+  ]
+ },
+ "DCDISPLAY": {
+  "description": "Displays or hides dynamic dimensional constraints for selected objects",
+  "source": "acad",
+  "ui_labels": [
+   "Show Dynamic Constraints",
+   "Hide All Dynamic Constraints",
+   "Show All Dynamic Constraints"
+  ]
+ },
+ "CONSTRAINTINFER": {
+  "source": "acad",
+  "ui_labels": [
+   "Toggles Infer Constraints"
+  ]
+ },
+ "HATCHTOBACK": {
+  "description": "Forces all hatches to be displayed behind all other objects",
+  "source": "acad",
+  "ui_labels": [
+   "Draw Order, Hatch to Back"
+  ]
+ },
+ "POINTCLOUDATTACH": {
+  "description": "Attaches point cloud scan and project files to a drawing.",
+  "source": "acad",
+  "ui_labels": [
+   "Attach Point Cloud"
+  ]
+ },
+ "POINTCLOUDDENSITY": {
+  "description": "Sets the density of points that can be displayed for all point clouds in the drawing, based on a percentage of the current limit.",
+  "source": "acad",
+  "ui_labels": [
+   "Point Cloud Density"
+  ]
+ },
+ "POINTCLOUDAUTOUPDATE": {
+  "source": "acad",
+  "ui_labels": [
+   "Point Cloud Auto Update"
+  ]
+ },
+ "POINTCLOUDRTDENSITY": {
+  "description": "Sets the density of points that are displayed during real-time zooming, panning, or orbiting.",
+  "source": "acad",
+  "ui_labels": [
+   "Point Cloud Realtime Density"
+  ]
+ },
+ "POINTCLOUDCOLORMAP": {
+  "description": "Customizes color schemes and sets ranges for intensity and elevation stylizations of a point cloud; sets colors for classification properties.",
+  "source": "acad",
+  "ui_labels": [
+   "Point Cloud Color Map"
+  ]
+ },
+ "POINTCLOUDSTYLIZE": {
+  "description": "Sets color stylization for selected point cloud.",
+  "source": "acad",
+  "ui_labels": [
+   "PointCloud Stylize",
+   "Point Cloud Color Map"
+  ]
+ },
+ "POINTCLOUDCROP": {
+  "description": "Toggles between display of points outside the cropped area of a point cloud and points inside the cropped area.",
+  "source": "acad",
+  "ui_labels": [
+   "PointCloud Crop",
+   "PointCloud UnCrop",
+   "Point Cloud Uncrop",
+   "Point Cloud Crop Invert"
+  ]
+ },
+ "POINTCLOUDUNCROP": {
+  "description": "Toggles between display of points outside the cropped area of a point cloud and points inside the cropped area.",
+  "source": "acad",
+  "ui_labels": [
+   "PointCloud UnCrop",
+   "Point Cloud Uncrop",
+   "Point Cloud Crop Invert"
+  ]
+ },
+ "POINTCLOUDMANAGER": {
+  "description": "Opens or closes the Point Cloud Manager to control the visibility of scans and regions.",
+  "source": "acad",
+  "ui_labels": [
+   "PointCloud Manager"
+  ]
+ },
+ "POINTCLOUDMANAGERCLOSE": {
+  "description": "Opens or closes the Point Cloud Manager to control the visibility of scans and regions.",
+  "source": "acad",
+  "ui_labels": [
+   "PointCloud Manager Close"
+  ]
+ },
+ "-POINTCLOUDMANAGER": {
+  "description": "Opens or closes the Point Cloud Manager to control the visibility of scans and regions.",
+  "source": "acad",
+  "ui_labels": [
+   "PointCloud Manager Dash"
+  ]
+ },
+ "HATCHSETORIGIN": {
+  "source": "acad",
+  "ui_labels": [
+   "Set Origin"
+  ]
+ },
+ "HATCHSETBOUNDARY": {
+  "source": "acad",
+  "ui_labels": [
+   "Set Boundary"
+  ]
+ },
+ "HATCHGENERATEBOUNDARY": {
+  "source": "acad",
+  "ui_labels": [
+   "Generate Boundary"
+  ]
+ },
+ "MATEDITOROPEN": {
+  "description": "Opens and closes Materials Editor",
+  "help_topic": "MaterialEditor",
+  "source": "acad",
+  "ui_labels": [
+   "Materials Editor"
+  ]
+ },
+ "MATERIALEDITOR": {
+  "description": "Opens and closes Materials Editor",
+  "help_topic": "MaterialEditor",
+  "source": "acad",
+  "ui_labels": [
+   "Materials Editor"
+  ]
+ },
+ "MATEDITORCLOSE": {
+  "description": "Opens and closes Materials Editor",
+  "help_topic": "MaterialEditor",
+  "source": "acad",
+  "ui_labels": [
+   "Materials Editor"
+  ]
+ },
+ "ISOLATEOBJECTS": {
+  "description": "Temporarily hides all objects except the selected objects for the current drawing session.",
+  "help_topic": "ISOLATEOBJECTS",
+  "source": "acad",
+  "ui_labels": [
+   "Isolate Objects"
+  ]
+ },
+ "HIDEOBJECTS": {
+  "description": "Temporarily hides selected objects for the current drawing session.",
+  "help_topic": "HIDEOBJECTS",
+  "source": "acad",
+  "ui_labels": [
+   "Hide Objects"
+  ]
+ },
+ "UNISOLATEOBJECTS": {
+  "description": "Unhides temporarily hidden objects.",
+  "help_topic": "UNISOLATEOBJECTS",
+  "source": "acad",
+  "ui_labels": [
+   "End Object Isolation"
+  ]
+ },
+ "SELECTSIMILAR": {
+  "description": "Selects all objects similar to the object(s) selected based on the Similar settings.",
+  "help_topic": "SELECTSIMILAR",
+  "source": "acad",
+  "ui_labels": [
+   "Select Similar"
+  ]
+ },
+ "ADDSELECTED": {
+  "description": "Starts a draw command based on the object type of the selected object.",
+  "help_topic": "ADDSELECTED",
+  "source": "acad",
+  "ui_labels": [
+   "Add Selected"
+  ]
+ },
+ "NCOPY": {
+  "description": "Copies objects nested inside blocks and external references",
+  "source": "acad",
+  "help_topic": "NCOPY",
+  "express_tool": true,
+  "ui_labels": [
+   "Copy Nested Objects"
+  ]
+ },
+ "BLEND": {
+  "description": "Creates a tangent or smooth spline between the endpoints of two open curves",
+  "source": "acad",
+  "ui_labels": [
+   "Blend Curves"
+  ]
+ },
+ "UNGROUP": {
+  "description": "Explodes or ungroups a group",
+  "source": "acad",
+  "ui_labels": [
+   "Ungroup"
+  ]
+ },
+ "GROUPEDIT": {
+  "description": "Adds or removes objects from a group",
+  "source": "acad",
+  "ui_labels": [
+   "Group Edit",
+   "Add to Group",
+   "Remove from Group"
+  ]
+ },
+ "CLASSICGROUP": {
+  "description": "Displays group dialog to manage named groups",
+  "source": "acad",
+  "ui_labels": [
+   "Group Manager"
+  ]
+ },
+ "GROUPDISPLAYMODE": {
+  "description": "Turns group bounding box on and off",
+  "source": "acad",
+  "ui_labels": [
+   "Group Bound Box"
+  ]
+ },
+ "ARRAYEDIT": {
+  "description": "Maintains current item spacing when the path is edited, or when the number of items is edited through grips or the Properties palette.",
+  "source": "acad",
+  "ui_labels": [
+   "Edit Array",
+   "Base Point",
+   "Array Rows",
+   "Array Reset"
+  ]
+ },
+ "ARRAYRECT": {
+  "description": "Distributes object copies into any combination of rows, columns, and levels.",
+  "source": "acad",
+  "ui_labels": [
+   "Rectangular Array"
+  ]
+ },
+ "ARRAYPATH": {
+  "description": "Evenly distributes object copies along a path or a portion of a path.",
+  "source": "acad",
+  "ui_labels": [
+   "Path Array"
+  ]
+ },
+ "ARRAYPOLAR": {
+  "description": "Evenly distributes object copies in a circular pattern around a center point or axis of rotation.",
+  "source": "acad",
+  "ui_labels": [
+   "Polar Array"
+  ]
+ },
+ "ARRAYCLOSE": {
+  "description": "Discards changes made to an array's source objects and exits the array editing state.",
+  "source": "acad",
+  "ui_labels": [
+   "ArrayEditClose Save",
+   "ArrayEditClose Discard"
+  ]
+ },
+ "-ARRAYCLOSE": {
+  "description": "Discards changes made to an array's source objects and exits the array editing state.",
+  "source": "acad",
+  "ui_labels": [
+   "ArrayEditClose Save",
+   "ArrayEditClose Discard"
+  ]
+ },
+ "DWGCONVERT": {
+  "description": "Converts drawing format version for selected drawing files",
+  "source": "acad",
+  "ui_labels": [
+   "DWG Convert"
+  ]
+ },
+ "OVERKILL": {
+  "description": "Cleans up overlapping geometry by removing duplicated and/or unneeded objects",
+  "source": "acad",
+  "ui_labels": [
+   "Delete Duplicate Objects"
+  ]
+ },
+ "ONLINEDESIGNSHARE": {
+  "description": "Upload design views to a secure cloud location for viewing and sharing from your browser.",
+  "source": "acad",
+  "ui_labels": [
+   "Share Design Views"
+  ]
+ },
+ "SAVETOWEBMOBILE": {
+  "description": "Save the current drawing to AutoCAD Web and Mobile.",
+  "source": "acad",
+  "ui_labels": [
+   "Save to Web and Mobile"
+  ]
+ },
+ "OPENFROMWEBMOBILE": {
+  "description": "Open an existing drawing from AutoCAD Web and Mobile.",
+  "source": "acad",
+  "ui_labels": [
+   "Open from Web and Mobile"
+  ]
+ },
+ "SHAREVIEW": {
+  "description": "Upload design views to a secure cloud location for viewing and sharing from your browser.",
+  "source": "acad",
+  "ui_labels": [
+   "Share View"
+  ]
+ },
+ "SHAREDVIEWS": {
+  "description": "Open the Shared Views palette.",
+  "source": "acad",
+  "ui_labels": [
+   "Shared Views"
+  ]
+ },
+ "PUSHTODOCSOPEN": {
+  "description": "Open the Push to Autodesk Docs palette.",
+  "source": "acad",
+  "ui_labels": [
+   "Push to Autodesk Docs"
+  ]
+ },
+ "COMMANDMACROS": {
+  "description": "Open the Command Macros palette.",
+  "source": "acad",
+  "ui_labels": [
+   "Command Macros"
+  ]
+ },
+ "ACTIVITYINSIGHTSOPEN": {
+  "description": "Open the Activity Insights palette.",
+  "help_topic": "ACTIVITYINSIGHTSOPEN",
+  "source": "acad",
+  "ui_labels": [
+   "Activity Insights"
+  ]
+ },
+ "ACTIVITYINSIGHTSSTARTPAGEOPEN": {
+  "description": "Open the Activity Insights palette on the StartPage.",
+  "help_topic": "ACTIVITYINSIGHTSSTARTPAGEOPEN",
+  "source": "acad",
+  "ui_labels": [
+   "Activity Insights StartPage"
+  ]
+ },
+ "ASSISTANTOPEN": {
+  "description": "Open the Autodesk Assistant palette.",
+  "help_topic": "ASSISTANTOPEN",
+  "source": "acad",
+  "ui_labels": [
+   "Autodesk Assistant"
+  ]
+ },
+ "TRACEPALETTEOPEN": {
+  "description": "Open the Autodesk Traces palette.",
+  "source": "acad",
+  "ui_labels": [
+   "Traces"
+  ]
+ },
+ "ONLINEAUTOCAD360": {
+  "description": "Launches AutoCAD web in your default browser.",
+  "source": "acad",
+  "ui_labels": [
+   "AutoCAD 360"
+  ]
+ },
+ "VIEWPROJ": {
+  "description": "Generates orthographic and isometric views from a drawing view.",
+  "source": "acad",
+  "help_topic": "VIEWPROJ",
+  "ui_labels": [
+   "Projected View"
+  ]
+ },
+ "VIEWUPDATE": {
+  "description": "Updates selected Drawing Views that have become out of date because the source model has changed.",
+  "source": "acad",
+  "help_topic": "VIEWUPDATE",
+  "ui_labels": [
+   "Update View",
+   "Update all Views"
+  ]
+ },
+ "VIEWEDIT": {
+  "description": "Modifies the properties that are specific to a drawing view.",
+  "source": "acad",
+  "help_topic": "VIEWEDIT",
+  "ui_labels": [
+   "Edit View"
+  ]
+ },
+ "SURFEXTRACTCURVE": {
+  "description": "Creates an isoline curve from a surface, solid, or the face of a solid object in the U or V direction",
+  "source": "acad",
+  "ui_labels": [
+   "Extract Isolines"
+  ]
+ },
+ "RENDERONLINE": {
+  "description": "Uploads the current drawing and renders its 3D views with Autodesk Online Rendering Service.",
+  "source": "acad",
+  "ui_labels": [
+   "Render Online"
+  ]
+ },
+ "SHOWRENDERGALLERY": {
+  "description": "Opens your online gallery of completed and in-progress renderings in a browser.",
+  "source": "acad",
+  "ui_labels": [
+   "Show Render Gallery"
+  ]
+ },
+ "VIEWSECTION": {
+  "description": "Generates a section view from a drawing view using geometry in the layout to define the cutting plane.",
+  "source": "acad",
+  "help_topic": "VIEWSECTION",
+  "ui_labels": [
+   "Section View",
+   "Section View Full",
+   "Section View Half",
+   "Section View Object"
+  ]
+ },
+ "VIEWDETAIL": {
+  "description": "Generates a rectangular detail view from a drawing view.",
+  "source": "acad",
+  "help_topic": "VIEWDETAIL",
+  "ui_labels": [
+   "Detail View",
+   "Detail View Circular",
+   "Detail View Rectangular"
+  ]
+ },
+ "VIEWSYMBOLSKETCH": {
+  "description": "Enters the symbol sketch environment so you can constrain the section line or detail boundary geometry to the drawing view.",
+  "source": "acad",
+  "help_topic": "VIEWSYMBOLSKETCH",
+  "ui_labels": [
+   "Symbol Sketch",
+   "Edit View Sketch"
+  ]
+ },
+ "SUBOBJSELECTIONMODE (5)": {
+  "description": "Turns on filtering so you can select subobject components within a drawing view.",
+  "help_topic": "SUBOBJSELECTIONMODE",
+  "source": "acad",
+  "ui_labels": [
+   "Drawing View Component"
+  ]
+ },
+ "ADCCLOSE": {
+  "description": "Closes Design Center",
+  "source": "acad",
+  "ui_labels": [
+   "Closes Design Center"
+  ]
+ },
+ "ARX": {
+  "description": "Loads, unloads, and provides information about ObjectARX applications",
+  "source": "acad",
+  "ui_labels": [
+   "Arx"
+  ]
+ },
+ "ATTEXT": {
+  "description": "Extracts attribute data, informational text associated with a block, into a file",
+  "source": "acad",
+  "ui_labels": [
+   "Extract Attribute"
+  ]
+ },
+ "AUTOPUBLISH": {
+  "description": "Publishes drawings to DWF, DWFx, or PDF files automatically to a specified location",
+  "source": "acad",
+  "ui_labels": [
+   "Publish Drawing"
+  ]
+ },
+ "BMPOUT": {
+  "description": "Saves selected objects to a file in device-independent bitmap format",
+  "source": "acad",
+  "ui_labels": [
+   "Save to BMP"
+  ]
+ },
+ "CLASSICLAYER": {
+  "description": "Opens the legacy Layer Properties Manager",
+  "source": "acad",
+  "ui_labels": [
+   "Layer Properties Manager"
+  ]
+ },
+ "CLASSICXREF": {
+  "description": "Manages referenced drawing files in the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "XREF"
+  ]
+ },
+ "CUIUNLOAD": {
+  "description": "Unloads a CUIx file",
+  "source": "acad",
+  "ui_labels": [
+   "Unload CUI"
+  ]
+ },
+ "DELAY": {
+  "description": "Provides a timed pause within a script",
+  "source": "acad",
+  "ui_labels": [
+   "Delay"
+  ]
+ },
+ "DIMDISASSOCIATE": {
+  "description": "Removes associativity from selected dimensions",
+  "source": "acad",
+  "ui_labels": [
+   "Removes associativity"
+  ]
+ },
+ "DXFOUT": {
+  "description": "Saves a copy of the current drawing under a new file name",
+  "source": "acad",
+  "ui_labels": [
+   "Dxfout"
+  ]
+ },
+ "ELEV": {
+  "description": "Sets elevation and extrusion thickness of new objects",
+  "source": "acad",
+  "ui_labels": [
+   "Elevation"
+  ]
+ },
+ "FILL": {
+  "description": "Controls the filling of objects such as hatches, 2D solids, and wide polylines",
+  "source": "acad",
+  "ui_labels": [
+   "Fill"
+  ]
+ },
+ "FILTER": {
+  "description": "Creates a list of requirements that an object must meet to be included in a selection set",
+  "source": "acad",
+  "ui_labels": [
+   "Filter"
+  ]
+ },
+ "LAYERCLOSE": {
+  "description": "Closes the Layer Properties Manager",
+  "source": "acad",
+  "ui_labels": [
+   "Close Layer Properties Manager"
+  ]
+ },
+ "LAYERSTATESAVE": {
+  "description": "Save a new layerstate",
+  "source": "acad",
+  "ui_labels": [
+   "Save Layer State"
+  ]
+ },
+ "MATERIALASSIGN": {
+  "description": "Uses the current material defined in the CMATERIAL system variable",
+  "source": "acad",
+  "ui_labels": [
+   "Assign Material"
+  ]
+ },
+ "MENUUNLOAD": {
+  "description": "Unload acad menu files",
+  "source": "acad",
+  "ui_labels": [
+   "Unload Menu"
+  ]
+ },
+ "MODEL": {
+  "description": "Switches from a named (paper space) layout to the Model layout",
+  "source": "acad",
+  "ui_labels": [
+   "Model"
+  ]
+ },
+ "MSLIDE": {
+  "description": "Creates a slide file of the current model viewport or the current layout",
+  "source": "acad",
+  "ui_labels": [
+   "MSlide"
+  ]
+ },
+ "MULTIPLE": {
+  "description": "Repeats the next command until canceled",
+  "source": "acad",
+  "ui_labels": [
+   "Multiple"
+  ]
+ },
+ "MVSETUP": {
+  "description": "Sets up the specifications of a drawing",
+  "source": "acad",
+  "ui_labels": [
+   "MVSetup"
+  ]
+ },
+ "NETLOAD": {
+  "description": "Loads a .NET application",
+  "source": "acad",
+  "ui_labels": [
+   "Netload"
+  ]
+ },
+ "OLEOPEN": {
+  "description": "Open OLE object in its associated application",
+  "source": "acad",
+  "ui_labels": [
+   "Open OLE"
+  ]
+ },
+ "PLOTSTAMP": {
+  "description": "Places a plot stamp on a specified corner of each drawing and logs it to a file",
+  "source": "acad",
+  "ui_labels": [
+   "Open OLE"
+  ]
+ },
+ "PNGOUT": {
+  "description": "Export as a png file",
+  "source": "acad",
+  "ui_labels": [
+   "Export as PNG"
+  ]
+ },
+ "PSETUPIN": {
+  "description": "Imports a user-defined page setup into a new drawing layout",
+  "source": "acad",
+  "ui_labels": [
+   "Import setup"
+  ]
+ },
+ "QCCLOSE": {
+  "description": "Closes the QuickCalc calculator",
+  "source": "acad",
+  "ui_labels": [
+   "Close Quick Calculator"
+  ]
+ },
+ "REDEFINE": {
+  "description": "Restores AutoCAD internal commands overridden by UNDEFINE",
+  "source": "acad",
+  "ui_labels": [
+   "Redefine"
+  ]
+ },
+ "REGENAUTO": {
+  "description": "Controls automatic regeneration of a drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Regeneration"
+  ]
+ },
+ "TABLEDIT": {
+  "description": "Edits text in a table cell",
+  "source": "acad",
+  "ui_labels": [
+   "Edit Table"
+  ]
+ },
+ "TASKBAR": {
+  "description": "Controls whether multiple open drawings are displayed separately or grouped on the Windows taskbar",
+  "source": "acad",
+  "ui_labels": [
+   "Taskbar"
+  ]
+ },
+ "TOOLPALETTESCLOSE": {
+  "description": "Closes the Tool Palettes window",
+  "source": "acad",
+  "ui_labels": [
+   "Close Tool Palettes"
+  ]
+ },
+ "UNDEFINE": {
+  "description": "Allows an application-defined command to override an internal command",
+  "source": "acad",
+  "ui_labels": [
+   "Undefine Command"
+  ]
+ },
+ "VIEWRES": {
+  "description": "Sets the resolution for objects in the current viewport",
+  "source": "acad",
+  "ui_labels": [
+   "Viewport Resolution"
+  ]
+ },
+ "VPLAYER": {
+  "description": "Sets layer visibility within viewports",
+  "source": "acad",
+  "ui_labels": [
+   "Viewport Layer"
+  ]
+ },
+ "VSLIDE": {
+  "description": "Displays an image slide file in the current viewport",
+  "source": "acad",
+  "ui_labels": [
+   "Display Image Slide"
+  ]
+ },
+ "WMFOUT": {
+  "description": "Saves objects to a Windows metafile",
+  "source": "acad",
+  "ui_labels": [
+   "Save as WMF"
+  ]
+ },
+ "XPLODE": {
+  "description": "Breaks a compound object into its component objects",
+  "source": "acad",
+  "ui_labels": [
+   "Xplode"
+  ]
+ },
+ "MENULOAD": {
+  "description": "Load acad menu files",
+  "source": "acad",
+  "ui_labels": [
+   "Load Menu"
+  ]
+ },
+ "TEXTALIGN": {
+  "description": "Aligns and spaces selected text objects",
+  "source": "acad",
+  "ui_labels": [
+   "Text Align"
+  ]
+ },
+ "DESKTOPANALYTICS": {
+  "description": "Displays the Desktop Analytics dialog",
+  "source": "acad",
+  "ui_labels": [
+   "Desktop Analytics..."
+  ]
+ },
+ "PCEXTRACTSECTION": {
+  "description": "Extracts 2D geometry from point cloud for the active section plane",
+  "source": "acad",
+  "ui_labels": [
+   "Extract Section lines"
+  ]
+ },
+ "PCEXTRACTCORNER": {
+  "description": "Extracts a corner point from the intersection of 3 planar segments or a point cloud.",
+  "source": "acad",
+  "ui_labels": [
+   "Point Cloud Extract Corner"
+  ]
+ },
+ "PCEXTRACTEDGE": {
+  "description": "Extracts a line from the intersection of 2 planar segments of a point cloud.",
+  "source": "acad",
+  "ui_labels": [
+   "Point Cloud Extract Edge"
+  ]
+ },
+ "PCEXTRACTCENTERLINE": {
+  "description": "Extracts a centerline from a cylindrical segment of a point cloud.",
+  "source": "acad",
+  "ui_labels": [
+   "Point Cloud Extract Center Line"
+  ]
+ },
+ "CENTERLINE": {
+  "description": "Creates centerline geometry of a specified linetype in association with selected lines and polylines.",
+  "source": "acad",
+  "ui_labels": [
+   "Centerline"
+  ]
+ },
+ "CENTERMARK": {
+  "description": "Creates an associative, cross-shaped mark at the center of a selected circle, arc, or polygonal arc.",
+  "source": "acad",
+  "ui_labels": [
+   "Center Mark"
+  ]
+ },
+ "CENTERDISASSOCIATE": {
+  "description": "Removes associativity of center marks or centerlines from objects they define.",
+  "source": "acad",
+  "ui_labels": [
+   "Center Disassociate"
+  ]
+ },
+ "CENTERRESET": {
+  "description": "Resets the centerlines to the current value specified in the CENTEREXE system variable.",
+  "source": "acad",
+  "ui_labels": [
+   "Center Reset",
+   "Reset Extension Length"
+  ]
+ },
+ "CENTERREASSOCIATE": {
+  "description": "Associates or reassociates a center mark or centerline object to selected objects.",
+  "source": "acad",
+  "ui_labels": [
+   "Center Reassociate"
+  ]
+ },
+ "SYSVARMONITOR": {
+  "description": "Starts SysvarMonitor command",
+  "source": "acad",
+  "ui_labels": [
+   "SYSVARMONITOR"
+  ]
+ },
+ "GCE": {
+  "description": "Snaps to the geometric center point of polyline, 2d polyline and 2d spline",
+  "source": "acad",
+  "ui_labels": [
+   "Snap, Geometric Center"
+  ]
+ },
+ "3DPRINT": {
+  "description": "Sends solid objects and watertight meshes to Autodesk Print Studio (available only for 64-bit systems).",
+  "source": "acad",
+  "ui_labels": [
+   "Publish, Print Studio"
+  ]
+ },
+ "RESET EXTENSION LENGTH": {
+  "description": "Reset Extension Length",
+  "source": "acad",
+  "ui_labels": [
+   "Reset Extension Length"
+  ]
+ },
+ "NEWVIEW": {
+  "description": "Saves a new named view from what's displayed in the current viewport, or by defining a rectangular window",
+  "source": "acad",
+  "ui_labels": [
+   "New View"
+  ]
+ },
+ "COMPARE": {
+  "description": "Allows you to highlight the differences between two revisions of the same drawing or different drawings",
+  "source": "acad",
+  "ui_labels": [
+   "DWG Compare"
+  ]
+ },
+ "DETECT": {
+  "description": "Identifies objects in the drawing that can be converted into blocks.",
+  "source": "acad",
+  "ui_labels": [
+   "DETECT"
+  ]
+ },
+ "DETECTPALETTECLOSE": {
+  "description": "Opens the Detection palette.",
+  "source": "acad",
+  "ui_labels": [
+   "DetectPalette"
+  ]
+ },
+ "DETECTPALETTE": {
+  "description": "Opens the Detection palette.",
+  "source": "acad",
+  "ui_labels": [
+   "DetectPalette"
+  ]
+ },
+ "CLASSICINSERT": {
+  "description": "Inserts a block or a drawing into the current drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Insert Block - Classic"
+  ]
+ },
+ "SHARE": {
+  "description": "Shares a link to the current version of the drawing including its external references.",
+  "source": "acad",
+  "ui_labels": [
+   "Share Drawing"
+  ]
+ },
+ "MARKUPIMPORT": {
+  "description": "Import markup into a trace Identifies the markups in your drawing and converts them to AutoCAD objects like text, leaders, and revision clouds.",
+  "source": "acad",
+  "ui_labels": [
+   "Markup Import"
+  ]
+ },
+ "CUTBASE": {
+  "description": "Copies selected objects to the Clipboard along with a specified base point and removes them from the drawing",
+  "source": "acad",
+  "ui_labels": [
+   "Cut with Base Point"
+  ]
+ },
+ "BREPLACE": {
+  "description": "Replaces an existing block with a specified block.",
+  "source": "acad",
+  "ui_labels": [
+   "Replace"
+  ]
+ },
+ "XLIST": {
+  "description": "Displays properties of objects nested in blocks and external references",
+  "help_topic": "XLIST",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "List Xref/Block Properties"
+  ]
+ },
+ "BTRIM": {
+  "description": "Trims to objects nested in blocks and external references",
+  "help_topic": "BTRIM",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Trim to Nested Objects"
+  ]
+ },
+ "BEXTEND": {
+  "description": "Extends to objects nested in blocks and external references",
+  "help_topic": "BEXTEND",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Extend to Nested Objects"
+  ]
+ },
+ "BURST": {
+  "description": "Explodes block and converts attributes to text",
+  "help_topic": "BURST",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Explode Attributes to Text"
+  ]
+ },
+ "SHP2BLK": {
+  "description": "Converts from a shape definition to a block definition",
+  "help_topic": "SHP2BLK",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Convert Shape to Block"
+  ]
+ },
+ "ATTOUT": {
+  "description": "Extracts attribute information from the drawing",
+  "help_topic": "ATTOUT",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Export Attribute Information"
+  ]
+ },
+ "ATTIN": {
+  "description": "Inserts attribute information into the drawing",
+  "help_topic": "ATTIN",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Import Attribute Information"
+  ]
+ },
+ "BLOCKTOXREF": {
+  "description": "Converts a specified block and all of its inserts to an xref",
+  "help_topic": "BLOCKTOXREF",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Convert block to xref"
+  ]
+ },
+ "BLOCKREPLACE": {
+  "description": "Replaces all inserts of one block with inserts of another",
+  "help_topic": "BLOCKREPLACE",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Replace block with another block"
+  ]
+ },
+ "RTEXT": {
+  "description": "Inserts or edits a remote text object",
+  "help_topic": "RTEXT",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Remote Text"
+  ]
+ },
+ "TEXTFIT": {
+  "description": "Fits text between specified points",
+  "help_topic": "TEXTFIT",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Text Fit"
+  ]
+ },
+ "TEXTMASK": {
+  "description": "Places a mask behind selected text",
+  "help_topic": "TEXTMASK",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Text Mask"
+  ]
+ },
+ "TEXTUNMASK": {
+  "description": "Removes a mask from behind selected text",
+  "help_topic": "TEXTUNMASK",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Unmask Text"
+  ]
+ },
+ "TXTEXP": {
+  "description": "Explodes text into polylines",
+  "help_topic": "TXTEXP",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Explode Text"
+  ]
+ },
+ "ARCTEXT": {
+  "description": "Creates text following a selected arc",
+  "help_topic": "ARCTEXT",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Arc-Aligned Text"
+  ]
+ },
+ "TJUST": {
+  "description": "Justifies text created with MTEXT and ATTDEF",
+  "help_topic": "TJUST",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Justify Text"
+  ]
+ },
+ "TORIENT": {
+  "description": "Rotates text, multiline text, and block attribute objects to new orientation",
+  "help_topic": "TORIENT",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Rotate Text"
+  ]
+ },
+ "TCIRCLE": {
+  "description": "Surrounds text or multiline text with circles, slots, or rectangles",
+  "help_topic": "TCIRCLE",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Enclose Text with Object"
+  ]
+ },
+ "TCOUNT": {
+  "description": "Adds sequential numbering to text objects",
+  "help_topic": "TCOUNT",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Automatic Text Numbering"
+  ]
+ },
+ "TCASE": {
+  "description": "Changes the case of selected text",
+  "help_topic": "TCASE",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Change Text Case"
+  ]
+ },
+ "ALIGNSPACE": {
+  "description": "Aligns model space objects in different viewports with each other or with objects in paper space",
+  "help_topic": "ALIGNSPACE",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Align Space"
+  ]
+ },
+ "VPSYNC": {
+  "description": "Synchronizes one or more viewports with a master viewport",
+  "help_topic": "VPSYNC",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Synchronize Viewports"
+  ]
+ },
+ "VPSCALE": {
+  "description": "Lists the scale of a selected viewport",
+  "help_topic": "VPSCALE",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "List Viewport Scale"
+  ]
+ },
+ "LAYOUTMERGE": {
+  "description": "Merges the objects from other layouts into one layout and saves corresponding views",
+  "help_topic": "LAYOUTMERGE",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Merge Layout"
+  ]
+ },
+ "QLATTACH": {
+  "description": "Associates a leader to an annotation object",
+  "help_topic": "QLATTACH",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Attach Leader to Annotation"
+  ]
+ },
+ "QLDETACHSET": {
+  "description": "Disassociates selected leaders from an annotation",
+  "help_topic": "QLDETACHSET",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Detach Leaders from Annotation"
+  ]
+ },
+ "QLATTACHSET": {
+  "description": "Associates selected leaders with a likely annotation",
+  "help_topic": "QLATTACHSET",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Global Attach Leader to Annotation"
+  ]
+ },
+ "DIMEX": {
+  "description": "Saves dimension styles to a file",
+  "help_topic": "DIMEX",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Dimstyle Export..."
+  ]
+ },
+ "DIMIM": {
+  "description": "Imports dimension styles saved to a file using DIMEX",
+  "help_topic": "DIMIM",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Dimstyle Import..."
+  ]
+ },
+ "DIMREASSOC": {
+  "description": "Re-associates dimensions",
+  "help_topic": "DIMREASSOC",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Reset Dim Text Value"
+  ]
+ },
+ "GETSEL": {
+  "description": "Selects specific types of objects",
+  "help_topic": "GETSEL",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Get Selection Set"
+  ]
+ },
+ "FS": {
+  "description": "Selects objects that touch a specified object",
+  "help_topic": "FS",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Fast Select"
+  ]
+ },
+ "MSTRETCH": {
+  "description": "Stretches objects with multiple selection windows",
+  "help_topic": "MSTRETCH",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Multiple Object Stretch"
+  ]
+ },
+ "MOCORO": {
+  "description": "Moves, copies, rotates, and scales objects",
+  "help_topic": "MOCORO",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Move/Copy/Rotate"
+  ]
+ },
+ "CLIPIT": {
+  "description": "Adds arc, circle, and polyline capability to XCLIP",
+  "help_topic": "CLIPIT",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Extended Clip"
+  ]
+ },
+ "CDORDER": {
+  "description": "Arranges draw order of objects based on color",
+  "help_topic": "CDORDER",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "DrawOrder by color"
+  ]
+ },
+ "FLATTEN": {
+  "description": "Converts 3D geometry to 2D",
+  "help_topic": "FLATTEN",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Flatten objects"
+  ]
+ },
+ "COPYM": {
+  "description": "Copies objects multiple times with options to repeat, divide, measure, and array",
+  "help_topic": "COPYM",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Multiple Copy"
+  ]
+ },
+ "EXOFFSET": {
+  "description": "Enhances OFFSET",
+  "help_topic": "EXOFFSET",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Extended Offset"
+  ]
+ },
+ "BREAKLINE": {
+  "description": "Creates polylines and inserts break-line symbol",
+  "help_topic": "BREAKLINE",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Break-line Symbol"
+  ]
+ },
+ "SUPERHATCH": {
+  "description": "Uses images, blocks, external references, or wipeouts as hatch patterns",
+  "help_topic": "SUPERHATCH",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Super Hatch..."
+  ]
+ },
+ "MOVEBAK": {
+  "description": "Moves saved AutoCAD backup files to a directory",
+  "help_topic": "MOVEBAK",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Move Backup Files"
+  ]
+ },
+ "PLT2DWG": {
+  "description": "Imports HP-GL files into the current drawing session",
+  "help_topic": "PLT2DWG",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Convert PLT to DWG"
+  ]
+ },
+ "IMAGEEDIT": {
+  "description": "Launches an image editor application for editing a selected image",
+  "help_topic": "IMAGEEDIT",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Edit Image"
+  ]
+ },
+ "REDIR": {
+  "description": "Redefines the paths in external references, images, shapes, and fonts",
+  "help_topic": "REDIR",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Redefine Path"
+  ]
+ },
+ "PROPULATE": {
+  "description": "Updates, lists, and clears drawing property information",
+  "help_topic": "PROPULATE",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Update Drawing Property Data"
+  ]
+ },
+ "SAVEALL": {
+  "description": "Saves all open drawings",
+  "help_topic": "SAVEALL",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Save All Drawings"
+  ]
+ },
+ "QQUIT": {
+  "description": "Closes all drawings and exits",
+  "help_topic": "QQUIT",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Quick Exit"
+  ]
+ },
+ "REVERT": {
+  "description": "Closes the current drawing and re-opens the original version",
+  "help_topic": "REVERT",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Revert to Original"
+  ]
+ },
+ "SHOWURLS": {
+  "description": "Shows the location of embedded URL addresses",
+  "help_topic": "SHOWURLS",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Show URLs"
+  ]
+ },
+ "CHURLS": {
+  "description": "Modifies URL addresses",
+  "help_topic": "CHURLS",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Change URLs"
+  ]
+ },
+ "REPURLS": {
+  "description": "Replaces URL addresses with others",
+  "help_topic": "REPURLS",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Find and Replace URLs"
+  ]
+ },
+ "ALIASEDIT": {
+  "description": "Launches an editor for aliases stored in the acad.pgp file",
+  "help_topic": "ALIASEDIT",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Command Alias Editor..."
+  ]
+ },
+ "SYSVDLG": {
+  "description": "Launches an editor for system variables",
+  "help_topic": "SYSVDLG",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "System Variable Editor..."
+  ]
+ },
+ "MKLTYPE": {
+  "description": "Creates a linetype based on selected objects",
+  "help_topic": "MKLTYPE",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Make Linetype"
+  ]
+ },
+ "MKSHAPE": {
+  "description": "Creates a shape based on selected objects",
+  "help_topic": "MKSHAPE",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Make Shape"
+  ]
+ },
+ "RTUCS": {
+  "description": "Changes the UCS in real time",
+  "help_topic": "RTUCS",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Real-Time UCS"
+  ]
+ },
+ "XDATA": {
+  "description": "Attaches extended object data (xdata) to an object",
+  "help_topic": "XDATA",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Attach Xdata"
+  ]
+ },
+ "XDLIST": {
+  "description": "Lists the extended object data (xdata) attached to an object",
+  "help_topic": "XDLIST",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "List Object Xdata"
+  ]
+ },
+ "EXPLAN": {
+  "description": "Enhances PLAN",
+  "help_topic": "EXPLAN",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Extended Plan"
+  ]
+ },
+ "EDITTIME": {
+  "description": "Tracks total active editing time in drawing",
+  "help_topic": "EDITTIME",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Dwg Editing Time"
+  ]
+ },
+ "TFRAMES": {
+  "description": "Toggles frames for images and wipeouts",
+  "help_topic": "TFRAMES",
+  "source": "acetmain",
+  "express_tool": true,
+  "ui_labels": [
+   "Toggle Frames"
+  ]
+ },
+ "AECDISPLAYMANAGERCONFIGSSELECTI": {
+  "description": "Sets the current display configuration: DISPLAYMANAGERCONFIGSSELECTION",
+  "help_topic": "AECID_AecDisplayManagerConfigsSelection",
+  "source": "aecarchxoe",
+  "ui_labels": [
+   "Set Current Display Configuration"
+  ]
+ },
+ "AECID_AECDISPLAYMANAGERCONFIGSSELECTION": {
+  "description": "Sets the current display configuration: DISPLAYMANAGERCONFIGSSELECTION",
+  "help_topic": "AECID_AecDisplayManagerConfigsSelection",
+  "source": "aecarchxoe",
+  "ui_labels": [
+   "Set Current Display Configuration"
+  ]
+ },
+ "-AECEXPORTTOAUTOCAD": {
+  "description": "Exports to AutoCAD format: -EXPORTTOAUTOCAD",
+  "source": "aecarchxoe",
+  "ui_labels": [
+   "Export to AutoCAD"
+  ]
+ },
+ "AECSETXREFCONFIG": {
+  "description": "Overrides the display configuration for an external reference: SETXREFCONFIG",
+  "source": "aecarchxoe",
+  "ui_labels": [
+   "Override External Reference Display Configuration"
+  ]
+ },
+ "APPMANAGER": {
+  "description": "Displays the App Manager dialog where you can view, update, uninstall and get help on all the Apps downloaded from the Autodesk App Store",
+  "source": "appmanager",
+  "ui_labels": [
+   "App Manager"
+  ]
+ },
+ "VIEWBASE": {
+  "description": "Generates the base view of a model created in model space, from which all other drawing views are derived.",
+  "help_topic": "VIEWBASE",
+  "source": "modeldoc",
+  "ui_labels": [
+   "Base View",
+   "Base View from File",
+   "Base View from Model Space"
+  ]
+ },
+ "VIEWSTD": {
+  "description": "Defines the default settings for Drawing Views.",
+  "help_topic": "VIEWSTD",
+  "source": "modeldoc",
+  "ui_labels": [
+   "Drafting Standard"
+  ]
+ },
+ "VIEWSKETCHCLOSE": {
+  "description": "Exits the view sketch environment and returns to paper space.",
+  "help_topic": "VIEWSKETCHCLOSE",
+  "source": "modeldoc",
+  "ui_labels": [
+   "View Sketch Close"
+  ]
+ },
+ "VIEWSECTIONSTYLE": {
+  "description": "Creates and modifies section view styles.",
+  "help_topic": "VIEWSECTIONSTYLE",
+  "source": "modeldoc",
+  "ui_labels": [
+   "Section View Style"
+  ]
+ },
+ "VIEWDETAILSTYLE": {
+  "description": "Creates and modifies detail view styles.",
+  "help_topic": "VIEWDETAILSTYLE",
+  "source": "modeldoc",
+  "ui_labels": [
+   "Detail View Style"
+  ]
+ },
+ "VIEWEDGE": {
+  "description": "Edits selected Edges",
+  "source": "modeldoc",
+  "ui_labels": [
+   "Edit Edges"
+  ]
+ },
+ "VIEWCOMPONENT": {
+  "description": "Modifies the participation of components within a section view or drawing view derived from a section view.",
+  "help_topic": "VIEWCOMPONENT",
+  "source": "modeldoc",
+  "ui_labels": [
+   "Edit Components"
+  ]
+ },
+ "VIEWSETPROJ": {
+  "description": "Set inventor project file.",
+  "source": "modeldoc",
+  "ui_labels": [
+   "Set Inventor Project file"
+  ]
+ }
+}

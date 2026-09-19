@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .. import com, lisp
+from .. import com, commands_db, lisp
 from ..errors import AcadError
 from ..registry import tool
 
@@ -70,14 +70,24 @@ def cad_command(
     if not name.startswith(("_", ".", "-")):
         name = "_." + name.lstrip("_.")
 
+    resolved: list[str] = []
     parts: list[Any] = [name]
     for a in args or []:
         if isinstance(a, str) and a.strip().lower() == "<selection>":
             if not select_handles:
                 raise AcadError("<selection> used but no select_handles were given")
             parts.append(lisp.ss_from(select_handles))
-        else:
-            parts.append(_arg(a))
+            continue
+        # Let a readable option name through: "tolerance" becomes "_O",
+        # because AutoCAD wants the capital letters of "tOlerance". Getting
+        # this wrong leaves the command waiting at a prompt.
+        if isinstance(a, str) and a and not a.startswith(("_", "-")) and len(a) > 1:
+            keyword = commands_db.option_keyword(name, a)
+            if keyword:
+                parts.append("_" + keyword)
+                resolved.append(f"{a} -> _{keyword}")
+                continue
+        parts.append(_arg(a))
     if select_handles and not any(isinstance(p, lisp.Raw) for p in parts):
         # conventional place for a selection: straight after the command name
         parts.insert(1, lisp.ss_from(select_handles))
@@ -96,6 +106,8 @@ def cad_command(
         out["created_count"] = len(created)
     if value not in (None, ""):
         out["returned"] = value
+    if resolved:
+        out["option_keywords_resolved"] = resolved
     return out
 
 

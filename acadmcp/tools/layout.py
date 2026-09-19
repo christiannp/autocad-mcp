@@ -89,11 +89,24 @@ def layout_manage(
         if verb == "create":
             if not name:
                 raise AcadError("a layout needs a name")
-            com.retry(lambda: doc.Layouts.Add(str(name)))
-            # Layouts.Add sometimes hands back an object late binding cannot
-            # read properties from, so fetch the layout again by name.
+            made_with = "COM"
+            try:
+                com.retry(lambda: doc.Layouts.Add(str(name)), timeout=20)
+            except Exception:  # noqa: BLE001
+                # Late binding cannot always resolve Layouts.Add. The command
+                # line always can, which is the point of having both engines.
+                made_with = "-LAYOUT command"
+                lisp.evaluate(
+                    lisp.command("_.-LAYOUT", "_New", str(name)), doc=doc, timeout=120
+                )
+            # Add can also hand back an object whose properties are unreadable,
+            # so fetch the layout again by name either way.
             layout = _find_layout(doc, str(name))
-            return {"created": str(layout.Name), "tab_order": com.prop(layout, "TabOrder")}
+            return {
+                "created": str(layout.Name),
+                "tab_order": com.prop(layout, "TabOrder"),
+                "via": made_with,
+            }
         if not name:
             raise AcadError(f"{verb} needs the layout name")
         layout = _find_layout(doc, name)

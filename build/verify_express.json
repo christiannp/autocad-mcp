@@ -1,0 +1,340 @@
+{
+ "ALIASEDIT": {
+  "exists_ui": true,
+  "output": [
+   "ALIASEDIT"
+  ],
+  "parked": false
+ },
+ "ALIGNSPACE": {
+  "exists_ui": true,
+  "output": [
+   "ALIGNSPACE",
+   "Initializing...",
+   "Command not allowed unless TILEMODE is set to 0"
+  ],
+  "parked": false
+ },
+ "ARCTEXT": {
+  "exists_ui": true,
+  "output": [
+   "ARCTEXT"
+  ],
+  "parked": true
+ },
+ "ATTIN": {
+  "exists_ui": true,
+  "output": [
+   "ATTIN",
+   "Initializing..."
+  ],
+  "parked": true
+ },
+ "ATTOUT": {
+  "exists_ui": true,
+  "output": [
+   "ATTOUT"
+  ],
+  "parked": true
+ },
+ "BEXTEND": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "BLOCKREPLACE": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "BLOCKTOXREF": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "BREAKLINE": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "BTRIM": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "BURST": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "CDORDER": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "CHURLS": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "CLIPIT": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "COPYM": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "DIMEX": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "DIMIM": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "DIMREASSOC": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "EXOFFSET": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "EXPLAN": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "FLATTEN": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "GETSEL": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "IMAGEEDIT": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "LAYOUTMERGE": {
+  "exists_ui": true,
+  "output": [
+   "LAYOUTMERGE",
+   "Initializing..."
+  ],
+  "parked": true
+ },
+ "MKLTYPE": {
+  "exists_ui": true,
+  "output": [
+   "MKLTYPE",
+   "Initializing..."
+  ],
+  "parked": true
+ },
+ "MKSHAPE": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "MSTRETCH": {
+  "exists_ui": true,
+  "output": [
+   "MSTRETCH",
+   "Initializing...",
+   "Define crossing windows or crossing polygons..."
+  ],
+  "parked": true
+ },
+ "PLT2DWG": {
+  "exists_ui": true,
+  "output": [
+   "PLT2DWG",
+   "Initializing..."
+  ],
+  "parked": true
+ },
+ "PROPULATE": {
+  "exists_ui": true,
+  "output": [
+   "PROPULATE"
+  ],
+  "parked": true
+ },
+ "QLATTACH": {
+  "exists_ui": true,
+  "output": [
+   "QLATTACH"
+  ],
+  "parked": true
+ },
+ "QLATTACHSET": {
+  "exists_ui": true,
+  "output": [
+   "QLATTACHSET"
+  ],
+  "parked": true
+ },
+ "QLDETACHSET": {
+  "exists_ui": true,
+  "output": [
+   "QLDETACHSET"
+  ],
+  "parked": true
+ },
+ "REDIR": {
+  "exists_ui": true,
+  "output": [
+   "REDIR",
+   "Initializing...",
+   "Current REDIRMODE: Styles,Xrefs,Images,Rtext"
+  ],
+  "parked": true
+ },
+ "REPURLS": {
+  "exists_ui": true,
+  "output": [
+   "REPURLS",
+   "Initializing..."
+  ],
+  "parked": true
+ },
+ "RTEXT": {
+  "exists_ui": true,
+  "output": [
+   "RTEXT",
+   "Initializing...",
+   "Current settings: Style=Standard  Height=2.5000  Rotation=0"
+  ],
+  "parked": true
+ },
+ "RTUCS": {
+  "exists_ui": true,
+  "output": [
+   "RTUCS",
+   "Initializing...",
+   "Press TAB key to change axis or"
+  ],
+  "parked": true
+ },
+ "SHOWURLS": {
+  "exists_ui": true,
+  "output": [
+   "SHOWURLS",
+   "No URLs found."
+  ],
+  "parked": false
+ },
+ "SHP2BLK": {
+  "exists_ui": true,
+  "output": [
+   "SHP2BLK",
+   "Initializing..."
+  ],
+  "parked": true
+ },
+ "SUPERHATCH": {
+  "exists_ui": true,
+  "output": [
+   "SUPERHATCH",
+   "Initializing..."
+  ],
+  "parked": true
+ },
+ "SYSVDLG": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "TCASE": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "TCIRCLE": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "TCOUNT": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "TEXTFIT": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "TEXTMASK": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "TEXTUNMASK": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "TFRAMES": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "TJUST": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "TORIENT": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "TXT2MTXT": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "TXTEXP": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "VPSCALE": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "VPSYNC": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "XDATA": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "XDLIST": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ },
+ "XLIST": {
+  "exists_ui": false,
+  "output": [],
+  "parked": true
+ }
+}

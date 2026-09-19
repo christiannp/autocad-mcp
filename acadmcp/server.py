@@ -10,6 +10,7 @@ from .registry import mcp
 TOOL_MODULES = [
     "session",
     "raw",
+    "commands",
     "draw",
     "modify",
     "select",
