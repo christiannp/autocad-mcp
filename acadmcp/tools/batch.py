@@ -85,7 +85,7 @@ def batch_preview(
     }
 
 
-@tool(description=(
+@tool(undo_group=False, description=(
     "Open every matching drawing in a folder, run the same steps on each, then "
     "save and close it. Steps are the same shape as cad_script: "
     "{\"command\": \"_.-PURGE\", \"args\": [...]} or {\"lisp\": \"...\"}. "
@@ -223,7 +223,7 @@ def batch_process(
     }
 
 
-@tool(description=(
+@tool(undo_group=False, description=(
     "Run a batch job headlessly with accoreconsole - no window, much faster for "
     "large folders, but no visual feedback and script commands only (no LISP "
     "that needs the UI). script_lines are typed exactly as at the command line."

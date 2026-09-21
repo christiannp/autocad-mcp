@@ -81,6 +81,11 @@ def h(value):
     return None
 
 
+for leftover in ("ext-test.dwg", "standards.dwg"):
+    try:
+        doc_close(drawing=leftover, save=False)
+    except Exception:  # noqa: BLE001 - not open, fine
+        pass
 run("doc_new", doc_new)
 run("units mm", lambda: sysvar(settings={"INSUNITS": 4, "LTSCALE": 50, "PDMODE": 3, "PDSIZE": 200}))
 run("layer A-ROOF", lambda: layer_set("A-ROOF", color="cyan", make_current=True))
@@ -96,8 +101,10 @@ run("undo mark", lambda: undo("mark"))
 tmp = run("temp circle", lambda: draw_circle([50000, 50000], radius=100))
 run("undo back", lambda: undo("back"))
 run("temp circle gone", lambda: (_ for _ in ()).throw(AssertionError("still there")) if entity_info([h(tmp)]).get("count", 0) else "gone")
-run("undo 1 (undoes nothing harmful)", lambda: undo("undo", steps=1))
+run("undo 1 (= the polygon call)", lambda: undo("undo", steps=1))
+run("polygon gone", lambda: "gone" if not entity_info([h(poly)]).get("count") else (_ for _ in ()).throw(AssertionError("polygon still there")))
 run("redo 1", lambda: undo("redo", steps=1))
+run("polygon back", lambda: "back" if entity_info([h(poly)]).get("count") else (_ for _ in ()).throw(AssertionError("polygon not restored")))
 
 print("\n=== offset with side ===", flush=True)
 inner = run("offset inside 1000", lambda: entity_offset([h(roof)], 1000, side="inside"))
@@ -236,6 +243,7 @@ if INTERACTIVE:
     run("user_pick keyword", lambda: user_pick("keyword", options=["Yes", "No"], timeout=30))
 
 run("save", lambda: doc_save(path=str(OUT / "ext-test.dwg")))
+run("close", lambda: doc_close(save=False))
 print(f"\n{passed} passed, {failed} failed", flush=True)
 for f in sorted(OUT.rglob("*")):
     if f.is_file():

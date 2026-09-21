@@ -113,6 +113,9 @@ def entity_select(
     else:
         mode = f'(ssget "_X" {flt})'
 
+    if window or crossing or fence or polygon:
+        # area selection only sees what is on screen, exactly like picking it
+        com.run_com(lambda: com.quiet(lambda: com.app().ZoomExtents()), timeout=60)
     handles = lisp.evaluate(lisp.raw(f"(acadmcp:handles {mode})"), timeout=180) or []
     handles = [str(h) for h in handles if h]
     total = len(handles)
@@ -324,7 +327,7 @@ def selection_current(
     return out
 
 
-@tool(description=(
+@tool(undo_group=False, description=(
     "Highlight entities in AutoCAD (select them with grips) so the user can "
     "see which objects are meant, or clear the selection with no handles. "
     "Optionally zoom to them first."
@@ -358,7 +361,7 @@ def selection_highlight(
 PICK_KINDS = ("objects", "point", "points", "distance", "text", "keyword", "number")
 
 
-@tool(description=(
+@tool(undo_group=False, description=(
     "Ask the user to pick something in AutoCAD and wait for it: objects (click "
     "or window-select, Enter to finish), point, points (several, Enter to "
     "finish), distance (two clicks or a typed value), text, number, or keyword "

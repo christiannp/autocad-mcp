@@ -1,4 +1,4 @@
-﻿# Diagnostics
+# Diagnostics
 
 One-off scripts written while working out how AutoCAD 2025 actually behaves.
 They are kept because each one answers a question that is expensive to
@@ -18,4 +18,7 @@ README.md.
 | `diag_save_plot.py` | which plotting call actually writes a PDF? |
 | `diag_break.py` | does the BREAK command accept scripted points? (it does not, reliably) |
 | `quick_overkill.py` | OVERKILL option keywords |
+| `diag_undo.py` | how UNDO/REDO behave around COM edits, LISP jobs and StartUndoMark groups |
+| `diag_prompt_log.py` | what a parked command was really asking, read from AutoCAD's own LOGFILE |
+| `diag_vis.py` | a visual check of screenshot and render on the extended test drawing |
 | `mark_readonly.py` | a one-time patch that tagged the inspection-only tools |

@@ -408,9 +408,11 @@ def layer_states(
     if verb in ("save", "restore", "delete", "export") and not name:
         raise AcadError(f"{verb} needs the layer state name")
     if verb == "save":
-        # 65535 = every layer property; the saved state can be restored in full
+        # mask 511 = every documented layer property (on/off, frozen, locked,
+        # plot, new-viewport-frozen, colour, linetype, lineweight, plot style);
+        # anything higher is rejected with "ADS request error"
         ok = lisp.evaluate(
-            lisp.raw(f"(layerstate-save {lisp.lstr(str(name))} 65535 nil)"), doc=doc, timeout=120
+            lisp.raw(f"(layerstate-save {lisp.lstr(str(name))} 511 nil)"), doc=doc, timeout=120
         )
         return {"saved": name, "ok": bool(ok), "states": names()}
     if verb == "restore":

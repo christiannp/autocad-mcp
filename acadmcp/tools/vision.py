@@ -90,7 +90,7 @@ def _zoom(handles: list[str] | None, window: list[list[float]] | None, extents: 
         return f"zoom skipped ({str(exc)[:120]})"
 
 
-@tool(description=(
+@tool(undo_group=False, description=(
     "Look at the AutoCAD window: returns a picture of the drawing canvas as the "
     "user sees it, so an edit can be checked visually. Zooms to extents first "
     "unless handles (zoom to those objects) or window corners are given, or "
@@ -123,35 +123,58 @@ def screenshot(
 _PIXELS = re.compile(r"\(?\s*([\d.]+)\s*[_ ]?x[_ ]?\s*([\d.]+)\s*[_ ]?Pixels", re.I)
 
 
-def _pick_media(names: list[str], width: int, height: int) -> tuple[str, int, int, int]:
-    """Choose the largest pixel paper size that fits, and the rotation for it.
+def _pick_media(names: list[str], width: int, height: int) -> tuple[str, int, int]:
+    """Choose the raster paper size with the most pixels.
 
-    Raster sizes are listed as '(short x long Pixels)'; rotating by 90 degrees
-    turns a portrait sheet into a landscape one.
+    The PNG plotter's sizes are listed as '(width x height Pixels)' and the
+    canvas is always exactly that size - PlotRotation does not turn it - so
+    orientation cannot be chosen. The largest canvas wins regardless: the
+    drawing is plotted to fit, the blank margin is trimmed afterwards, and the
+    result is shrunk to the requested size. A landscape drawing on a portrait
+    1280x1600 canvas still gets 1280 px of width, more than any landscape sheet
+    the plotter offers.
     """
-    want_long = max(width, height)
-    landscape = width >= height
+    # the plotter goes up to 16K (15360 x 8640); anything past about twice the
+    # requested size only costs time, so cap the long side there
+    cap = max(2 * max(int(width), int(height)), 1600)
     best: tuple[int, str, int, int] | None = None
     for name in names:
         m = _PIXELS.search(str(name))
         if not m:
             continue
-        a, b = int(float(m.group(1))), int(float(m.group(2)))
-        short, long_ = min(a, b), max(a, b)
-        score = long_ if long_ <= want_long else -long_
+        w, h = int(float(m.group(1))), int(float(m.group(2)))
+        area = w * h
+        fits = max(w, h) <= cap
+        score = area if fits else -area
         if best is None or score > best[0]:
-            best = (score, str(name), short, long_)
+            best = (score, str(name), w, h)
     if best is None:
         raise AcadError(
             f"{PNG_DEVICE} lists no pixel paper sizes; check the plotter configuration"
         )
-    _, name, short, long_ = best
-    m = _PIXELS.search(name)
-    a, b = int(float(m.group(1))), int(float(m.group(2)))  # type: ignore[union-attr]
-    sheet_landscape = a > b
-    rotation = 0 if sheet_landscape == landscape else 1
-    out_w, out_h = (long_, short) if landscape else (short, long_)
-    return name, rotation, out_w, out_h
+    _, name, w, h = best
+    return name, w, h
+
+
+def _trim(image: Any, margin: int = 24) -> Any:
+    """Cut away the blank border a plot-to-fit leaves around the drawing."""
+    from PIL import ImageChops
+
+    rgb = image.convert("RGB")
+    background = rgb.getpixel((0, 0))
+    from PIL import Image as PILImage
+
+    diff = ImageChops.difference(rgb, PILImage.new("RGB", rgb.size, background))
+    box = diff.getbbox()
+    if not box:
+        return image
+    left = max(0, box[0] - margin)
+    top = max(0, box[1] - margin)
+    right = min(rgb.width, box[2] + margin)
+    bottom = min(rgb.height, box[3] + margin)
+    if right - left < 50 or bottom - top < 50:
+        return image
+    return image.crop((left, top, right, bottom))
 
 
 _SAVED_PROPS = (
@@ -161,7 +184,7 @@ _SAVED_PROPS = (
 )
 
 
-@tool(description=(
+@tool(undo_group=False, description=(
     "Render the drawing to a clean picture through AutoCAD's own plotter and "
     "return it - exact geometry, no ribbon or palettes, independent of what is "
     "on screen. area: extents (default), window (give window corners), objects "
@@ -235,16 +258,16 @@ def render(
             page.ConfigName = PNG_DEVICE
             com.quiet(lambda: page.RefreshPlotDeviceInfo())
             names = list(com.unwrap(com.retry(lambda: page.GetCanonicalMediaNames())) or [])
-            media, rotation, out_w, out_h = _pick_media(names, int(width), int(height))
+            media, out_w, out_h = _pick_media(names, int(width), int(height))
             page.CanonicalMediaName = media
-            page.PlotRotation = rotation
+            page.PlotRotation = 0
             if corners:
                 com.retry(lambda: page.SetWindowToPlot(com.pt2(corners[0]), com.pt2(corners[1])))
                 page.PlotType = PLOT_TYPE["window"]
                 details["window"] = [corners[0], corners[1]]
-            elif key == "layout":
-                page.PlotType = PLOT_TYPE["layout"]
             else:
+                # for a layout too: "extents" of the sheet, scaled to fit the
+                # canvas. PlotType layout plots at 1:1 and comes out tiny.
                 page.PlotType = PLOT_TYPE["extents"]
             page.UseStandardScale = True
             page.StandardScale = 0            # scale to fit
@@ -262,7 +285,7 @@ def render(
             ok = com.retry(
                 lambda: plotter.PlotToFile(target, PNG_DEVICE), timeout=120, context="rendering"
             )
-            details.update({"paper": media, "pixels": [out_w, out_h], "accepted": bool(ok)})
+            details.update({"paper": media, "canvas": [out_w, out_h], "accepted": bool(ok)})
         finally:
             for name in reversed(_SAVED_PROPS):
                 value = saved.get(name)
@@ -290,9 +313,8 @@ def render(
 
     with PILImage.open(target) as im:
         image = im.convert("RGB")
-    details["source_png"] = target
     if not path:
         com.quiet(lambda: os.remove(target))
-        details.pop("source_png", None)
+    image = _trim(image)
     image = _shrink(image, max(int(width), int(height)))
     return _finish(image, path, details)

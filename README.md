@@ -1,11 +1,13 @@
 # AutoCAD MCP
 
 Lets Claude drive the AutoCAD running on this PC — draw, edit, annotate,
-dimension, lay out sheets, plot, extract data, and batch-process folders of
-drawings.
+dimension, lay out sheets, plot, extract data, batch-process folders of
+drawings — and **look at the result**, because a drawing has to be checked by
+eye, not just by entity count.
 
 The design goal was simple: **if it can be done by hand in AutoCAD, it can be
-done through this server.**
+done through this server.** 121 tools, plus a verified registry of every
+command the AutoCAD UI can reach.
 
 ---
 
@@ -51,20 +53,28 @@ Restart the Claude desktop app afterwards.
 
 AutoCAD must be running. If it is not, the first call starts it.
 
-> **Check the registration actually stuck.**
-> The Claude desktop app rewrites `claude_desktop_config.json` for its own
-> settings, and has been observed dropping the whole `mcpServers` key when it
-> does — registered at 01:35, gone by 05:19 on one occasion. If the tools stop
-> appearing, look here first:
+> **That config entry does not survive.** The Claude desktop app rewrites
+> `claude_desktop_config.json` for its own settings and drops the whole
+> `mcpServers` key when it does — seen twice on one machine, hours after
+> registering. Check with:
 >
 > ```powershell
 > (Get-Content "$env:APPDATA\Claude\claude_desktop_config.json" -Raw |
 >   ConvertFrom-Json).mcpServers
 > ```
 >
-> Empty output means it was wiped. Re-run `install.py` and restart the app. If
-> it keeps happening, package the server as a Claude desktop extension instead
-> (`%APPDATA%\Claude\Claude Extensions\`, manifest_version 0.3).
+> Empty output means it was wiped. The durable fix is to install the server as
+> a **desktop extension**, which the app registers through its own installer:
+>
+> ```powershell
+> .\.venv\Scripts\python.exe install.py --mcpb
+> ```
+>
+> builds `dist\autocad-mcp.mcpb`. Double-click it (or Settings > Extensions >
+> Advanced > Install Extension) and approve the install. The bundle is only a
+> launcher pointing at this clone, so `git pull` updates the server with no
+> reinstall. The extension also shows up in Cowork sessions linked to the PC,
+> which a config-file entry does not.
 
 ---
 
@@ -99,39 +109,85 @@ Nothing in the repo hardcodes a user folder, so a clone anywhere works.
 ## The tools
 
 **Session** `acad_status` `acad_cancel` `doc_list` `doc_new` `doc_open`
-`doc_save` `doc_close` `doc_activate` `sysvar` `zoom` `regen` `purge`
+`doc_save` `doc_close` `doc_activate` `sysvar` `zoom` `regen` `purge` `undo`
+`view` `ucs`
+
+**Seeing the drawing** `screenshot` `render` — both return the picture to
+Claude directly (see below)
+
+**Working with the person at the screen** `selection_current`
+`selection_highlight` `user_pick`
 
 **Escape hatches** `cad_command` `cad_lisp` `cad_script` `cad_send`
 
 **Command reference** `command_search` `command_help`
 
-**Draw** `draw_line` `draw_polyline` `draw_rectangle` `draw_circle` `draw_arc`
-`draw_ellipse` `draw_spline` `draw_point` `draw_hatch` `draw_construction_line`
+**Draw** `draw_line` `draw_polyline` `draw_rectangle` `draw_polygon`
+`draw_circle` `draw_arc` `draw_ellipse` `draw_spline` `draw_point` `draw_hatch`
+`draw_construction_line` `draw_revcloud` `draw_wipeout` `region` `boundary`
 
 **Modify** `entity_move` `entity_copy` `entity_rotate` `entity_scale`
 `entity_mirror` `entity_offset` `entity_array` `entity_delete` `entity_trim`
 `entity_extend` `entity_fillet` `entity_chamfer` `entity_join` `entity_explode`
-`entity_break` `entity_overkill` `entity_properties` `match_properties`
+`entity_break` `entity_overkill` `entity_stretch` `entity_align`
+`entity_lengthen` `polyline_edit` `entity_divide` `draw_order`
+`entity_change_space` `entity_properties` `match_properties` `group`
 
 **Find & measure** `entity_select` `entity_info` `entity_summary` `measure`
 
-**Layers & styles** `layer_list` `layer_set` `layer_state` `layer_delete`
-`layer_rename` `layer_merge` `linetype` `text_style` `dim_style`
+**Layers & styles** `layer_list` `layer_set` `layer_state` `layer_states`
+`layer_delete` `layer_rename` `layer_merge` `linetype` `text_style` `dim_style`
+`standards_import` `annotation_scale`
 
-**Blocks & xrefs** `block_list` `block_define` `block_insert`
-`block_attributes` `block_edit` `block_export` `xref`
+**Blocks, xrefs & underlays** `block_list` `block_define` `block_insert`
+`block_attributes` `block_dynamic` `attribute_sync` `block_edit` `block_export`
+`xref` `underlay` `pdf_import`
 
-**Annotation** `draw_text` `draw_mtext` `draw_dimension` `draw_leader`
-`draw_table` `text_edit` `text_find_replace`
+**Annotation** `draw_text` `draw_mtext` `draw_dimension` `dimension_chain`
+`dimension_edit` `draw_leader` `draw_mleader` `draw_table` `table_read`
+`table_edit` `table_from_spreadsheet` `text_edit` `text_find_replace`
+`text_combine`
 
 **Sheets & output** `layout_list` `layout_manage` `page_setup` `plot_devices`
 `viewport_create` `viewport_manage` `plot` `export`
 
-**Data & vision** `drawing_info` `data_extract` `screenshot`
+**Data** `drawing_info` `data_extract`
 
 **Batch** `batch_preview` `batch_process` `batch_headless`
 
----
+### Seeing the drawing
+
+Two tools hand a picture straight back to Claude as an image, so an edit can
+be checked by looking at it rather than by trusting a handle list:
+
+* **`screenshot`** grabs the AutoCAD window as the user sees it, cropped to the
+  drawing canvas and shrunk to 1600 px, after zooming to extents, to the given
+  objects, or to a window. It is pure Win32 — it still works while a modal
+  dialog has COM frozen, and it does not need the window to be in front.
+* **`render`** plots the drawing to a PNG through AutoCAD's own raster plotter
+  (`PublishToWeb PNG.pc3`) — exact geometry, no ribbon or palettes, independent
+  of what is on screen, optionally through a plot style such as
+  `monochrome.ctb`. Extents, a window, a set of objects, or a whole layout.
+
+Either can also keep the PNG on disk with `path`.
+
+### Undo
+
+Every tool call that changes the drawing is wrapped in its own undo group, so
+`undo` (and Ctrl+Z at the keyboard) steps back **one tool call at a time** —
+without this, AutoCAD lumps every COM edit made between two commands into a
+single step. `undo` also sets marks and goes back to them: mark before a
+multi-step change, look, and `back` reverts all of it if it is wrong. `redo`
+only works straight after an undo; any other change in between clears it,
+exactly as in AutoCAD itself.
+
+### Working with the person at the screen
+
+She can click things in AutoCAD and say "move these": `selection_current`
+returns what is highlighted. `selection_highlight` does the reverse — grips the
+objects Claude means, so she can see them before saying yes. `user_pick` asks
+her for objects, a point, a distance, a word or a number on AutoCAD's command
+line and waits (with a timeout) for the answer.
 
 ## Command coverage
 
@@ -148,7 +204,8 @@ built by reading this machine's own CUIX files and then running the commands.
 | Reachable through `cad_command` | all of them |
 
 Of the verified set, **181 carry their option keywords**, extracted from the
-prompt text rather than guessed.
+prompt text rather than guessed. **171 commands** point at a dedicated tool
+that is easier than driving them through `cad_command`.
 
 Ask the registry before driving an unfamiliar command:
 
@@ -191,8 +248,18 @@ layouts, units and extents.
 **`entity_select` speaks AutoCAD wildcards.** `layer="A-ROOF*"` matches the
 family; `type="INSERT"` plus `block="PV-*"` finds panel placements.
 
-**`screenshot` lets Claude look at the drawing** — useful for checking a layout
-before plotting, or confirming an edit landed where it should.
+**`screenshot` and `render` let Claude look at the drawing** — useful for
+checking a layout before plotting, or confirming an edit landed where it
+should. Prefer `render` for a clean, exact picture and `screenshot` for "what
+is on her screen right now", dialogs included.
+
+**A missing handle stops a command before it starts.** Every command-driven
+tool resolves its handles first; one that no longer exists aborts the call
+with "no object with handle X" instead of leaving AutoCAD waiting at a prompt.
+
+**When a command does park at a prompt, the error says which one** — the
+timeout message quotes AutoCAD's `LASTPROMPT`, so a wrong argument to
+`cad_command` is diagnosed from the message, not by looking at the screen.
 
 **`data_extract` replaces the Data Extraction wizard.** Point it at a block and
 it writes one row per insert, one column per attribute, straight to .xlsx.
@@ -275,6 +342,59 @@ file reader but *not* by `(read)`, so non-ASCII text is built with `(chr n)`
 instead. Chinese layer names, text and attributes survive
 Python → LISP → drawing → COM → Python byte-identical.
 
+**Esc is posted, not typed.** A parked command is cancelled by posting
+`WM_KEYDOWN`/`WM_KEYUP` Escape to AutoCAD's own windows, which needs no focus:
+it works while the user is in another application, while the screen is locked,
+and when nobody is at the machine — precisely when a synthetic keystroke via
+`SendInput` would be refused (and rightly so). A real keystroke follows only if
+AutoCAD already is the foreground window.
+
+**One tool call, one undo step.** `StartUndoMark`/`EndUndoMark` around every
+drawing-changing tool call. Verified: nesting is fine, a group holding both COM
+edits and a LISP-driven command undoes as one, and an *empty* group still
+costs an undo step — which is why tools that never change the drawing
+(plotting, screenshots, opening files) are excluded from grouping.
+
+**UNDO and REDO are typed, not evaluated.** Any AutoLISP evaluation — even a
+read-only `(getvar)` — counts as a new operation and empties the redo stack.
+So `undo` sends `_.UNDO n` / `_.MREDO n` straight to the command line and
+confirms completion through `CMDACTIVE`; COM reads in between do not disturb
+the redo stack, LISP does.
+
+**`ssget` with a window only sees what is on screen**, like hatching by
+point. `entity_select` with an area and `entity_stretch` zoom to extents first.
+
+**REVCLOUD cannot be scripted by points.** Its command-line prompt in this
+release offers only `[Arc length/Object/Style]` - the rectangular and
+polygonal modes are ribbon-only, and freehand follows the mouse, so a point
+fed from a script leaves it "guiding crosshairs" until Esc. `draw_revcloud`
+draws the outline as a polyline and converts it with the Object option, which
+is what the ribbon button does underneath. The Arc option asks for a minimum
+*and* a maximum, and the maximum may not exceed three times the minimum.
+
+**CHSPACE will not take a selection set from a script** - it sits at *Select
+objects* until Esc. `entity_change_space` does the same job over COM: copy
+into the other space, then scale and move through the viewport's transform.
+
+**AutoCAD's own log tells you what a parked command wanted.** With
+`LOGFILEMODE=1` every prompt and error goes to `LOGFILENAME`; reading its tail
+after a timeout is how the two findings above were made in minutes. The
+`tests/diagnostics/diag_prompt_log.py` script does exactly that.
+
+**`layerstate-save` rejects masks it does not know** with "ADS request
+error". 511 (every documented property) works; 65535 does not.
+
+**`CenterPlot` is "Invalid input" for a layout plot** — set it only when
+plotting model space by extents or window.
+
+**`ActivePViewport` can only be set from floating model space**: `MSpace =
+True` first, then the viewport, then CHSPACE. The first VIEWPORT entity in a
+layout is the sheet itself; the user's viewports follow it.
+
+**UCS by origin asks for a point on the X axis** after the origin — an Enter
+accepts the default, and without it the next command is swallowed as that
+point.
+
 ---
 
 ## If something goes wrong
@@ -297,6 +417,7 @@ Python → LISP → drawing → COM → Python byte-identical.
 .\.venv\Scripts\python.exe -X utf8 tests\unicode_check.py # CJK round trip
 .\.venv\Scripts\python.exe -X utf8 tests\func_basic.py    # draw / modify / select
 .\.venv\Scripts\python.exe -X utf8 tests\func_full.py     # layers ... batch
+.\.venv\Scripts\python.exe -X utf8 tests\func_ext.py      # vision, undo, offset sides, stretch ... underlays
 .\.venv\Scripts\python.exe -X utf8 tests\func_batch.py    # folder processing
 .\.venv\Scripts\python.exe -X utf8 tests\list_tools.py    # the registered surface
 ```

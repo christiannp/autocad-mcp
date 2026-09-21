@@ -77,11 +77,26 @@
   (reverse out)
 )
 
+(defun acadmcp:fail (msg)
+  ;; abort the job with a readable message instead of letting a command run
+  ;; with a nil argument and sit waiting for input
+  (if *error* (*error* msg))
+  (exit)
+)
+
+(defun acadmcp:ent (h / e)
+  ;; ename for a handle; a missing handle aborts the job
+  (if (setq e (handent h)) e (acadmcp:fail (strcat "no object with handle " h)))
+)
+
 (defun acadmcp:ss (handles / ss e)
-  ;; list of handle strings -> pickset (nil if none resolved)
+  ;; list of handle strings -> pickset; any missing handle aborts the job
   (setq ss (ssadd))
   (foreach h handles
-    (if (and h (setq e (handent h))) (ssadd e ss))
+    (if (and h (setq e (handent h)))
+      (ssadd e ss)
+      (acadmcp:fail (strcat "no object with handle " (vl-princ-to-string h)))
+    )
   )
   (if (> (sslength ss) 0) ss nil)
 )

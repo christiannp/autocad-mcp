@@ -214,7 +214,7 @@ def cad_script(
     }
 
 
-@tool(description=(
+@tool(undo_group=False, description=(
     "Type text straight into AutoCAD's command line without waiting for a result. "
     "Last resort for interactive commands that need the user to click in the "
     "drawing; prefer cad_command, which reports what happened."

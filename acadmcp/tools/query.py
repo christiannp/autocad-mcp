@@ -107,7 +107,7 @@ def drawing_info(
     return com.run_com(work, timeout=300)
 
 
-@tool(description=(
+@tool(undo_group=False, description=(
     "Extract drawing data to a spreadsheet or CSV - the scriptable replacement "
     "for AutoCAD's Data Extraction wizard. Pulls block attributes and geometry "
     "for whatever the filters match, one row per object."

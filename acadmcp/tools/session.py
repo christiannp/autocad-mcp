@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import time
 from typing import Any
 
 from .. import com, lisp
@@ -72,7 +73,7 @@ def acad_status() -> dict[str, Any]:
     return com.run_com(work, timeout=90)
 
 
-@tool(description="Get AutoCAD back to a clean command prompt after it has been left waiting for input, and confirm it responds again. Use this if a tool reports AutoCAD is busy.")
+@tool(undo_group=False, description="Get AutoCAD back to a clean command prompt after it has been left waiting for input, and confirm it responds again. Use this if a tool reports AutoCAD is busy.")
 def acad_cancel() -> dict[str, Any]:
     ok = lisp.cancel()
     lisp.forget_library()
@@ -100,7 +101,7 @@ def doc_list() -> dict[str, Any]:
     return com.run_com(work, timeout=60)
 
 
-@tool(description="Create a new drawing, optionally from a .dwt template. Returns the new drawing's name.")
+@tool(undo_group=False, description="Create a new drawing, optionally from a .dwt template. Returns the new drawing's name.")
 def doc_new(template: str | None = None) -> dict[str, Any]:
     def work() -> dict[str, Any]:
         app = com.app()
@@ -127,7 +128,7 @@ def doc_new(template: str | None = None) -> dict[str, Any]:
     return result
 
 
-@tool(description="Open a .dwg or .dxf file in AutoCAD and make it the active drawing.")
+@tool(undo_group=False, description="Open a .dwg or .dxf file in AutoCAD and make it the active drawing.")
 def doc_open(path: str, read_only: bool = False) -> dict[str, Any]:
     target = os.path.abspath(os.path.expanduser(str(path)))
     if not os.path.isfile(target):
@@ -151,7 +152,7 @@ def doc_open(path: str, read_only: bool = False) -> dict[str, Any]:
     return result
 
 
-@tool(description="Save the active drawing, or save it under a new name/format. Formats: native, 2018, 2013, 2010, 2007, 2004, 2000, dxf2018 ... dxf2000.")
+@tool(undo_group=False, description="Save the active drawing, or save it under a new name/format. Formats: native, 2018, 2013, 2010, 2007, 2004, 2000, dxf2018 ... dxf2000.")
 def doc_save(
     path: str | None = None,
     format: str | None = None,
@@ -191,7 +192,7 @@ def doc_save(
     return com.run_com(work, timeout=360)
 
 
-@tool(description="Close a drawing. By default changes are discarded, so pass save=true to keep them.")
+@tool(undo_group=False, description="Close a drawing. By default changes are discarded, so pass save=true to keep them.")
 def doc_close(drawing: str | None = None, save: bool = False) -> dict[str, Any]:
     def work() -> dict[str, Any]:
         doc = com.find_doc(drawing)
@@ -209,7 +210,7 @@ def doc_close(drawing: str | None = None, save: bool = False) -> dict[str, Any]:
     return result
 
 
-@tool(description="Make one of the open drawings the active one.")
+@tool(undo_group=False, description="Make one of the open drawings the active one.")
 def doc_activate(drawing: str) -> dict[str, Any]:
     def work() -> dict[str, Any]:
         doc = com.find_doc(drawing)
@@ -251,7 +252,7 @@ def sysvar(
     return com.run_com(work, timeout=90)
 
 
-@tool(description="Change the view: zoom extents/all/window/centre/scale, or zoom to given objects.")
+@tool(undo_group=False, description="Change the view: zoom extents/all/window/centre/scale, or zoom to given objects.")
 def zoom(
     mode: str = "extents",
     corner1: list[float] | None = None,
@@ -303,7 +304,7 @@ def zoom(
     return com.run_com(work, timeout=90)
 
 
-@tool(description="Regenerate the drawing (REGEN), refreshing the display and recomputing geometry.")
+@tool(undo_group=False, description="Regenerate the drawing (REGEN), refreshing the display and recomputing geometry.")
 def regen(all_viewports: bool = True) -> dict[str, Any]:
     def work() -> dict[str, Any]:
         doc = com.active_doc()
@@ -348,11 +349,39 @@ def purge(
     }
 
 
-@tool(description=(
-    "Undo or redo. action: undo (the last `steps` operations), redo, mark (set "
-    "an undo mark), or back (undo everything since the last mark). Each tool "
-    "call is at least one undo step, so mark before a multi-step change and "
-    "back reverts all of it if the result is wrong."
+def _typed(doc: Any, text: str, timeout: float = 60) -> None:
+    """Type a command at the prompt and wait for it to finish.
+
+    UNDO and REDO must go this way, not through the AutoLISP bridge: any LISP
+    evaluation counts as a new operation and empties the redo stack, so a redo
+    issued through the bridge would always find "nothing to redo".
+    """
+    lisp.send_raw(text + "\n", doc=doc)
+    time.sleep(0.4)
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        active = com.run_com(
+            lambda: int(com.retry(lambda: doc.GetVariable("CMDACTIVE"), timeout=10)), timeout=30
+        )
+        if active == 0:
+            return
+        time.sleep(0.2)
+    raise AcadError(f"AutoCAD is still busy after '{text}' - check its command line")
+
+
+def _entity_count(doc: Any) -> int:
+    return com.run_com(
+        lambda: int(com.prop(doc.ModelSpace, "Count", 0) or 0) + int(com.prop(doc.PaperSpace, "Count", 0) or 0),
+        timeout=30,
+    )
+
+
+@tool(undo_group=False, description=(
+    "Undo or redo. action: undo (the last `steps` tool calls), redo, mark (set "
+    "an undo mark), or back (undo everything since the last mark). Every tool "
+    "call that changes the drawing is one undo step. Redo only works straight "
+    "after an undo - any other change in between clears it, as in AutoCAD "
+    "itself. mark before a multi-step change lets back revert all of it."
 ))
 def undo(
     action: str = "undo",
@@ -360,27 +389,37 @@ def undo(
     drawing: str | None = None,
 ) -> dict[str, Any]:
     verb = str(action).strip().lower()
-    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60)
     n = max(1, int(steps))
+    before = _entity_count(doc)
     if verb == "undo":
-        lisp.run_command("_.UNDO", n, doc=doc, timeout=300)
-        return {"undone": n}
-    if verb == "redo":
-        lisp.run_command("_.MREDO", n, doc=doc, timeout=300)
-        return {"redone": n}
-    if verb == "mark":
-        lisp.run_command("_.UNDO", "_Mark", doc=doc, timeout=60)
-        return {"mark": "set"}
-    if verb == "back":
-        marks = lisp.evaluate(lisp.raw('(getvar "UNDOMARKS")'), doc=doc, timeout=60)
+        _typed(doc, f"_.UNDO {n}")
+        out: dict[str, Any] = {"undone": n}
+    elif verb == "redo":
+        _typed(doc, f"_.MREDO {n}")
+        out = {"redone": n}
+    elif verb == "mark":
+        _typed(doc, "_.UNDO _Mark")
+        return {"mark": "set", "marks": int(com.run_com(lambda: doc.GetVariable("UNDOMARKS"), timeout=30))}
+    elif verb == "back":
+        marks = int(com.run_com(lambda: doc.GetVariable("UNDOMARKS"), timeout=30) or 0)
         if not marks:
             raise AcadError(
                 "there is no undo mark to go back to - set one first with "
                 "action='mark' (going back without a mark would undo everything)"
             )
-        lisp.run_command("_.UNDO", "_Back", doc=doc, timeout=300)
-        return {"undone": "everything since the last mark", "marks_left": int(marks) - 1}
-    raise AcadError("action must be undo, redo, mark or back")
+        _typed(doc, "_.UNDO _Back", timeout=300)
+        out = {"undone": "everything since the last mark", "marks_left": marks - 1}
+    else:
+        raise AcadError("action must be undo, redo, mark or back")
+    after = _entity_count(doc)
+    out["entities"] = {"before": before, "after": after}
+    if before == after:
+        out["note"] = (
+            "the entity count did not change - the step may have been a property "
+            "change, or there was nothing to " + ("redo" if verb == "redo" else "undo")
+        )
+    return out
 
 
 @tool(description=(
@@ -470,7 +509,8 @@ def ucs(
     elif verb == "origin":
         if not origin:
             raise AcadError("origin needs the new origin point")
-        lisp.run_command("_.UCS", origin, doc=doc, timeout=60)
+        # after the origin, UCS asks for a point on the X axis - Enter accepts
+        lisp.run_command("_.UCS", origin, "", doc=doc, timeout=60)
         if float(angle):
             lisp.run_command("_.UCS", "_Z", float(angle), doc=doc, timeout=60)
     elif verb in ("three_point", "3point"):

@@ -220,7 +220,9 @@ def viewport_create(
         )
         vp.Display(True)
         if view_center:
-            com.quiet(lambda: setattr(vp, "ViewCenter", com.pt(view_center)))
+            # Target is the model point at the viewport's centre (no ViewCenter
+            # on a paper-space viewport)
+            com.retry(lambda: setattr(vp, "Target", com.pt(view_center)))
         if scale_1_to:
             vp.CustomScale = 1.0 / float(scale_1_to)
         if locked:
@@ -280,7 +282,7 @@ def viewport_manage(
     return com.run_com(work, timeout=180)
 
 
-@tool(description=(
+@tool(undo_group=False, description=(
     "Plot to a PDF file, or to any installed device. By default plots the "
     "active layout; pass layouts to plot several sheets into one PDF."
 ))
@@ -352,7 +354,7 @@ def plot(
     return result
 
 
-@tool(description="Export the drawing to another format: dxf, pdf, dwf, dwfx, wmf, sat, bmp, or eps.")
+@tool(undo_group=False, description="Export the drawing to another format: dxf, pdf, dwf, dwfx, wmf, sat, bmp, or eps.")
 def export(
     path: str,
     format: str | None = None,

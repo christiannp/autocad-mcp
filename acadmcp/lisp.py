@@ -179,8 +179,12 @@ def ss_from(handles: Iterable[str]) -> Raw:
 
 
 def entity(handle: str) -> Raw:
-    """The entity name (ename) for a handle, for use inside LISP."""
-    return Raw(f"(handent {lstr(handle)})")
+    """The entity name (ename) for a handle, for use inside LISP.
+
+    A handle that does not resolve aborts the job with a clear error rather
+    than feeding nil to a command, which would leave AutoCAD waiting at a prompt.
+    """
+    return Raw(f"(acadmcp:ent {lstr(handle)})")
 
 
 # ---------------------------------------------------------------------------
@@ -426,9 +430,14 @@ def evaluate(
                 _run_source(d, _job_source(out, body, quiet))
                 if not _wait(out, seconds):
                     cancel(d)
+                    # LASTPROMPT still holds the prompt the command was parked
+                    # at - by far the quickest way to see which argument was wrong
+                    last = str(com.quiet(lambda: com.retry(
+                        lambda: d.GetVariable("LASTPROMPT"), timeout=10), "") or "").strip()
+                    hint = f" It was waiting at: \"{last[:200]}\"." if last else ""
                     raise Busy(
-                        f"AutoLISP did not return within {seconds:g}s. AutoCAD is "
-                        "probably waiting for input - check its command line."
+                        f"AutoLISP did not return within {seconds:g}s - AutoCAD was "
+                        f"left waiting for input, and Esc has been sent.{hint}"
                     )
                 return _read_result(out)
             finally:

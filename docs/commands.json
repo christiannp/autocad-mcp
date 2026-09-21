@@ -12,7 +12,7 @@
   "exist": 1001,
   "with_prompts": 528,
   "with_options": 181,
-  "with_dedicated_tool": 114,
+  "with_dedicated_tool": 171,
   "dialog_in_ui_with_twin": 49,
   "verified_in_the_application": 20,
   "application_only_not_headless": 20,
@@ -1053,7 +1053,8 @@
    "description": "Creates a region or a polyline from an enclosed area",
    "ui_label": "Boundary",
    "kind": "other",
-   "confidence": "unknown - not found in the UI definition or by probing"
+   "confidence": "unknown - not found in the UI definition or by probing",
+   "tool": "boundary"
   },
   "-BOX": {
    "name": "-BOX",
@@ -3496,7 +3497,8 @@
    "description": "Creates a group of objects",
    "ui_label": "Group",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "group"
   },
   "-GROUPDISPLAYMODE": {
    "name": "-GROUPDISPLAYMODE",
@@ -3724,7 +3726,8 @@
    "description": "Inserts images in many formats into an AutoCAD drawing file",
    "ui_label": "Image",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "underlay"
   },
   "-IMAGEADJUST": {
    "name": "-IMAGEADJUST",
@@ -3738,7 +3741,8 @@
    "description": "Controls the image display of the brightness, contrast, and fade values of images",
    "ui_label": "Imageadj",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "underlay"
   },
   "-IMAGEATTACH": {
    "name": "-IMAGEATTACH",
@@ -4053,7 +4057,8 @@
    "description": "Saves, restores, and manages named layer states",
    "ui_label": "Layer States Manager",
    "kind": "other",
-   "confidence": "unknown - not found in the UI definition or by probing"
+   "confidence": "unknown - not found in the UI definition or by probing",
+   "tool": "layer_states"
   },
   "-LAYERSTATESAVE": {
    "name": "-LAYERSTATESAVE",
@@ -4238,7 +4243,8 @@
    "description": "Translates the layers in the current drawing to specified layer standards",
    "ui_label": "CAD Standards, Layer Translator...",
    "kind": "other",
-   "confidence": "unknown - not found in the UI definition or by probing"
+   "confidence": "unknown - not found in the UI definition or by probing",
+   "tool": "standards_import"
   },
   "-LAYULK": {
    "name": "-LAYULK",
@@ -5304,7 +5310,8 @@
    "ui_label": "Add Current Scale",
    "help_topic": "OBJECTSCALE",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "annotation_scale"
   },
   "-OFFSET": {
    "name": "-OFFSET",
@@ -5706,7 +5713,8 @@
    "ui_label": "PDF Underlay...",
    "help_topic": "PDFATTACH",
    "kind": "other",
-   "confidence": "unknown - not found in the UI definition or by probing"
+   "confidence": "unknown - not found in the UI definition or by probing",
+   "tool": "underlay"
   },
   "-PDFCLIP": {
    "name": "-PDFCLIP",
@@ -5734,7 +5742,8 @@
    "description": "Imports data from a page of a PDF file into the current drawing as AutoCAD objects.",
    "ui_label": "PDFIMPORT",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "pdf_import"
   },
   "-PDFLAYERS": {
    "name": "-PDFLAYERS",
@@ -7750,7 +7759,8 @@
    "description": "Controls the list of scales available for layout viewports, page layouts, and plotting",
    "ui_label": "Scale List...",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "annotation_scale"
   },
   "-SCALETEXT": {
    "name": "-SCALETEXT",
@@ -9178,7 +9188,8 @@
    "description": "Sets the view point to southwest isometric",
    "ui_label": "View, Top",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "view"
   },
   "-VIEWBACK": {
    "name": "-VIEWBACK",
@@ -10244,7 +10255,8 @@
    "ui_label": "DesignCenter",
    "help_topic": "ADCENTER",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "standards_import"
   },
   "ADDSELECTED": {
    "name": "ADDSELECTED",
@@ -10517,7 +10529,8 @@
    "description": "Aligns objects with other objects in 2D and 3D",
    "ui_label": "Align",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "entity_align"
   },
   "ALIGNSPACE": {
    "name": "ALIGNSPACE",
@@ -11028,7 +11041,8 @@
    "description": "Updates block references with new and changed attributes from a specified block definition",
    "ui_label": "Synchronize Attributes",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "attribute_sync"
   },
   "AUDIT": {
    "name": "AUDIT",
@@ -11407,7 +11421,8 @@
    "description": "Creates a region or a polyline from an enclosed area",
    "ui_label": "Boundary",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "boundary"
   },
   "BOX": {
    "name": "BOX",
@@ -11877,7 +11892,8 @@
    "description": "Moves objects between model space and paper space",
    "ui_label": "Change Space",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "entity_change_space"
   },
   "CHURLS": {
    "name": "CHURLS",
@@ -12707,7 +12723,8 @@
    "description": "Updates linked data from a table in the current drawing to an external data file",
    "ui_label": "Update Data Links",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "table_edit"
   },
   "DBCCLOSE": {
    "name": "DBCCLOSE",
@@ -13144,7 +13161,8 @@
    "description": "Continues a linear, angular, or ordinate dimension from the baseline of the previous or selected dimension",
    "ui_label": "Dimension, Baseline",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "dimension_chain"
   },
   "DIMBREAK": {
    "name": "DIMBREAK",
@@ -13226,7 +13244,8 @@
    "description": "Creates a dimension that starts from an extension line of a previously created dimension",
    "ui_label": "Dimension, Continue",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "dimension_chain"
   },
   "DIMDIAMETER": {
    "name": "DIMDIAMETER",
@@ -13288,7 +13307,8 @@
    "description": "Makes the extension lines of linear dimensions oblique",
    "ui_label": "Dimedit",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "dimension_edit"
   },
   "DIMEX": {
    "name": "DIMEX",
@@ -13543,7 +13563,8 @@
    "description": "Moves and rotates dimension text and relocates the dimension line",
    "ui_label": "DimTedt:",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "dimension_edit"
   },
   "DIST": {
    "name": "DIST",
@@ -13594,7 +13615,8 @@
    "description": "Creates evenly spaced point objects or blocks along the length or perimeter of an object",
    "ui_label": "Divide",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "entity_divide"
   },
   "DONUT": {
    "name": "DONUT",
@@ -13644,7 +13666,8 @@
    "ui_label": "Draword:",
    "help_topic": "DRAWORDER",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "draw_order"
   },
   "DSETTINGS": {
    "name": "DSETTINGS",
@@ -14858,7 +14881,8 @@
    "description": "Creates a group of objects",
    "ui_label": "Group",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "group"
   },
   "GROUPDISPLAYMODE": {
    "name": "GROUPDISPLAYMODE",
@@ -14995,7 +15019,8 @@
    "description": "Forces all hatches to be displayed behind all other objects",
    "ui_label": "Draw Order, Hatch to Back",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "draw_order"
   },
   "HELIX": {
    "name": "HELIX",
@@ -15134,7 +15159,8 @@
    "description": "Inserts images in many formats into an AutoCAD drawing file",
    "ui_label": "Image",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "underlay"
   },
   "IMAGEADJUST": {
    "name": "IMAGEADJUST",
@@ -15147,7 +15173,8 @@
    "description": "Controls the image display of the brightness, contrast, and fade values of images",
    "ui_label": "Imageadj",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "underlay"
   },
   "IMAGEATTACH": {
    "name": "IMAGEATTACH",
@@ -15160,7 +15187,8 @@
    "description": "Inserts images in many formats into an AutoCAD drawing file",
    "ui_label": "Attach Image",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "underlay"
   },
   "IMAGECLIP": {
    "name": "IMAGECLIP",
@@ -15383,7 +15411,8 @@
    "description": "Creates a 3D solid or 2D region from selected overlapping solids or regions",
    "ui_label": "Intrsect",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "region"
   },
   "ISOLATEOBJECTS": {
    "name": "ISOLATEOBJECTS",
@@ -15546,7 +15575,8 @@
    "description": "Saves, restores, and manages named layer states",
    "ui_label": "Layer States Manager",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "layer_states"
   },
   "LAYERSTATESAVE": {
    "name": "LAYERSTATESAVE",
@@ -15556,7 +15586,8 @@
    "description": "Save a new layerstate",
    "ui_label": "Save Layer State",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "layer_states"
   },
   "LAYFRZ": {
    "name": "LAYFRZ",
@@ -15779,7 +15810,8 @@
    "description": "Translates the layers in the current drawing to specified layer standards",
    "ui_label": "CAD Standards, Layer Translator...",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "standards_import"
   },
   "LAYULK": {
    "name": "LAYULK",
@@ -15870,7 +15902,8 @@
    "description": "Changes the length of objects and the included angle of arcs",
    "ui_label": "Lengthn:",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "entity_lengthen"
   },
   "LIGHT": {
    "name": "LIGHT",
@@ -16383,7 +16416,8 @@
    "description": "Creates point objects or blocks at measured intervals along the length or perimeter of an object",
    "ui_label": "Measure",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "entity_divide"
   },
   "MEASUREGEOM": {
    "name": "MEASUREGEOM",
@@ -16776,7 +16810,7 @@
    },
    "default": "Options",
    "interactive": true,
-   "tool": "draw_leader",
+   "tool": "draw_mleader",
    "description": "Creates a multileader object",
    "ui_label": "Multileader",
    "kind": "command line",
@@ -16985,7 +17019,8 @@
    "description": "Reverses the effects of the previous UNDO or U command",
    "ui_label": "Redo",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "undo"
   },
   "MSLIDE": {
    "name": "MSLIDE",
@@ -17305,7 +17340,8 @@
    "ui_label": "Add Current Scale",
    "help_topic": "OBJECTSCALE",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "annotation_scale"
   },
   "OFFSET": {
    "name": "OFFSET",
@@ -17753,7 +17789,8 @@
    "ui_label": "PDF Underlay...",
    "help_topic": "PDFATTACH",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "underlay"
   },
   "PDFCLIP": {
    "name": "PDFCLIP",
@@ -17777,7 +17814,8 @@
    "description": "Imports data from a page of a PDF file into the current drawing as AutoCAD objects.",
    "ui_label": "PDFIMPORT",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "pdf_import"
   },
   "PDFLAYERS": {
    "name": "PDFLAYERS",
@@ -17888,7 +17926,8 @@
    "description": "Fits pairs of arcs through and between the vertices of a polyline",
    "ui_label": "Pedit",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "polyline_edit"
   },
   "PER": {
    "name": "PER",
@@ -18340,7 +18379,8 @@
    "description": "Creates an equilateral closed polyline",
    "ui_label": "Polygon",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "draw_polygon"
   },
   "POLYSOLID": {
    "name": "POLYSOLID",
@@ -19505,7 +19545,8 @@
    "description": "Reverses the effects of the previous UNDO or U command",
    "ui_label": "Redo",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "undo"
   },
   "REDRAW": {
    "name": "REDRAW",
@@ -19658,7 +19699,8 @@
    "description": "Converts an object that encloses an area into a region object",
    "ui_label": "Region",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "region"
   },
   "RENAME": {
    "name": "RENAME",
@@ -19879,7 +19921,8 @@
    "description": "Creates a revision cloud drawing a freeform polyline.",
    "ui_label": "Freehand Revision Cloud",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "draw_revcloud"
   },
   "REVERSE": {
    "name": "REVERSE",
@@ -19894,7 +19937,8 @@
    "description": "Reverses the direction of line, polyline, spline and helix objects",
    "ui_label": "Reverse",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "polyline_edit"
   },
   "REVERT": {
    "name": "REVERT",
@@ -20220,7 +20264,8 @@
    "description": "Saves a rendered image to a file",
    "ui_label": "Saveimg",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "render"
   },
   "SAVETOWEBMOBILE": {
    "name": "SAVETOWEBMOBILE",
@@ -20263,7 +20308,8 @@
    "description": "Controls the list of scales available for layout viewports, page layouts, and plotting",
    "ui_label": "Scale List...",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "annotation_scale"
   },
   "SCALETEXT": {
    "name": "SCALETEXT",
@@ -21015,7 +21061,8 @@
    "ui_label": "Stretch",
    "help_topic": "STRETCH",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "entity_stretch"
   },
   "STYLE": {
    "name": "STYLE",
@@ -21085,7 +21132,8 @@
    "description": "Combines selected 3D solids or 2D regions by subtraction",
    "ui_label": "Subtract",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "region"
   },
   "SUNPROPERTIES": {
    "name": "SUNPROPERTIES",
@@ -21468,7 +21516,8 @@
    "description": "Edits text in a table cell",
    "ui_label": "Edit Table",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "table_edit"
   },
   "TABLESTYLE": {
    "name": "TABLESTYLE",
@@ -21700,7 +21749,8 @@
    "description": "Force All Annotation objects to be displayed in the front of all other objects.",
    "ui_label": "Draw Order, Leaders Only",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "draw_order"
   },
   "TEXTUNMASK": {
    "name": "TEXTUNMASK",
@@ -21999,7 +22049,8 @@
    "express_tool": true,
    "help_topic": "TXT2MTXT",
    "kind": "express tool",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "text_combine"
   },
   "TXTEXP": {
    "name": "TXTEXP",
@@ -22043,7 +22094,8 @@
    "description": "Sets the current user coordinate system to the world coordinate system",
    "ui_label": "Z",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "ucs"
   },
   "UCSDETECT": {
    "name": "UCSDETECT",
@@ -22148,7 +22200,8 @@
    "description": "Reverses the most recent action",
    "ui_label": "Undo",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "undo"
   },
   "UNGROUP": {
    "name": "UNGROUP",
@@ -22182,7 +22235,8 @@
    "description": "Combines selected 3D solids or 2D regions by addition",
    "ui_label": "Union",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "region"
   },
   "UNISOLATEOBJECTS": {
    "name": "UNISOLATEOBJECTS",
@@ -22337,7 +22391,8 @@
    "description": "Manages Named Views. Allows creating, deleting, renaming, and editing named views.",
    "ui_label": "Ddview",
    "kind": "other",
-   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown"
+   "confidence": "documented - AutoCAD's own UI wires a button to this command, but it was not run, so its prompts are unknown",
+   "tool": "view"
   },
   "VIEWBACK": {
    "name": "VIEWBACK",
@@ -23159,7 +23214,8 @@
    "description": "Creates a wipeout object",
    "ui_label": "Wipeout",
    "kind": "command line",
-   "confidence": "verified - these prompts were captured by running it"
+   "confidence": "verified - these prompts were captured by running it",
+   "tool": "draw_wipeout"
   },
   "WMFIN": {
    "name": "WMFIN",

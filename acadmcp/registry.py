@@ -46,23 +46,73 @@ def _clean(exc: BaseException) -> str:
     return text or exc.__class__.__name__
 
 
-def tool(*dargs: Any, readonly: bool = False, **dkwargs: Any) -> Callable[[F], F]:
+def _begin_undo_group(drawing: Any) -> Any:
+    """Open an undo group on the drawing a tool is about to change.
+
+    AutoCAD lumps every COM edit made between two commands into one undo
+    step, so without this "undo the last thing" after five COM-based tool
+    calls would undo all five. StartUndoMark/EndUndoMark around each call
+    makes one tool call one undo step - verified against AutoCAD 2025,
+    nesting included. Returns the document the group was opened on, or None.
+    """
+    from . import com
+
+    def work() -> Any:
+        doc = com.find_doc(drawing) if drawing else com.active_doc()
+        doc.StartUndoMark()
+        return doc
+
+    try:
+        return com.run_com(work, timeout=20)
+    except Exception:  # noqa: BLE001 - no drawing, or AutoCAD busy: no group
+        return None
+
+
+def _end_undo_group(doc: Any) -> None:
+    from . import com
+
+    try:
+        com.run_com(lambda: doc.EndUndoMark(), timeout=20)
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def tool(
+    *dargs: Any,
+    readonly: bool = False,
+    undo_group: bool | None = None,
+    **dkwargs: Any,
+) -> Callable[[F], F]:
     """Register a tool, turning internal failures into readable messages.
 
     ``readonly=True`` marks a tool that only inspects the drawing. Those are
     safe to run again, so if AutoCAD happens to be busy for a moment (it often
     is right after a command finishes) we wake it and retry once instead of
     failing. Tools that change the drawing are never retried automatically.
+
+    ``undo_group`` wraps the call in its own undo step (default for every tool
+    that is not readonly). Pass False for tools that never change the drawing
+    (plotting, screenshots, opening files) - an empty group would still cost
+    the user a press of Ctrl+Z.
     """
+    grouped = (not readonly) if undo_group is None else bool(undo_group)
 
     def decorate(fn: F) -> F:
         if inspect.iscoroutinefunction(fn):
             raise TypeError("AutoCAD tools are synchronous")
 
+        def call(*args: Any, **kwargs: Any) -> Any:
+            doc = _begin_undo_group(kwargs.get("drawing")) if grouped else None
+            try:
+                return fn(*args, **kwargs)
+            finally:
+                if doc is not None:
+                    _end_undo_group(doc)
+
         @functools.wraps(fn)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             try:
-                return fn(*args, **kwargs)
+                return call(*args, **kwargs)
             except Busy:
                 if not readonly:
                     raise
@@ -77,7 +127,7 @@ def tool(*dargs: Any, readonly: bool = False, **dkwargs: Any) -> Callable[[F], F
 
             com.ensure_responsive()
             try:
-                return fn(*args, **kwargs)
+                return call(*args, **kwargs)
             except AcadError as exc:
                 raise ValueError(_clean(exc)) from None
             except Exception as exc:  # noqa: BLE001

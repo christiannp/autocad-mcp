@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 logs/
 testout/
+dist/
 *.bak
 *.dwl
 *.dwl2
