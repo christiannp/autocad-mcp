@@ -12,6 +12,7 @@ Output: build/probe_headless.json
 from __future__ import annotations
 
 import json
+import os
 import re
 import subprocess
 import sys
@@ -20,8 +21,9 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-ACCORE = Path(r"C:\Program Files\Autodesk\AutoCAD 2025\accoreconsole.exe")
-SCRATCH = Path(r"C:\Users\Wanda\AppData\Local\Temp\acadmcp_probe\scratch.dwg")
+RELEASE = os.environ.get("ACADMCP_ACAD_RELEASE", "AutoCAD 2025")
+ACCORE = Path(r"C:\Program Files\Autodesk") / RELEASE / "accoreconsole.exe"
+SCRATCH = Path(os.environ["LOCALAPPDATA"]) / "Temp" / "acadmcp_probe" / "scratch.dwg"
 OUT = ROOT / "build" / "probe_headless.json"
 
 BATCH = 40

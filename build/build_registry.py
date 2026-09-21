@@ -11,14 +11,24 @@ real prompt text means it is never guessed again.
 from __future__ import annotations
 
 import json
+import os
 import re
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PGP = Path(
-    r"C:\Users\Wanda\AppData\Roaming\Autodesk\AutoCAD 2025\R25.0\enu\Support\acad.pgp"
+RELEASE = os.environ.get("ACADMCP_ACAD_RELEASE", "AutoCAD 2025")
+VERSION = os.environ.get("ACADMCP_ACAD_VERSION", "R25.0")
+LANG = os.environ.get("ACADMCP_ACAD_LANG", "enu")
+PGP = (
+    Path(os.environ["APPDATA"])
+    / "Autodesk"
+    / RELEASE
+    / VERSION
+    / LANG
+    / "Support"
+    / "acad.pgp"
 )
 
 BRACKET = re.compile(r"\[([^\]]+)\]")

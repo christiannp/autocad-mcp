@@ -7,6 +7,7 @@ check CMDACTIVE and bail out the moment AutoCAD is left at a prompt.
 
 from __future__ import annotations
 
+import os
 import sys
 import time
 from pathlib import Path
@@ -15,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from acadmcp import com, winui  # noqa: E402
 
-TMP = Path("C:/Users/Wanda/AppData/Local/acadmcp/probe")
+TMP = Path(os.path.expandvars("%LOCALAPPDATA%/acadmcp/probe"))
 TMP.mkdir(parents=True, exist_ok=True)
 
 
@@ -89,7 +90,7 @@ def main() -> None:
             before = str(doc.GetVariable("TRUSTEDPATHS") or "")
             paths = [p for p in before.split(";") if p.strip()]
             for extra in (str(TMP), str(Path(__file__).resolve().parent.parent / "lisp"),
-                          "C:\\Users\\Wanda\\AppData\\Local\\acadmcp\\jobs"):
+                          os.path.expandvars(r"%LOCALAPPDATA%\acadmcp\\jobs")):
                 if extra not in paths:
                     paths.append(extra)
             doc.SetVariable("TRUSTEDPATHS", ";".join(paths))

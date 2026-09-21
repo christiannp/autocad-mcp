@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import sys
 import time
 from pathlib import Path
@@ -51,7 +52,7 @@ def main() -> None:
 
         say("\n== 1. (load) by location, SECURELOAD =", doc.GetVariable("SECURELOAD"), "==")
         ok_temp = trial("AutoCAD temp", temp / "acadmcp_job.lsp")
-        ok_docs = trial("Documents", Path("C:/Users/Wanda/Documents/acadmcp_job.lsp"))
+        ok_docs = trial("Documents", Path(os.path.expandvars("%USERPROFILE%/Documents/acadmcp_job.lsp")))
         ok_proj = trial("project lisp folder",
                         Path(__file__).resolve().parent.parent / "lisp" / "probe_job.lsp")
 

@@ -15,12 +15,14 @@ from __future__ import annotations
 
 import html
 import json
+import os
 import re
 from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-WORK = Path(r"C:\Users\Wanda\AppData\Local\Temp\acadmcp_cui")
+# written by build_inventory.py - the unpacked CUIX parts
+WORK = Path(os.environ["LOCALAPPDATA"]) / "Temp" / "acadmcp_cui"
 
 BLOCK = re.compile(r"<Macro\b.*?</Macro>", re.S)
 TAG = {
