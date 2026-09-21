@@ -35,7 +35,8 @@ from acadmcp.tools.layout import (  # noqa: E402
     export, layout_list, layout_manage, page_setup, plot, plot_devices,
     viewport_create, viewport_manage,
 )
-from acadmcp.tools.query import data_extract, drawing_info, screenshot  # noqa: E402
+from acadmcp.tools.query import data_extract, drawing_info  # noqa: E402
+from acadmcp.tools.vision import screenshot  # noqa: E402
 from acadmcp.tools.select import entity_select  # noqa: E402
 from acadmcp.tools.session import doc_close, doc_new, doc_save, sysvar  # noqa: E402
 
@@ -161,7 +162,7 @@ run("drawing_info", lambda: drawing_info())
 run("data_extract xlsx", lambda: data_extract(str(OUT / "modules.xlsx"), block="PV-MODULE"))
 run("data_extract csv grouped", lambda: data_extract(str(OUT / "all.csv"),
                                                      group_identical=True))
-run("screenshot", lambda: screenshot(str(OUT / "screen.png")))
+run("screenshot", lambda: screenshot(path=str(OUT / "screen.png")))
 
 print("\n=== batch ===", flush=True)
 run("make 2nd file", lambda: doc_save(path=str(OUT / "batch" / "a.dwg")))

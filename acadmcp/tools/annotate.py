@@ -461,3 +461,436 @@ def draw_table(
         }
 
     return com.run_com(work, timeout=300)
+
+
+@tool(description=(
+    "Draw a multileader (MLEADER): an arrow from the first point, through any "
+    "further points, to a text note. This is the modern leader most drawing "
+    "standards expect; draw_leader makes the legacy kind."
+))
+def draw_mleader(
+    points: list[list[float]],
+    text: str,
+    text_height: float | None = None,
+    style: str | None = None,
+    landing: bool | None = None,
+    layer: str | None = None,
+    space: str = "auto",
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    if not points or len(points) < 2:
+        raise AcadError("a multileader needs at least two points (arrow, then text)")
+
+    def work() -> dict[str, Any]:
+        doc = com.find_doc(drawing)
+        target = com.space(doc, space)
+        if layer:
+            util.ensure_layer(doc, layer)
+        result = com.retry(lambda: target.AddMLeader(com.flat3d(points), 0))
+        ent = result[0] if isinstance(result, (tuple, list)) else result
+        ent = com.by_handle(doc, str(ent.Handle))   # re-fetch: late binding
+        if style:
+            com.quiet(lambda: setattr(ent, "StyleName", str(style)))
+        com.quiet(lambda: setattr(ent, "ContentType", 2))   # mtext content
+        ent.TextString = str(text)
+        if text_height:
+            com.quiet(lambda: setattr(ent, "TextHeight", float(text_height)))
+        if landing is not None:
+            com.quiet(lambda: setattr(ent, "DoglegLength", float(ent.DoglegLength) if landing else 0.0))
+        if layer:
+            ent.Layer = str(layer)
+        out = util.describe(ent)
+        out["text"] = str(text)
+        return out
+
+    try:
+        return com.run_com(work, timeout=180)
+    except AcadError as exc:
+        # COM's AddMLeader is temperamental; the command always works
+        doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+        steps: list[Any] = []
+        if layer:
+            steps.append(lisp.raw(f'(setvar "CLAYER" {lisp.lstr(str(layer))})'))
+        steps.append(lisp.command("_.MLEADER", *points, str(text)))
+        _, created = lisp.capture(
+            lisp.pushed({"CLAYER": lisp.raw('(getvar "CLAYER")')}, lisp.progn(*steps)),
+            doc=doc, timeout=180,
+        )
+        return {"created": created, "text": str(text), "via": "MLEADER command", "com_error": str(exc)[:120]}
+
+
+def _project(p: list[float], origin: list[float], direction: list[float]) -> list[float]:
+    """Project p onto the line through origin with unit direction."""
+    t = (p[0] - origin[0]) * direction[0] + (p[1] - origin[1]) * direction[1]
+    return [origin[0] + direction[0] * t, origin[1] + direction[1] * t]
+
+
+@tool(description=(
+    "A run of dimensions along a line of points (what DIMCONTINUE / DIMBASELINE "
+    "produce): one dimension per consecutive pair, all on one dimension line "
+    "through dimension_line_point. kind linear measures along `rotation` "
+    "degrees (0 horizontal, 90 vertical); aligned follows the points. baseline "
+    "stacks every dimension from the first point instead, spacing apart."
+))
+def dimension_chain(
+    points: list[list[float]],
+    dimension_line_point: list[float],
+    kind: str = "linear",
+    rotation: float = 0.0,
+    baseline: bool = False,
+    spacing: float | None = None,
+    style: str | None = None,
+    layer: str | None = None,
+    space: str = "auto",
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    if not points or len(points) < 2:
+        raise AcadError("a chain needs at least two points")
+    key = str(kind).strip().lower()
+    if key not in ("linear", "aligned", "horizontal", "vertical"):
+        raise AcadError("kind must be linear, aligned, horizontal or vertical")
+    angle = float(rotation)
+    if key == "horizontal":
+        angle = 0.0
+    elif key == "vertical":
+        angle = 90.0
+    pts = [[float(p[0]), float(p[1])] for p in points]
+    dl = [float(dimension_line_point[0]), float(dimension_line_point[1])]
+
+    if key == "aligned":
+        dx, dy = pts[-1][0] - pts[0][0], pts[-1][1] - pts[0][1]
+        n = math.hypot(dx, dy) or 1.0
+        direction = [dx / n, dy / n]
+    else:
+        direction = [math.cos(math.radians(angle)), math.sin(math.radians(angle))]
+    normal = [-direction[1], direction[0]]
+
+    def work() -> dict[str, Any]:
+        doc = com.find_doc(drawing)
+        target = com.space(doc, space)
+        if layer:
+            util.ensure_layer(doc, layer)
+        gap = float(spacing) if spacing else float(
+            com.quiet(lambda: doc.GetVariable("DIMDLI"), 3.75) or 3.75
+        ) * float(com.quiet(lambda: doc.GetVariable("DIMSCALE"), 1.0) or 1.0)
+        made = []
+        pairs = [(pts[0], p) for p in pts[1:]] if baseline else list(zip(pts, pts[1:]))
+        for i, (a, b) in enumerate(pairs):
+            offset = i * gap if baseline else 0.0
+            mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]
+            line_pt = [dl[0] + normal[0] * offset, dl[1] + normal[1] * offset]
+            text_pos = _project(mid, line_pt, direction)
+            if key == "aligned":
+                ent = com.retry(
+                    lambda a=a, b=b, t=text_pos: target.AddDimAligned(com.pt(a), com.pt(b), com.pt(t))
+                )
+            else:
+                ent = com.retry(
+                    lambda a=a, b=b, t=text_pos: target.AddDimRotated(
+                        com.pt(a), com.pt(b), com.pt(t), math.radians(angle)
+                    )
+                )
+            if style:
+                com.quiet(lambda e=ent: setattr(e, "StyleName", str(style)))
+            if layer:
+                ent.Layer = str(layer)
+            made.append({
+                "handle": str(ent.Handle),
+                "measurement": com.quiet(lambda e=ent: round(float(e.Measurement), 6)),
+            })
+        return {"created": [m["handle"] for m in made], "dimensions": made, "count": len(made),
+                "baseline": bool(baseline)}
+
+    return com.run_com(work, timeout=300)
+
+
+@tool(description=(
+    "Change existing dimensions: override the text (use '' to go back to the "
+    "measured value, or '<>' inside text to keep the number, e.g. '<> TYP.'), "
+    "move the text, change the style, overall scale, text height, arrowhead "
+    "size or decimal places. Omit everything to just read them."
+))
+def dimension_edit(
+    handles: list[str],
+    text_override: str | None = None,
+    text_position: list[float] | None = None,
+    style: str | None = None,
+    scale: float | None = None,
+    text_height: float | None = None,
+    arrow_size: float | None = None,
+    precision: int | None = None,
+    text_rotation: float | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    if not handles:
+        raise AcadError("no handles given")
+
+    def work() -> dict[str, Any]:
+        doc = com.find_doc(drawing)
+        rows = []
+        for h in handles:
+            ent = com.by_handle(doc, str(h))
+            if util.dxf_type(ent) != "DIMENSION":
+                rows.append({"handle": str(h), "skipped": f"{util.dxf_type(ent)} is not a dimension"})
+                continue
+            if text_override is not None:
+                ent.TextOverride = str(text_override)
+            if text_position is not None:
+                ent.TextPosition = com.pt(text_position)
+            if style:
+                ent.StyleName = str(style)
+            if scale is not None:
+                ent.ScaleFactor = float(scale)
+            if text_height is not None:
+                ent.TextHeight = float(text_height)
+            if arrow_size is not None:
+                ent.ArrowheadSize = float(arrow_size)
+            if precision is not None:
+                ent.PrimaryUnitsPrecision = int(precision)
+            if text_rotation is not None:
+                ent.TextRotation = math.radians(float(text_rotation))
+            q = com.quiet
+            rows.append({
+                "handle": str(ent.Handle),
+                "measurement": q(lambda: round(float(ent.Measurement), 6)),
+                "text_override": q(lambda: str(ent.TextOverride)),
+                "text_position": q(lambda: util.round_pt(ent.TextPosition)),
+                "style": q(lambda: str(ent.StyleName)),
+                "scale": q(lambda: round(float(ent.ScaleFactor), 6)),
+                "text_height": q(lambda: round(float(ent.TextHeight), 6)),
+            })
+        return {"count": len(rows), "dimensions": rows}
+
+    return com.run_com(work, timeout=300)
+
+
+@tool(readonly=True, description=(
+    "Read an existing table: every cell's text as rows, plus the size of the "
+    "grid, so a schedule in the drawing can be checked or copied."
+))
+def table_read(handle: str, drawing: str | None = None) -> dict[str, Any]:
+    def work() -> dict[str, Any]:
+        doc = com.find_doc(drawing)
+        table = com.by_handle(doc, str(handle))
+        if util.dxf_type(table) != "ACAD_TABLE":
+            raise AcadError(f"{handle} is a {util.dxf_type(table)}, not a table")
+        rows, cols = int(table.Rows), int(table.Columns)
+        grid = [
+            [str(com.quiet(lambda r=r, c=c: table.GetText(r, c), "") or "") for c in range(cols)]
+            for r in range(rows)
+        ]
+        return {
+            "handle": str(table.Handle),
+            "rows": rows,
+            "columns": cols,
+            "style": com.quiet(lambda: str(table.StyleName)),
+            "position": com.quiet(lambda: util.round_pt(table.InsertionPoint)),
+            "column_widths": [com.quiet(lambda c=c: round(float(table.GetColumnWidth(c)), 4)) for c in range(cols)],
+            "row_heights": [com.quiet(lambda r=r: round(float(table.GetRowHeight(r)), 4)) for r in range(rows)],
+            "cells": grid,
+        }
+
+    return com.run_com(work, timeout=180)
+
+
+@tool(description=(
+    "Edit an existing table: set cells ([{row, col, value}], 0-based), insert "
+    "or delete rows/columns, resize columns or rows, merge a block of cells, "
+    "change the table style. update_data_links refreshes every Excel-linked "
+    "table in the drawing (DATALINKUPDATE) - use it with no handle."
+))
+def table_edit(
+    handle: str | None = None,
+    cells: list[dict[str, Any]] | None = None,
+    insert_rows: dict[str, Any] | None = None,
+    delete_rows: list[int] | None = None,
+    insert_columns: dict[str, Any] | None = None,
+    delete_columns: list[int] | None = None,
+    column_widths: dict[str, float] | None = None,
+    row_heights: dict[str, float] | None = None,
+    merge: dict[str, int] | None = None,
+    style: str | None = None,
+    update_data_links: bool = False,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    if update_data_links:
+        doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+        lisp.run_command("_.DATALINKUPDATE", "_Update", "_K", doc=doc, timeout=300)
+        if not handle:
+            return {"data_links": "updated"}
+    if not handle:
+        raise AcadError("give the table's handle")
+
+    def work() -> dict[str, Any]:
+        doc = com.find_doc(drawing)
+        table = com.by_handle(doc, str(handle))
+        if util.dxf_type(table) != "ACAD_TABLE":
+            raise AcadError(f"{handle} is a {util.dxf_type(table)}, not a table")
+        done: dict[str, Any] = {}
+        if style:
+            table.StyleName = str(style)
+            done["style"] = str(style)
+        if insert_rows:
+            at = int(insert_rows.get("index", int(table.Rows)))
+            n = int(insert_rows.get("count", 1))
+            h = float(insert_rows.get("height") or table.GetRowHeight(max(0, min(at, int(table.Rows) - 1))))
+            com.retry(lambda: table.InsertRows(at, h, n))
+            done["inserted_rows"] = n
+        if insert_columns:
+            at = int(insert_columns.get("index", int(table.Columns)))
+            n = int(insert_columns.get("count", 1))
+            w = float(insert_columns.get("width") or table.GetColumnWidth(max(0, min(at, int(table.Columns) - 1))))
+            com.retry(lambda: table.InsertColumns(at, w, n))
+            done["inserted_columns"] = n
+        for row in cells or []:
+            table.SetText(int(row["row"]), int(row["col"]), str(row.get("value", "")))
+        if cells:
+            done["cells_set"] = len(cells)
+        for r in sorted({int(r) for r in (delete_rows or [])}, reverse=True):
+            com.retry(lambda r=r: table.DeleteRows(r, 1))
+        if delete_rows:
+            done["deleted_rows"] = len(delete_rows)
+        for c in sorted({int(c) for c in (delete_columns or [])}, reverse=True):
+            com.retry(lambda c=c: table.DeleteColumns(c, 1))
+        if delete_columns:
+            done["deleted_columns"] = len(delete_columns)
+        for c, w in (column_widths or {}).items():
+            table.SetColumnWidth(int(c), float(w))
+        for r, hgt in (row_heights or {}).items():
+            table.SetRowHeight(int(r), float(hgt))
+        if merge:
+            com.retry(lambda: table.MergeCells(
+                int(merge["top"]), int(merge["bottom"]), int(merge["left"]), int(merge["right"])
+            ))
+            done["merged"] = merge
+        com.quiet(lambda: table.RecomputeTableBlock(True))
+        done.update({"handle": str(table.Handle), "rows": int(table.Rows), "columns": int(table.Columns)})
+        return done
+
+    return com.run_com(work, timeout=300)
+
+
+@tool(description=(
+    "Insert a table filled from a spreadsheet: an .xlsx sheet (optionally a "
+    "cell range like A1:D20) or a .csv. The values are copied in, not linked - "
+    "AutoCAD's live Excel DATALINK can only be created in its own dialog; if "
+    "she needs one, create it there once and table_edit(update_data_links) "
+    "refreshes it."
+))
+def table_from_spreadsheet(
+    path: str,
+    position: list[float],
+    sheet: str | None = None,
+    cell_range: str | None = None,
+    header_rows: int = 1,
+    title: str | None = None,
+    row_height: float = 8.0,
+    column_width: float = 40.0,
+    layer: str | None = None,
+    space: str = "auto",
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    import os
+
+    source = os.path.abspath(os.path.expanduser(str(path)))
+    if not os.path.isfile(source):
+        raise AcadError(f"no such file: {source}")
+    data: list[list[Any]] = []
+    if source.lower().endswith(".csv"):
+        import csv
+
+        with open(source, newline="", encoding="utf-8-sig") as fh:
+            data = [list(r) for r in csv.reader(fh)]
+    else:
+        try:
+            import openpyxl
+        except ImportError as exc:  # pragma: no cover
+            raise AcadError("openpyxl is not installed, so .xlsx files cannot be read") from exc
+        wb = openpyxl.load_workbook(source, data_only=True, read_only=True)
+        ws = wb[sheet] if sheet else wb.active
+        rows_iter = ws[cell_range] if cell_range else ws.iter_rows()
+        for r in rows_iter:
+            data.append(["" if c.value is None else c.value for c in r])
+        wb.close()
+    data = [r for r in data if any(str(v).strip() for v in r)]
+    if not data:
+        raise AcadError("the spreadsheet range is empty")
+    out = draw_table(
+        position, data, row_height=row_height, column_width=column_width,
+        title=title, layer=layer, space=space, drawing=drawing,
+    )
+    out["source"] = source
+    out["header_rows"] = int(header_rows)
+    return out
+
+
+@tool(description=(
+    "Combine several single-line TEXT objects into one MTEXT paragraph "
+    "(TXT2MTXT), keeping their order top to bottom."
+))
+def text_combine(handles: list[str], drawing: str | None = None) -> dict[str, Any]:
+    if len(handles) < 1:
+        raise AcadError("no handles given")
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    _, created = lisp.capture(
+        lisp.command("_.TXT2MTXT", lisp.ss_from([str(h) for h in handles]), ""),
+        doc=doc, timeout=180,
+    )
+    return {"combined": len(handles), "created": created}
+
+
+@tool(description=(
+    "Annotation scales. list: the drawing's scale list and the current scale "
+    "(CANNOSCALE). set_current: make a scale current for new annotative "
+    "objects. add: add a scale to the list (paper_units:drawing_units, e.g. "
+    "1:100). add_to_objects / remove_from_objects: give annotative objects "
+    "(handles) a scale representation."
+))
+def annotation_scale(
+    action: str = "list",
+    scale: str | None = None,
+    paper_units: float = 1.0,
+    drawing_units: float | None = None,
+    handles: list[str] | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    verb = str(action).strip().lower()
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+
+    def scales() -> dict[str, Any]:
+        rows = lisp.evaluate(
+            lisp.raw(
+                '(progn (setq amx-out nil) (foreach amx-p (dictsearch (namedobjdict) "ACAD_SCALELIST") '
+                "(if (= (car amx-p) 350) (progn (setq amx-e (entget (cdr amx-p))) "
+                "(setq amx-out (cons (list (cdr (assoc 300 amx-e)) (cdr (assoc 140 amx-e)) "
+                "(cdr (assoc 141 amx-e))) amx-out))))) (reverse amx-out))"
+            ),
+            doc=doc, timeout=60,
+        ) or []
+        return {
+            "current": lisp.evaluate(lisp.raw('(getvar "CANNOSCALE")'), doc=doc, timeout=60),
+            "current_value": lisp.evaluate(lisp.raw('(getvar "CANNOSCALEVALUE")'), doc=doc, timeout=60),
+            "scales": [{"name": r[0], "paper": r[1], "drawing": r[2]} for r in rows if isinstance(r, list)],
+        }
+
+    if verb == "list":
+        return scales()
+    if not scale:
+        raise AcadError(f"{verb} needs the scale name, e.g. '1:100'")
+    if verb == "set_current":
+        lisp.evaluate(lisp.raw(f'(setvar "CANNOSCALE" {lisp.lstr(str(scale))})'), doc=doc, timeout=60)
+        return {"current": scale}
+    if verb == "add":
+        ratio = f"{paper_units:g}:{drawing_units:g}" if drawing_units else str(scale)
+        lisp.run_command("_.-SCALELISTEDIT", "_Add", str(scale), ratio, "_Exit", doc=doc, timeout=60)
+        return {"added": scale, "ratio": ratio}
+    if verb in ("add_to_objects", "remove_from_objects"):
+        if not handles:
+            raise AcadError(f"{verb} needs handles")
+        option = "_Add" if verb == "add_to_objects" else "_Delete"
+        lisp.run_command(
+            "_.-OBJECTSCALE", lisp.ss_from([str(h) for h in handles]), "", option, str(scale), "",
+            doc=doc, timeout=120,
+        )
+        return {verb: scale, "count": len(handles)}
+    raise AcadError("action must be list, set_current, add, add_to_objects or remove_from_objects")

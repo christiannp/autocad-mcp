@@ -1,4 +1,4 @@
-"""Understanding a drawing: statistics, data extraction, screenshots."""
+"""Understanding a drawing: statistics and data extraction."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from collections import Counter, OrderedDict
 from datetime import datetime
 from typing import Any
 
-from .. import capture, com, lisp, util
+from .. import com, lisp, util
 from ..errors import AcadError
 from ..registry import tool
 
@@ -255,23 +255,3 @@ def data_extract(
         "grouped": bool(group_identical),
         "size_bytes": os.path.getsize(target) if os.path.isfile(target) else 0,
     }
-
-
-@tool(description=(
-    "Take a screenshot of the AutoCAD window and save it as a PNG, so the "
-    "drawing can be looked at directly. Optionally zoom to extents first."
-))
-def screenshot(
-    path: str | None = None,
-    zoom_extents: bool = True,
-    drawing: str | None = None,
-) -> dict[str, Any]:
-    if zoom_extents:
-        com.run_com(lambda: com.quiet(lambda: com.app().ZoomExtents()), timeout=60)
-
-    target = path or os.path.join(
-        os.environ.get("TEMP", "."), f"acad_{datetime.now():%H%M%S}.png"
-    )
-    result = capture.grab_window(target)
-    result["hint"] = "open this file to see what is on screen in AutoCAD"
-    return result

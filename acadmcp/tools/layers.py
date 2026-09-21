@@ -383,3 +383,159 @@ def dim_style(
         }
 
     return com.run_com(work, timeout=180)
+
+
+@tool(description=(
+    "Named layer states (the Layer States Manager): list them, save the "
+    "current on/off/freeze/lock/colour settings of every layer under a name, "
+    "restore one, delete one, or export/import a .las file. Lets 'switch to "
+    "the plotting setup' be one call."
+))
+def layer_states(
+    action: str = "list",
+    name: str | None = None,
+    path: str | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    verb = str(action).strip().lower()
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+
+    def names() -> list[str]:
+        return [str(n) for n in (lisp.evaluate(lisp.raw("(layerstate-getnames)"), doc=doc, timeout=60) or [])]
+
+    if verb == "list":
+        return {"states": names()}
+    if verb in ("save", "restore", "delete", "export") and not name:
+        raise AcadError(f"{verb} needs the layer state name")
+    if verb == "save":
+        # 65535 = every layer property; the saved state can be restored in full
+        ok = lisp.evaluate(
+            lisp.raw(f"(layerstate-save {lisp.lstr(str(name))} 65535 nil)"), doc=doc, timeout=120
+        )
+        return {"saved": name, "ok": bool(ok), "states": names()}
+    if verb == "restore":
+        if str(name) not in names():
+            raise NotFound(f"There is no layer state called {name!r}.")
+        ok = lisp.evaluate(lisp.raw(f"(layerstate-restore {lisp.lstr(str(name))} nil 0)"), doc=doc, timeout=120)
+        return {"restored": name, "ok": bool(ok)}
+    if verb == "delete":
+        ok = lisp.evaluate(lisp.raw(f"(layerstate-delete {lisp.lstr(str(name))})"), doc=doc, timeout=60)
+        return {"deleted": name, "ok": bool(ok), "states": names()}
+    if verb == "export":
+        if not path:
+            raise AcadError("export needs the .las path")
+        target = _abs(path)
+        ok = lisp.evaluate(
+            lisp.raw(f"(layerstate-export {lisp.lstr(str(name))} {lisp.lstr(target.replace(chr(92), '/'))})"),
+            doc=doc, timeout=60,
+        )
+        return {"exported": name, "file": target, "ok": bool(ok)}
+    if verb == "import":
+        if not path:
+            raise AcadError("import needs the .las path")
+        source = _abs(path)
+        ok = lisp.evaluate(
+            lisp.raw(f"(layerstate-import {lisp.lstr(source.replace(chr(92), '/'))})"), doc=doc, timeout=60
+        )
+        return {"imported": source, "ok": bool(ok), "states": names()}
+    raise AcadError("action must be list, save, restore, delete, export or import")
+
+
+def _abs(path: str) -> str:
+    import os
+
+    return os.path.abspath(os.path.expanduser(str(path)))
+
+
+def _matches(name: str, patterns: list[str] | bool | None) -> bool:
+    if patterns is True:
+        return True
+    if not patterns:
+        return False
+    return any(fnmatch.fnmatchcase(name.lower(), str(p).lower()) for p in patterns)
+
+
+@tool(description=(
+    "Bring layers, blocks, text styles, dimension styles, linetypes or layouts "
+    "in from another drawing or template - what DesignCenter does by hand. Each "
+    "argument is a list of names (AutoCAD wildcards allowed, e.g. ['A-*']) or "
+    "true for all. Existing definitions in the current drawing are kept, not "
+    "overwritten. source can be a .dwg or .dwt path, or an open drawing."
+))
+def standards_import(
+    source: str,
+    layers: list[str] | bool | None = None,
+    blocks: list[str] | bool | None = None,
+    text_styles: list[str] | bool | None = None,
+    dim_styles: list[str] | bool | None = None,
+    linetypes: list[str] | bool | None = None,
+    layouts: list[str] | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    wanted = {
+        "layers": layers, "blocks": blocks, "text_styles": text_styles,
+        "dim_styles": dim_styles, "linetypes": linetypes,
+    }
+    if not any(wanted.values()) and not layouts:
+        raise AcadError("say what to import: layers, blocks, text_styles, dim_styles, linetypes or layouts")
+    src_path = _abs(source)
+
+    def work() -> dict[str, Any]:
+        doc = com.find_doc(drawing)
+        src = None
+        try:
+            src = com.find_doc(source)
+            opened = "open drawing"
+        except NotFound:
+            import os
+
+            if not os.path.isfile(src_path):
+                raise AcadError(f"no such file: {src_path}") from None
+            version = str(com.app().Version).split(".")[0]
+            src = com.app().GetInterfaceObject(f"ObjectDBX.AxDbDocument.{version}")
+            com.retry(lambda: src.Open(src_path), timeout=120, context="opening the source drawing")
+            opened = "ObjectDBX (not opened on screen)"
+
+        report: dict[str, Any] = {"source": src_path, "via": opened}
+        collections = {
+            "layers": ("Layers", doc.Layers),
+            "blocks": ("Blocks", doc.Blocks),
+            "text_styles": ("TextStyles", doc.TextStyles),
+            "dim_styles": ("DimStyles", doc.DimStyles),
+            "linetypes": ("Linetypes", doc.Linetypes),
+        }
+        for key, patterns in wanted.items():
+            if not patterns:
+                continue
+            attr, owner = collections[key]
+            src_coll = getattr(src, attr)
+            existing = {str(owner.Item(i).Name).lower() for i in range(int(owner.Count))}
+            picked, skipped = [], []
+            for i in range(int(src_coll.Count)):
+                item = src_coll.Item(i)
+                nm = str(item.Name)
+                if key == "blocks" and (nm.startswith("*") or com.quiet(lambda: item.IsXRef, False)):
+                    continue
+                if not _matches(nm, patterns):
+                    continue
+                if nm.lower() in existing:
+                    skipped.append(nm)
+                    continue
+                picked.append(item)
+            if picked:
+                com.retry(lambda: src.CopyObjects(com.objects(picked), owner), timeout=300,
+                          context=f"copying {key}")
+            report[key] = {
+                "imported": [str(p.Name) for p in picked],
+                "already_present": skipped,
+            }
+        return report
+
+    result = com.run_com(work, timeout=600)
+    if layouts:
+        done = []
+        for name in layouts:
+            lisp.run_command("_.-LAYOUT", "_Template", src_path, str(name), timeout=180)
+            done.append(str(name))
+        result["layouts"] = {"imported": done}
+    return result

@@ -502,6 +502,55 @@ def run_command(
     return evaluate(command(*args), doc=doc, quiet=quiet, timeout=timeout)
 
 
+def capture(
+    expr: Any,
+    *,
+    doc: Any = None,
+    quiet: bool = True,
+    timeout: float | None = None,
+) -> tuple[Any, list[str]]:
+    """Evaluate ``expr`` and also report the handles of everything it created.
+
+    Returns ``(value, created_handles)``.  This is how every command-driven
+    tool finds out what AutoCAD made, since ``(command ...)`` itself returns nil.
+    """
+    body = expr if isinstance(expr, str) and not isinstance(expr, Raw) else lval(expr)
+    payload = evaluate(
+        Raw(f"(acadmcp:capture '(lambda () {body}))"),
+        doc=doc,
+        quiet=quiet,
+        timeout=timeout,
+    )
+    if isinstance(payload, list) and len(payload) == 2 and isinstance(payload[1], list):
+        return payload[0], [str(h) for h in payload[1] if h]
+    return payload, []
+
+
+def pushed(pairs: dict[str, Any], body: Any) -> Raw:
+    """Wrap ``body`` so the given system variables are set for its duration.
+
+    ``pushed({"PEDITACCEPT": 1}, command(...))`` sets the variable, runs the
+    body, and restores the old value even if the body errors.
+    """
+    names = list(pairs)
+    saves = " ".join(
+        f"(cons {lstr(n)} (getvar {lstr(n)}))" for n in names
+    )
+    sets = " ".join(
+        f"(vl-catch-all-apply 'setvar (list {lstr(n)} {lval(v)}))"
+        for n, v in pairs.items()
+    )
+    inner = body if isinstance(body, str) and not isinstance(body, Raw) else lval(body)
+    return Raw(
+        f"(progn (setq amx-pushed (list {saves})) {sets} "
+        f"(setq amx-pres (vl-catch-all-apply '(lambda () {inner}) nil)) "
+        "(foreach amx-pp amx-pushed (vl-catch-all-apply 'setvar (list (car amx-pp) (cdr amx-pp)))) "
+        # a caught error object handed back as the value makes acadmcp:job
+        # report it as a failure, with the original message intact
+        "amx-pres)"
+    )
+
+
 def send_raw(text: str, doc: Any = None) -> None:
     """Fire a command string at AutoCAD without waiting for a result."""
 

@@ -5,8 +5,8 @@ from __future__ import annotations
 from collections import Counter
 from typing import Any
 
-from .. import com, lisp, util
-from ..errors import AcadError
+from .. import com, lisp, util, winui
+from ..errors import AcadError, Busy, LispError, NotFound
 from ..registry import tool
 
 # DXF group codes used for selection filters
@@ -286,3 +286,225 @@ def measure(
     if not out:
         raise AcadError("give two points, some handles, or both")
     return out
+
+
+# ---------------------------------------------------------------------------
+# working with the person at the screen
+# ---------------------------------------------------------------------------
+
+
+def _describe_handles(handles: list[str], drawing: str | None, details: bool) -> list[dict[str, Any]]:
+    if not handles:
+        return []
+
+    def work() -> list[dict[str, Any]]:
+        doc = com.find_doc(drawing)
+        return [util.describe(com.by_handle(doc, h), geometry=details) for h in handles]
+
+    return com.run_com(work, timeout=180)
+
+
+@tool(readonly=True, description=(
+    "What the user currently has selected (highlighted with grips) in AutoCAD. "
+    "Lets them click things on screen and then say 'move these' or 'what are "
+    "these?'. Returns the handles; the selection is left as it is."
+))
+def selection_current(
+    include_details: bool = False,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    handles = lisp.evaluate(lisp.raw("(acadmcp:pickfirst)"), doc=doc, quiet=False, timeout=60) or []
+    handles = [str(h) for h in handles if h]
+    out: dict[str, Any] = {"count": len(handles), "handles": handles}
+    if not handles:
+        out["note"] = "nothing is selected in AutoCAD right now"
+    else:
+        out["entities"] = _describe_handles(handles, drawing, include_details)
+    return out
+
+
+@tool(description=(
+    "Highlight entities in AutoCAD (select them with grips) so the user can "
+    "see which objects are meant, or clear the selection with no handles. "
+    "Optionally zoom to them first."
+))
+def selection_highlight(
+    handles: list[str] | None = None,
+    zoom_to: bool = False,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    if not handles:
+        lisp.evaluate(lisp.raw("(sssetfirst nil nil)"), doc=doc, quiet=False, timeout=60)
+        return {"selected": 0, "cleared": True}
+    if zoom_to:
+        lisp.evaluate(
+            lisp.command("_.ZOOM", "_Object", lisp.ss_from(handles), ""), doc=doc, timeout=120
+        )
+    count = lisp.evaluate(
+        lisp.raw(
+            f"(progn (setq amx-hs {lisp.ss_from(handles)}) (sssetfirst nil amx-hs) "
+            "(if amx-hs (sslength amx-hs) 0))"
+        ),
+        doc=doc,
+        quiet=False,
+        timeout=60,
+    )
+    winui.focus_autocad(verify=False)
+    return {"selected": int(count or 0), "handles": handles}
+
+
+PICK_KINDS = ("objects", "point", "points", "distance", "text", "keyword", "number")
+
+
+@tool(description=(
+    "Ask the user to pick something in AutoCAD and wait for it: objects (click "
+    "or window-select, Enter to finish), point, points (several, Enter to "
+    "finish), distance (two clicks or a typed value), text, number, or keyword "
+    "(one of `options`). The prompt is shown on AutoCAD's command line and the "
+    "window is brought to the front. Waits up to timeout seconds; a cancelled "
+    "or timed-out pick returns picked=null rather than failing."
+))
+def user_pick(
+    kind: str = "objects",
+    prompt: str | None = None,
+    options: list[str] | None = None,
+    base_point: list[float] | None = None,
+    timeout: float = 120,
+    include_details: bool = False,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    key = str(kind).strip().lower()
+    if key not in PICK_KINDS:
+        raise AcadError("kind must be one of " + ", ".join(PICK_KINDS))
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    msg = "\n" + (str(prompt).strip() if prompt else {
+        "objects": "Select objects (Enter when done):",
+        "point": "Pick a point:",
+        "points": "Pick points (Enter when done):",
+        "distance": "Specify a distance:",
+        "text": "Enter text:",
+        "keyword": "Choose an option:",
+        "number": "Enter a number:",
+    }[key]) + " "
+    lmsg = lisp.lstr(msg)
+
+    if key == "objects":
+        code = f"(progn (prompt {lmsg}) (acadmcp:handles (ssget)))"
+    elif key == "point":
+        base = f" {lisp.lpoint(base_point)}" if base_point else ""
+        code = f"(getpoint{base} {lmsg})"
+    elif key == "points":
+        code = (
+            "(progn (setq amx-pts nil amx-p T) "
+            f"(while (setq amx-p (if amx-pts (getpoint (last amx-pts) {lmsg}) (getpoint {lmsg}))) "
+            "(setq amx-pts (append amx-pts (list amx-p)))) amx-pts)"
+        )
+    elif key == "distance":
+        base = f" {lisp.lpoint(base_point)}" if base_point else ""
+        code = f"(getdist{base} {lmsg})"
+    elif key == "text":
+        code = f"(getstring T {lmsg})"
+    elif key == "number":
+        code = f"(getreal {lmsg})"
+    else:
+        if not options:
+            raise AcadError("keyword needs the list of options to offer")
+        words = " ".join(str(o).replace(" ", "") for o in options)
+        shown = "/".join(str(o) for o in options)
+        code = (
+            f"(progn (initget {lisp.lstr(words)}) "
+            f"(getkword {lisp.lstr(msg.rstrip() + ' [' + shown + ']: ')}))"
+        )
+
+    winui.focus_autocad(verify=False)
+    try:
+        value = lisp.evaluate(lisp.raw(code), doc=doc, quiet=False, timeout=float(timeout))
+    except Busy:
+        return {"kind": key, "picked": None, "reason": f"no answer within {timeout:g}s"}
+    except LispError as exc:
+        text = str(exc).lower()
+        if "cancel" in text or "quit" in text or "abort" in text:
+            return {"kind": key, "picked": None, "reason": "the user pressed Esc"}
+        raise
+
+    out: dict[str, Any] = {"kind": key, "picked": value}
+    if key == "objects":
+        handles = [str(h) for h in (value or []) if h]
+        out["picked"] = handles
+        out["count"] = len(handles)
+        if handles:
+            out["entities"] = _describe_handles(handles, drawing, include_details)
+    return out
+
+
+@tool(description=(
+    "Named groups (the GROUP command): list them, create one from handles, add "
+    "or remove members, delete a group (its members stay), or select one on "
+    "screen. Groups let a set of objects be picked together."
+))
+def group(
+    action: str = "list",
+    name: str | None = None,
+    handles: list[str] | None = None,
+    new_name: str | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    verb = str(action).strip().lower()
+
+    def find(doc: Any, wanted: str) -> Any:
+        target = str(wanted).lower()
+        for i in range(int(doc.Groups.Count)):
+            g = doc.Groups.Item(i)
+            if str(g.Name).lower() == target:
+                return g
+        raise NotFound(f"There is no group called {wanted!r}.")
+
+    def members(g: Any) -> list[str]:
+        return [str(g.Item(i).Handle) for i in range(int(g.Count))]
+
+    def work() -> dict[str, Any]:
+        doc = com.find_doc(drawing)
+        if verb == "list":
+            rows = []
+            for i in range(int(doc.Groups.Count)):
+                g = doc.Groups.Item(i)
+                rows.append({"name": str(g.Name), "count": int(g.Count), "handles": members(g)})
+            return {"count": len(rows), "groups": rows}
+        if not name:
+            raise AcadError(f"{verb} needs the group name")
+        if verb == "create":
+            if not handles:
+                raise AcadError("create needs the handles to group")
+            g = com.retry(lambda: doc.Groups.Add(str(name)), context="creating the group")
+            g.AppendItems(com.objects(com.by_handles(doc, [str(h) for h in handles])))
+            return {"created": str(g.Name), "count": int(g.Count)}
+        g = find(doc, name)
+        if verb == "add":
+            if not handles:
+                raise AcadError("add needs handles")
+            g.AppendItems(com.objects(com.by_handles(doc, [str(h) for h in handles])))
+            return {"group": str(g.Name), "count": int(g.Count)}
+        if verb == "remove":
+            if not handles:
+                raise AcadError("remove needs handles")
+            g.RemoveItems(com.objects(com.by_handles(doc, [str(h) for h in handles])))
+            return {"group": str(g.Name), "count": int(g.Count)}
+        if verb == "delete":
+            n = int(g.Count)
+            com.retry(lambda: g.Delete())
+            return {"deleted": name, "members_kept": n}
+        if verb == "rename":
+            if not new_name:
+                raise AcadError("rename needs new_name")
+            g.Name = str(new_name)
+            return {"renamed": {"from": name, "to": str(new_name)}}
+        if verb == "select":
+            return {"select": members(g)}
+        raise AcadError("action must be list, create, add, remove, delete, rename or select")
+
+    result = com.run_com(work, timeout=180)
+    if "select" in result:
+        return selection_highlight(handles=result["select"], drawing=drawing)
+    return result
