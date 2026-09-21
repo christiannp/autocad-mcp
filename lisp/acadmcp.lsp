@@ -104,7 +104,15 @@
   ;; expression would overwrite ours.
   (setq amx-cb (entlast))
   (setq amx-cr (apply amx-cfn nil))
-  (list amx-cr (acadmcp:since amx-cb))
+  ;; a caught error handed back as the value is reported as a failure
+  (if (vl-catch-all-error-p amx-cr) amx-cr (list amx-cr (acadmcp:since amx-cb)))
+)
+
+(defun acadmcp:pickfirst ( / amx-s)
+  ;; handles of what the user currently has selected (gripped) on screen,
+  ;; without consuming or clearing that selection
+  (setq amx-s (ssgetfirst))
+  (acadmcp:handles (if (cadr amx-s) (cadr amx-s) (car amx-s)))
 )
 
 ;; --------------------------------------------------------------------------
@@ -245,5 +253,5 @@
   (princ)
 )
 
-(setq acadmcp:version "1.0")
+(setq acadmcp:version "1.1")
 (princ)

@@ -443,3 +443,307 @@ def draw_construction_line(
         return _finish(ent, _props(layer, color, None, None))
 
     return com.run_com(work, timeout=90)
+
+
+@tool(description=(
+    "Draw a regular polygon (closed polyline) with `sides` sides around a "
+    "centre: inscribed in a circle of the given radius, or circumscribed "
+    "about it. rotation turns the first vertex, in degrees."
+))
+def draw_polygon(
+    center: list[float],
+    sides: int,
+    radius: float,
+    inscribed: bool = True,
+    rotation: float = 0.0,
+    layer: str | None = None,
+    color: Any = None,
+    linetype: str | None = None,
+    lineweight: Any = None,
+    space: str = "auto",
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    n = int(sides)
+    if n < 3:
+        raise AcadError("a polygon needs at least three sides")
+    if float(radius) <= 0:
+        raise AcadError("radius must be positive")
+    r = float(radius) if inscribed else float(radius) / math.cos(math.pi / n)
+    cx, cy = float(center[0]), float(center[1])
+    start = math.radians(float(rotation)) + (0.0 if inscribed else math.pi / n)
+    points = [
+        [cx + r * math.cos(start + 2 * math.pi * i / n), cy + r * math.sin(start + 2 * math.pi * i / n)]
+        for i in range(n)
+    ]
+    out = draw_polyline(
+        points, closed=True, layer=layer, color=color, linetype=linetype,
+        lineweight=lineweight, space=space, drawing=drawing,
+    )
+    out["sides"] = n
+    return out
+
+
+@tool(description=(
+    "Draw a revision cloud (REVCLOUD): around an existing closed object "
+    "(handle), as a rectangle (two corners), or through a list of points. "
+    "arc_length sets the size of the bumps; style normal or calligraphy."
+))
+def draw_revcloud(
+    handle: str | None = None,
+    rectangle: list[list[float]] | None = None,
+    points: list[list[float]] | None = None,
+    arc_length: float | None = None,
+    style: str | None = None,
+    keep_object: bool = False,
+    layer: str | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    steps: list[Any] = []
+    if arc_length is not None:
+        steps.append(lisp.command("_.REVCLOUD", "_Arc", float(arc_length), float(arc_length), lisp.raw("(command)")))
+    if style:
+        key = str(style).strip().lower()
+        if key not in ("normal", "calligraphy"):
+            raise AcadError("style must be normal or calligraphy")
+        steps.append(lisp.command("_.REVCLOUD", "_Style", "_Normal" if key == "normal" else "_Calligraphy", lisp.raw("(command)")))
+    if handle:
+        body = lisp.command("_.REVCLOUD", "_Object", lisp.entity(str(handle)), "_No")
+        mode = "object"
+    elif rectangle:
+        if len(rectangle) != 2:
+            raise AcadError("rectangle needs two corner points")
+        body = lisp.command("_.REVCLOUD", "_Rectangular", rectangle[0], rectangle[1])
+        mode = "rectangle"
+    elif points:
+        if len(points) < 3:
+            raise AcadError("a polygonal cloud needs at least three points")
+        body = lisp.command("_.REVCLOUD", "_Polygonal", *points, "")
+        mode = "polygonal"
+    else:
+        raise AcadError("give a handle, a rectangle or points")
+    if layer:
+        steps.append(lisp.raw(f'(setvar "CLAYER" {lisp.lstr(str(layer))})'))
+        com.run_com(lambda: util.ensure_layer(com.find_doc(drawing), str(layer)), timeout=60)
+    steps.append(body)
+    _, created = lisp.capture(
+        lisp.pushed({"CLAYER": lisp.raw('(getvar "CLAYER")')}, lisp.progn(*steps)) if layer else lisp.progn(*steps),
+        doc=doc,
+        timeout=180,
+    )
+    out: dict[str, Any] = {"created": created, "mode": mode}
+    if handle and not keep_object:
+        out["note"] = "REVCLOUD replaces the source object with the cloud"
+    return out
+
+
+@tool(description=(
+    "Draw a wipeout (a blank mask that hides what is under it) through a list "
+    "of points, or from a closed polyline. frames sets WIPEOUTFRAME for the "
+    "whole drawing: 0 hidden, 1 shown and plotted, 2 shown but not plotted."
+))
+def draw_wipeout(
+    points: list[list[float]] | None = None,
+    polyline: str | None = None,
+    erase_polyline: bool = False,
+    frames: int | None = None,
+    layer: str | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    out: dict[str, Any] = {}
+    if frames is not None:
+        lisp.evaluate(lisp.raw(f'(setvar "WIPEOUTFRAME" {int(frames)})'), doc=doc, timeout=60)
+        out["frames"] = int(frames)
+    if polyline:
+        body = lisp.command("_.WIPEOUT", "_Polyline", lisp.entity(str(polyline)), "_Yes" if erase_polyline else "_No")
+    elif points:
+        if len(points) < 3:
+            raise AcadError("a wipeout needs at least three points")
+        body = lisp.command("_.WIPEOUT", *points, "")
+    else:
+        if frames is not None:
+            return out
+        raise AcadError("give points or a polyline handle")
+    _, created = lisp.capture(body, doc=doc, timeout=180)
+    if layer and created:
+        from .modify import entity_properties
+
+        entity_properties(created, layer=str(layer), drawing=drawing)
+    out.update({"created": created, "count": len(created)})
+    return out
+
+
+BOOLEAN = {"union": 0, "intersect": 1, "subtract": 2}
+
+
+@tool(description=(
+    "Regions - closed areas you can do maths on. action create: turn closed "
+    "curves (handles) into regions (sources are erased unless keep_source). "
+    "union / intersect / subtract: combine regions (subtract takes `handles` "
+    "away from `from_handle`). area: report area and perimeter. to_polyline: "
+    "explode a region back into a closed polyline. Useful for usable-roof-area "
+    "calculations: roof minus obstructions."
+))
+def region(
+    action: str = "create",
+    handles: list[str] | None = None,
+    from_handle: str | None = None,
+    keep_source: bool = False,
+    layer: str | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    verb = str(action).strip().lower()
+    if verb in ("intersection",):
+        verb = "intersect"
+    if verb in ("subtraction", "difference"):
+        verb = "subtract"
+
+    def summary(r: Any) -> dict[str, Any]:
+        return {
+            "handle": str(r.Handle),
+            "area": com.quiet(lambda: round(float(r.Area), 6)),
+            "perimeter": com.quiet(lambda: round(float(r.Perimeter), 6)),
+            "centroid": com.quiet(lambda: util.round_pt(r.Centroid)),
+        }
+
+    def work() -> dict[str, Any]:
+        doc = com.find_doc(drawing)
+        if verb == "create":
+            if not handles:
+                raise AcadError("create needs the handles of closed curves")
+            ents = com.by_handles(doc, [str(h) for h in handles])
+            owner = com.quiet(lambda: ents[0].Owner) or doc.ModelSpace
+            try:
+                made = list(com.unwrap(com.retry(lambda: owner.AddRegion(com.objects(ents)))) or [])
+            except Exception as exc:  # noqa: BLE001
+                raise AcadError(
+                    "AutoCAD could not make a region from those objects - they must "
+                    f"form closed loops that do not cross themselves ({exc})"
+                ) from exc
+            if layer:
+                util.ensure_layer(doc, layer)
+                for r in made:
+                    r.Layer = str(layer)
+            if not keep_source:
+                for e in ents:
+                    com.quiet(lambda e=e: e.Delete())
+            return {"created": [summary(r) for r in made], "count": len(made)}
+
+        if verb in BOOLEAN:
+            if verb == "subtract":
+                if not (from_handle and handles):
+                    raise AcadError("subtract needs from_handle and the handles to take away")
+                base = com.by_handle(doc, str(from_handle))
+                others = com.by_handles(doc, [str(h) for h in handles])
+            else:
+                subjects = [str(h) for h in (handles or [])]
+                if from_handle:
+                    subjects.insert(0, str(from_handle))
+                if len(subjects) < 2:
+                    raise AcadError(f"{verb} needs at least two region handles")
+                base = com.by_handle(doc, subjects[0])
+                others = com.by_handles(doc, subjects[1:])
+            for r in (base, *others):
+                if util.dxf_type(r) != "REGION":
+                    raise AcadError(f"{r.Handle} is a {util.dxf_type(r)}, not a region")
+            for other in others:
+                com.retry(lambda o=other: base.Boolean(BOOLEAN[verb], o))
+            out = summary(base)
+            out["action"] = verb
+            return out
+
+        if verb == "area":
+            if not handles:
+                raise AcadError("area needs region handles")
+            rows = [summary(com.by_handle(doc, str(h))) for h in handles]
+            return {"regions": rows, "total_area": round(sum(float(r["area"] or 0) for r in rows), 6)}
+
+        if verb == "to_polyline":
+            return {"to_polyline": [str(h) for h in (handles or ([from_handle] if from_handle else []))]}
+
+        raise AcadError("action must be create, union, intersect, subtract, area or to_polyline")
+
+    result = com.run_com(work, timeout=300)
+    if "to_polyline" in result:
+        subjects = result["to_polyline"]
+        if not subjects:
+            raise AcadError("to_polyline needs region handles")
+        from .modify import entity_explode, polyline_edit
+
+        made: list[str] = []
+        for h in subjects:
+            pieces = entity_explode([h], drawing=drawing).get("created", [])
+            if pieces:
+                joined = polyline_edit(action="join", handles=pieces, fuzz=0.0, drawing=drawing)
+                made.extend(joined.get("created") or joined.get("remaining") or [])
+        return {"created": made, "count": len(made)}
+    return result
+
+
+@tool(description=(
+    "Trace the enclosed area around a point into a closed polyline or region "
+    "(BOUNDARY), like picking a point inside a room or a roof. Reports the "
+    "area. area_only measures and removes the boundary again."
+))
+def boundary(
+    point: list[float] | None = None,
+    points: list[list[float]] | None = None,
+    kind: str = "polyline",
+    island_detection: bool = True,
+    area_only: bool = False,
+    layer: str | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    key = str(kind).strip().lower()
+    if key not in ("polyline", "region"):
+        raise AcadError("kind must be polyline or region")
+    seeds = [list(p) for p in (points or [])]
+    if point is not None:
+        seeds.insert(0, list(point))
+    if not seeds:
+        raise AcadError("give a point (or points) inside the area")
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+
+    from .session import zoom
+
+    com.quiet(lambda: zoom(mode="extents"))     # boundary tracing only sees what is on screen
+    steps = [
+        lisp.command(
+            "_.-BOUNDARY", "_Advanced", "_Island", "_Yes" if island_detection else "_No",
+            "_Object", "_Region" if key == "region" else "_Polyline", "_eXit",
+            *seeds, "",
+        )
+    ]
+    _, created = lisp.capture(lisp.progn(*steps), doc=doc, timeout=180)
+    if not created:
+        raise AcadError(
+            "no closed area was found around that point - make sure the point is "
+            "inside an enclosed shape and the gaps are closed"
+        )
+
+    def measure() -> list[dict[str, Any]]:
+        d = com.find_doc(drawing)
+        rows = []
+        for h in created:
+            e = com.by_handle(d, h)
+            if layer and not area_only:
+                util.ensure_layer(d, layer)
+                e.Layer = str(layer)
+            rows.append({
+                "handle": h,
+                "type": util.dxf_type(e),
+                "area": com.quiet(lambda: round(float(e.Area), 6)),
+                "length": com.quiet(lambda: round(float(e.Length if util.dxf_type(e) != "REGION" else e.Perimeter), 6)),
+            })
+            if area_only:
+                com.quiet(lambda: e.Delete())
+        return rows
+
+    rows = com.run_com(measure, timeout=120)
+    out: dict[str, Any] = {
+        "created": [] if area_only else created,
+        "boundaries": rows,
+        "total_area": round(sum(float(r["area"] or 0) for r in rows), 6),
+    }
+    return out

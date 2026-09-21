@@ -19,6 +19,7 @@ TOOL_MODULES = [
     "annotate",
     "layout",
     "query",
+    "vision",
     "batch",
 ]
 

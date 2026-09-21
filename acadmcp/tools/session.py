@@ -104,10 +104,13 @@ def doc_list() -> dict[str, Any]:
 def doc_new(template: str | None = None) -> dict[str, Any]:
     def work() -> dict[str, Any]:
         app = com.app()
+        # Right after closing a drawing, late binding can fail to resolve
+        # Documents.Add ("AttributeError: <unknown>.Add") while AutoCAD is
+        # still tidying up - that is busy, not broken, so ride it out.
         if template:
-            com.retry(lambda: app.Documents.Add(str(template)), timeout=180)
+            com.retry(lambda: app.Documents.Add(str(template)), timeout=180, attr_is_busy=True)
         else:
-            com.retry(lambda: app.Documents.Add(), timeout=180)
+            com.retry(lambda: app.Documents.Add(), timeout=180, attr_is_busy=True)
         # Documents.Add can hand back an object late binding cannot read; the
         # new drawing is the active one, so read it from there instead.
         doc = com.retry(
@@ -343,3 +346,161 @@ def purge(
         "audited": bool(audit_and_fix),
         "requested": kinds or "all",
     }
+
+
+@tool(description=(
+    "Undo or redo. action: undo (the last `steps` operations), redo, mark (set "
+    "an undo mark), or back (undo everything since the last mark). Each tool "
+    "call is at least one undo step, so mark before a multi-step change and "
+    "back reverts all of it if the result is wrong."
+))
+def undo(
+    action: str = "undo",
+    steps: int = 1,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    verb = str(action).strip().lower()
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    n = max(1, int(steps))
+    if verb == "undo":
+        lisp.run_command("_.UNDO", n, doc=doc, timeout=300)
+        return {"undone": n}
+    if verb == "redo":
+        lisp.run_command("_.MREDO", n, doc=doc, timeout=300)
+        return {"redone": n}
+    if verb == "mark":
+        lisp.run_command("_.UNDO", "_Mark", doc=doc, timeout=60)
+        return {"mark": "set"}
+    if verb == "back":
+        marks = lisp.evaluate(lisp.raw('(getvar "UNDOMARKS")'), doc=doc, timeout=60)
+        if not marks:
+            raise AcadError(
+                "there is no undo mark to go back to - set one first with "
+                "action='mark' (going back without a mark would undo everything)"
+            )
+        lisp.run_command("_.UNDO", "_Back", doc=doc, timeout=300)
+        return {"undone": "everything since the last mark", "marks_left": int(marks) - 1}
+    raise AcadError("action must be undo, redo, mark or back")
+
+
+@tool(description=(
+    "Named views: list, save the current view under a name, restore one, or "
+    "delete one. A saved view remembers where the camera was, so 'go back to "
+    "the roof view' is one call."
+))
+def view(
+    action: str = "list",
+    name: str | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    verb = str(action).strip().lower()
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60)
+
+    def names() -> list[str]:
+        return com.run_com(
+            lambda: [str(doc.Views.Item(i).Name) for i in range(int(doc.Views.Count))],
+            timeout=60,
+        )
+
+    if verb == "list":
+        return {"views": names()}
+    if not name:
+        raise AcadError(f"{verb} needs the view name")
+    if verb == "save":
+        exists = str(name).lower() in {n.lower() for n in names()}
+        args: list[Any] = ["_.-VIEW", "_Save", str(name)]
+        if exists:
+            args.append("_Yes")            # "View already exists. Replace it?"
+        lisp.run_command(*args, doc=doc, timeout=60)
+        return {"saved": name, "replaced": exists}
+    if verb == "restore":
+        lisp.run_command("_.-VIEW", "_Restore", str(name), doc=doc, timeout=60)
+        return {"restored": name}
+    if verb == "delete":
+        lisp.run_command("_.-VIEW", "_Delete", str(name), doc=doc, timeout=60)
+        return {"deleted": name}
+    raise AcadError("action must be list, save, restore or delete")
+
+
+@tool(description=(
+    "The user coordinate system. action: world (back to WCS), origin (move the "
+    "origin, optionally rotate by angle degrees about Z), three_point (origin, a "
+    "point on +X, a point on +Y), object (align to an entity), save, restore, "
+    "list or current."
+))
+def ucs(
+    action: str = "current",
+    origin: list[float] | None = None,
+    x_point: list[float] | None = None,
+    y_point: list[float] | None = None,
+    angle: float = 0.0,
+    handle: str | None = None,
+    name: str | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    verb = str(action).strip().lower().replace("-", "_")
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60)
+
+    def current() -> dict[str, Any]:
+        return com.run_com(
+            lambda: {
+                "name": str(com.quiet(lambda: doc.GetVariable("UCSNAME"), "") or "")
+                or "(unnamed)",
+                "origin": com.unwrap(doc.GetVariable("UCSORG")),
+                "x_axis": com.unwrap(doc.GetVariable("UCSXDIR")),
+                "y_axis": com.unwrap(doc.GetVariable("UCSYDIR")),
+                "is_world": int(com.quiet(lambda: doc.GetVariable("WORLDUCS"), 1) or 0) == 1,
+            },
+            timeout=60,
+        )
+
+    if verb == "current":
+        return current()
+    if verb == "list":
+        saved = com.run_com(
+            lambda: [
+                str(doc.UserCoordinateSystems.Item(i).Name)
+                for i in range(int(doc.UserCoordinateSystems.Count))
+            ],
+            timeout=60,
+        )
+        return {"saved": saved, **current()}
+    if verb == "world":
+        lisp.run_command("_.UCS", "_World", doc=doc, timeout=60)
+    elif verb == "origin":
+        if not origin:
+            raise AcadError("origin needs the new origin point")
+        lisp.run_command("_.UCS", origin, doc=doc, timeout=60)
+        if float(angle):
+            lisp.run_command("_.UCS", "_Z", float(angle), doc=doc, timeout=60)
+    elif verb in ("three_point", "3point"):
+        if not (origin and x_point and y_point):
+            raise AcadError("three_point needs origin, x_point and y_point")
+        lisp.run_command("_.UCS", "_3", origin, x_point, y_point, doc=doc, timeout=60)
+    elif verb == "object":
+        if not handle:
+            raise AcadError("object needs the handle of the entity to align to")
+        lisp.run_command("_.UCS", "_OBject", lisp.entity(str(handle)), doc=doc, timeout=60)
+    elif verb == "save":
+        if not name:
+            raise AcadError("save needs a name")
+        existing = com.run_com(
+            lambda: [
+                str(doc.UserCoordinateSystems.Item(i).Name).lower()
+                for i in range(int(doc.UserCoordinateSystems.Count))
+            ],
+            timeout=60,
+        )
+        args: list[Any] = ["_.UCS", "_Save", str(name)]
+        if str(name).lower() in existing:
+            args.append("_Yes")            # "already exists. Replace it?"
+        lisp.run_command(*args, doc=doc, timeout=60)
+    elif verb == "restore":
+        if not name:
+            raise AcadError("restore needs a name")
+        lisp.run_command("_.UCS", "_Restore", str(name), doc=doc, timeout=60)
+    else:
+        raise AcadError(
+            "action must be current, list, world, origin, three_point, object, save or restore"
+        )
+    return {"action": verb, **current()}

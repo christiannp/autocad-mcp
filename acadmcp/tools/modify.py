@@ -124,28 +124,112 @@ def entity_mirror(
     return com.run_com(work, timeout=300)
 
 
-@tool(description="Offset curves by a distance. A positive distance offsets one way, a negative one the other; try the sign you want and check the result.")
+def _curve_direction(ent: Any) -> tuple[list[float], list[float]] | None:
+    """(start point, unit direction) of an open curve, or None."""
+    kind = util.dxf_type(ent)
+    try:
+        if kind == "LINE":
+            a, b = util.round_pt(ent.StartPoint), util.round_pt(ent.EndPoint)
+        elif kind in ("LWPOLYLINE", "POLYLINE"):
+            coords = com.unwrap(ent.Coordinates)
+            step = 2 if kind == "LWPOLYLINE" else 3
+            a, b = list(coords[0:2]), list(coords[step:step + 2])
+        elif kind in ("ARC", "SPLINE", "ELLIPSE"):
+            a = util.round_pt(ent.StartPoint)
+            b = util.round_pt(ent.EndPoint)
+            if kind == "ARC":
+                # tangent at the start, counter-clockwise
+                ang = float(ent.StartAngle) + math.pi / 2
+                b = [a[0] + math.cos(ang), a[1] + math.sin(ang)]
+        else:
+            return None
+    except Exception:  # noqa: BLE001
+        return None
+    dx, dy = b[0] - a[0], b[1] - a[1]
+    n = math.hypot(dx, dy)
+    if n == 0:
+        return None
+    return [a[0], a[1]], [dx / n, dy / n]
+
+
+@tool(description=(
+    "Offset curves by a distance. side chooses where the copy goes: inside or "
+    "outside for closed shapes (a roof outline offset inside by the setback), "
+    "left or right of the curve's direction for open ones, or give a through "
+    "point. Without side, a positive distance offsets one way and a negative "
+    "one the other."
+))
 def entity_offset(
     handles: list[str],
-    distance: float,
+    distance: float = 0.0,
+    side: str | None = None,
+    through: list[float] | None = None,
     drawing: str | None = None,
 ) -> dict[str, Any]:
-    if float(distance) == 0:
-        raise AcadError("the offset distance cannot be zero")
+    want = str(side).strip().lower() if side else None
+    if want and want not in ("inside", "outside", "left", "right"):
+        raise AcadError("side must be inside, outside, left or right")
+    if through is None and float(distance) == 0:
+        raise AcadError("the offset distance cannot be zero (or give a through point)")
+
+    if through is not None:
+        made_all: list[str] = []
+        for h in handles:
+            _, made = lisp.capture(
+                lisp.command("_.OFFSET", "_Through", lisp.entity(str(h)), through, ""),
+                timeout=120,
+            )
+            made_all.extend(made)
+        return {"created": made_all, "count": len(made_all), "through": through}
 
     def work() -> dict[str, Any]:
         doc = com.find_doc(drawing)
         made: list[str] = []
         failed: list[dict[str, str]] = []
+        sides: list[str] = []
         for h in handles:
             ent = com.by_handle(doc, str(h))
+            closed = bool(com.quiet(lambda: ent.Closed, False)) or util.dxf_type(ent) in ("CIRCLE", "ELLIPSE")
+            if want in ("inside", "outside") and not closed:
+                failed.append({"handle": str(h), "reason": "not a closed shape; use left/right"})
+                continue
+            if want in ("left", "right") and closed:
+                failed.append({"handle": str(h), "reason": "a closed shape; use inside/outside"})
+                continue
+
+            def offset(d: float) -> list[Any]:
+                return list(com.unwrap(com.retry(lambda: ent.Offset(float(d)))) or [])
+
             try:
-                result = com.retry(lambda e=ent: e.Offset(float(distance)))
-                for obj in com.unwrap(result) or []:
-                    made.append(str(obj.Handle))
+                d = abs(float(distance)) if want else float(distance)
+                objs = offset(d)
+                if want and objs:
+                    wrong = False
+                    if want in ("inside", "outside"):
+                        a0 = float(com.quiet(lambda: ent.Area, 0.0) or 0.0)
+                        a1 = float(com.quiet(lambda: objs[0].Area, 0.0) or 0.0)
+                        wrong = (a1 > a0) if want == "inside" else (a1 < a0)
+                    else:
+                        base = _curve_direction(ent)
+                        other = _curve_direction(objs[0])
+                        if base and other:
+                            (ax, ay), (dx, dy) = base
+                            (bx, by), _ = other
+                            cross = dx * (by - ay) - dy * (bx - ax)
+                            wrong = (cross < 0) if want == "left" else (cross > 0)
+                    if wrong:
+                        for o in objs:
+                            com.quiet(lambda o=o: o.Delete())
+                        objs = offset(-d)
+                for o in objs:
+                    made.append(str(o.Handle))
+                if want:
+                    sides.append(want)
             except Exception as exc:  # noqa: BLE001
                 failed.append({"handle": str(h), "reason": str(exc)})
         out: dict[str, Any] = {"created": made, "count": len(made), "distance": distance}
+        if want:
+            out["side"] = want
         if failed:
             out["could_not_offset"] = failed
         return out
@@ -598,3 +682,420 @@ def entity_overkill(
         "entities_after": after,
         "removed": (before - after) if isinstance(before, int) and isinstance(after, int) else None,
     }
+
+
+def _ss_crossing(corner1: list[float], corner2: list[float], only: list[str] | None) -> lisp.Raw:
+    """A crossing-window pickset, optionally reduced to the given handles.
+
+    STRETCH honours the window that built a pickset, which is what lets it
+    stretch the objects the window cuts and move the ones it encloses.
+    """
+    ss = f'(ssget "_C" {lisp.lpoint(corner1)} {lisp.lpoint(corner2)})'
+    if not only:
+        return lisp.raw(ss)
+    keep = " ".join(lisp.lstr(str(h)) for h in only)
+    return lisp.raw(
+        f"(progn (setq amx-ss {ss} amx-keep (list {keep}) amx-i 0) "
+        "(if amx-ss (progn (setq amx-drop nil) "
+        "(repeat (sslength amx-ss) (setq amx-e (ssname amx-ss amx-i)) "
+        "(if (not (member (acadmcp:hnd amx-e) amx-keep)) (setq amx-drop (cons amx-e amx-drop))) "
+        "(setq amx-i (1+ amx-i))) "
+        "(foreach amx-e amx-drop (ssdel amx-e amx-ss)))) "
+        "(if (and amx-ss (> (sslength amx-ss) 0)) amx-ss nil))"
+    )
+
+
+@tool(description=(
+    "Stretch: move the vertices that fall inside a crossing window while the "
+    "rest of each object stays put (the STRETCH command). crossing is two "
+    "corner points; objects fully inside simply move. Give a displacement, or "
+    "from_point and to_point. handles limits which objects may be affected."
+))
+def entity_stretch(
+    crossing: list[list[float]],
+    displacement: list[float] | None = None,
+    from_point: list[float] | None = None,
+    to_point: list[float] | None = None,
+    handles: list[str] | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    if not crossing or len(crossing) != 2:
+        raise AcadError("crossing needs exactly two corner points")
+    if displacement is not None:
+        base, dest = [0.0, 0.0, 0.0], [float(v) for v in displacement] + ([0.0] if len(displacement) == 2 else [])
+    elif from_point is not None and to_point is not None:
+        base, dest = from_point, to_point
+    else:
+        raise AcadError("give a displacement, or both from_point and to_point")
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    count = lisp.evaluate(
+        lisp.raw(
+            f"(progn (setq amx-sel {_ss_crossing(crossing[0], crossing[1], handles)}) "
+            f"(if amx-sel (progn {lisp.command('_.STRETCH', lisp.raw('amx-sel'), '', base, dest)} "
+            "(sslength amx-sel)) 0))"
+        ),
+        doc=doc,
+        timeout=300,
+    )
+    return {"stretched": int(count or 0), "crossing": crossing, "moved_by": dest if displacement else [to_point, from_point]}
+
+
+@tool(description=(
+    "Align objects by matching source points to destination points (the ALIGN "
+    "command): one pair moves, two pairs move and rotate (and optionally "
+    "scale), three pairs align in 3D."
+))
+def entity_align(
+    handles: list[str],
+    source_points: list[list[float]],
+    destination_points: list[list[float]],
+    scale: bool = False,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    if not handles:
+        raise AcadError("no handles given")
+    n = len(source_points)
+    if n not in (1, 2, 3) or len(destination_points) != n:
+        raise AcadError("give 1, 2 or 3 source points and the same number of destination points")
+    args: list[Any] = ["_.ALIGN", lisp.ss_from(handles), ""]
+    for s_pt, d_pt in zip(source_points, destination_points):
+        args += [s_pt, d_pt]
+    if n == 1:
+        args.append("")                     # no second source point
+    elif n == 2:
+        args.append("")                     # no third source point
+        args.append("_Yes" if scale else "_No")
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    lisp.evaluate(lisp.command(*args), doc=doc, timeout=300)
+    return {"aligned": len(handles), "pairs": n, "scaled": bool(scale and n == 2)}
+
+
+def _end_point(ent: Any, which: str) -> list[float]:
+    kind = util.dxf_type(ent)
+    if kind in ("LWPOLYLINE", "POLYLINE"):
+        coords = com.unwrap(ent.Coordinates)
+        step = 2 if kind == "LWPOLYLINE" else 3
+        pts = [list(coords[i:i + 2]) for i in range(0, len(coords), step)]
+        p = pts[-1] if which == "end" else pts[0]
+        return [float(p[0]), float(p[1])]
+    p = util.round_pt(ent.EndPoint if which == "end" else ent.StartPoint)
+    return p[:2]
+
+
+@tool(description=(
+    "Lengthen or shorten open curves (the LENGTHEN command) at one end: by a "
+    "delta (negative shortens), to a total length, or by a percentage. end is "
+    "'end' or 'start' of the curve."
+))
+def entity_lengthen(
+    handles: list[str],
+    delta: float | None = None,
+    total: float | None = None,
+    percent: float | None = None,
+    end: str = "end",
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    if not handles:
+        raise AcadError("no handles given")
+    which = str(end).strip().lower()
+    if which not in ("end", "start"):
+        raise AcadError("end must be 'end' or 'start'")
+    if delta is not None:
+        mode: list[Any] = ["_DElta", float(delta)]
+    elif total is not None:
+        mode = ["_Total", float(total)]
+    elif percent is not None:
+        mode = ["_Percent", float(percent)]
+    else:
+        raise AcadError("give delta, total or percent")
+
+    def picks() -> list[tuple[str, list[float]]]:
+        doc = com.find_doc(drawing)
+        return [(str(h), _end_point(com.by_handle(doc, str(h)), which)) for h in handles]
+
+    targets = com.run_com(picks, timeout=120)
+    args: list[Any] = ["_.LENGTHEN", *mode]
+    for h, p in targets:
+        args.append(lisp.raw(f"(list {lisp.entity(h)} {lisp.lpoint(p)})"))
+    args.append("")
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    lisp.evaluate(lisp.command(*args), doc=doc, timeout=300)
+
+    def lengths() -> dict[str, float | None]:
+        d = com.find_doc(drawing)
+        return {
+            str(h): com.quiet(lambda h=h: round(float(com.by_handle(d, str(h)).Length), 6))
+            for h in handles
+        }
+
+    return {"changed": len(handles), "mode": mode[0].lstrip("_"), "lengths": com.run_com(lengths, timeout=120)}
+
+
+PEDIT_OPTIONS = {
+    "fit": "_Fit", "spline": "_Spline", "decurve": "_Decurve",
+}
+
+
+@tool(description=(
+    "Edit a polyline. action: close, open, width (constant width), add_vertex "
+    "(index, point - inserts before that index), move_vertex (index, point), "
+    "delete_vertex (index), reverse, join (merge lines/arcs/polylines in "
+    "handles into one polyline, within fuzz), to_polyline (convert lines and "
+    "arcs), fit, spline, decurve, linetype_generation (on/off), or info."
+))
+def polyline_edit(
+    handle: str | None = None,
+    action: str = "info",
+    index: int | None = None,
+    point: list[float] | None = None,
+    width: float | None = None,
+    handles: list[str] | None = None,
+    fuzz: float = 0.0,
+    on: bool | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    verb = str(action).strip().lower()
+
+    if verb in ("join", "to_polyline"):
+        subjects = [str(h) for h in (handles or ([handle] if handle else []))]
+        if not subjects:
+            raise AcadError(f"{verb} needs handles")
+        doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+        if verb == "to_polyline":
+            body = lisp.command("_.PEDIT", "_Multiple", lisp.ss_from(subjects), "", "")
+        else:
+            body = lisp.command(
+                "_.PEDIT", "_Multiple", lisp.ss_from(subjects), "", "_Join", float(fuzz), ""
+            )
+        _, created = lisp.capture(lisp.pushed({"PEDITACCEPT": 1}, body), doc=doc, timeout=300)
+        survivors = lisp.evaluate(
+            lisp.raw(
+                "(vl-remove nil (mapcar '(lambda (h) (if (handent h) h)) "
+                + "(list " + " ".join(lisp.lstr(h) for h in subjects) + ")))"
+            ),
+            doc=doc,
+            timeout=60,
+        ) or []
+        return {"action": verb, "created": created, "remaining": survivors}
+
+    if not handle:
+        raise AcadError("give the polyline's handle")
+
+    if verb == "reverse":
+        doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+        lisp.evaluate(lisp.command("_.REVERSE", lisp.entity(str(handle)), ""), doc=doc, timeout=120)
+        return {"action": "reverse", "handle": handle}
+    if verb in PEDIT_OPTIONS:
+        doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+        lisp.evaluate(
+            lisp.pushed(
+                {"PEDITACCEPT": 1},
+                lisp.command("_.PEDIT", lisp.entity(str(handle)), PEDIT_OPTIONS[verb], ""),
+            ),
+            doc=doc,
+            timeout=120,
+        )
+        return {"action": verb, "handle": handle}
+    if verb == "linetype_generation":
+        if on is None:
+            raise AcadError("linetype_generation needs on=true or false")
+        doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+        lisp.evaluate(
+            lisp.pushed(
+                {"PEDITACCEPT": 1},
+                lisp.command("_.PEDIT", lisp.entity(str(handle)), "_Ltype", "_ON" if on else "_OFF", ""),
+            ),
+            doc=doc,
+            timeout=120,
+        )
+        return {"action": verb, "handle": handle, "on": bool(on)}
+
+    def work() -> dict[str, Any]:
+        doc = com.find_doc(drawing)
+        ent = com.by_handle(doc, str(handle))
+        kind = util.dxf_type(ent)
+        if kind not in ("LWPOLYLINE", "POLYLINE"):
+            raise AcadError(f"{handle} is a {kind}, not a polyline (use to_polyline first)")
+        if verb == "info":
+            info = util.describe(ent)
+            info["vertices"] = len(info.get("points", []))
+            info["constant_width"] = com.quiet(lambda: round(float(ent.ConstantWidth), 6))
+            return info
+        if verb == "close":
+            ent.Closed = True
+        elif verb == "open":
+            ent.Closed = False
+        elif verb == "width":
+            if width is None:
+                raise AcadError("width needs the width value")
+            ent.ConstantWidth = float(width)
+        elif verb in ("add_vertex", "move_vertex", "delete_vertex"):
+            if kind != "LWPOLYLINE":
+                raise AcadError("vertex editing works on lightweight polylines; convert it first")
+            if index is None:
+                raise AcadError(f"{verb} needs the vertex index (0-based)")
+            coords = list(com.unwrap(ent.Coordinates))
+            pts = [coords[i:i + 2] for i in range(0, len(coords), 2)]
+            bulges = [float(com.quiet(lambda i=i: ent.GetBulge(i), 0.0) or 0.0) for i in range(len(pts))]
+            i = int(index)
+            if verb == "delete_vertex":
+                if not 0 <= i < len(pts):
+                    raise AcadError(f"index {i} is out of range (0-{len(pts) - 1})")
+                if len(pts) <= 2:
+                    raise AcadError("a polyline needs at least two vertices")
+                del pts[i]
+                del bulges[i]
+            else:
+                if point is None:
+                    raise AcadError(f"{verb} needs the point")
+                p = [float(point[0]), float(point[1])]
+                if verb == "move_vertex":
+                    if not 0 <= i < len(pts):
+                        raise AcadError(f"index {i} is out of range (0-{len(pts) - 1})")
+                    pts[i] = p
+                else:
+                    i = max(0, min(i, len(pts)))
+                    pts.insert(i, p)
+                    bulges.insert(i, 0.0)
+            flat = [float(v) for p in pts for v in p]
+            ent.Coordinates = com.doubles(flat)
+            for j, b in enumerate(bulges):
+                if b:
+                    com.quiet(lambda j=j, b=b: ent.SetBulge(j, b))
+        else:
+            raise AcadError(
+                "action must be info, close, open, width, add_vertex, move_vertex, "
+                "delete_vertex, reverse, join, to_polyline, fit, spline, decurve or "
+                "linetype_generation"
+            )
+        com.quiet(lambda: ent.Update())
+        out = util.describe(ent)
+        out["action"] = verb
+        return out
+
+    return com.run_com(work, timeout=180)
+
+
+@tool(description=(
+    "Place points or blocks along a curve: divide it into a number of equal "
+    "segments (DIVIDE) or step along it by a length (MEASURE). With a block "
+    "name, one insert goes at each division. point_style sets PDMODE so plain "
+    "points are visible (3 = X, 34 = circle with cross)."
+))
+def entity_divide(
+    handle: str,
+    segments: int | None = None,
+    length: float | None = None,
+    block: str | None = None,
+    align_block: bool = True,
+    point_style: int | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    if segments is None and length is None:
+        raise AcadError("give segments (DIVIDE) or length (MEASURE)")
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    if point_style is not None:
+        lisp.evaluate(lisp.raw(f'(setvar "PDMODE" {int(point_style)})'), doc=doc, timeout=60)
+    ent = lisp.entity(str(handle))
+    if segments is not None:
+        if int(segments) < 2:
+            raise AcadError("segments must be at least 2")
+        if block:
+            body = lisp.command("_.DIVIDE", ent, "_Block", str(block), "_Yes" if align_block else "_No", int(segments))
+        else:
+            body = lisp.command("_.DIVIDE", ent, int(segments))
+    else:
+        if float(length) <= 0:
+            raise AcadError("length must be positive")
+        if block:
+            body = lisp.command("_.MEASURE", ent, "_Block", str(block), "_Yes" if align_block else "_No", float(length))
+        else:
+            body = lisp.command("_.MEASURE", ent, float(length))
+    _, created = lisp.capture(body, doc=doc, timeout=300)
+    return {
+        "created": created,
+        "count": len(created),
+        "mode": "divide" if segments is not None else "measure",
+        "placed": block or "points",
+    }
+
+
+@tool(description=(
+    "Display order: send entities to the back or front, or above/below a "
+    "reference entity (DRAWORDER). action hatches_to_back sends every hatch "
+    "behind everything else; text_to_front brings text, dimensions and leaders "
+    "forward."
+))
+def draw_order(
+    action: str = "back",
+    handles: list[str] | None = None,
+    reference: str | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    verb = str(action).strip().lower()
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    if verb == "hatches_to_back":
+        lisp.run_command("_.HATCHTOBACK", doc=doc, timeout=300)
+        return {"action": verb}
+    if verb == "text_to_front":
+        lisp.run_command("_.TEXTTOFRONT", "_All", doc=doc, timeout=300)
+        return {"action": verb}
+    if not handles:
+        raise AcadError("give the handles to reorder")
+    if verb in ("front", "back"):
+        args: list[Any] = ["_.DRAWORDER", lisp.ss_from(handles), "", "_Front" if verb == "front" else "_Back"]
+    elif verb in ("above", "below"):
+        if not reference:
+            raise AcadError(f"{verb} needs a reference handle")
+        args = [
+            "_.DRAWORDER", lisp.ss_from(handles), "",
+            "_Above" if verb == "above" else "_Under",
+            lisp.entity(str(reference)), "",
+        ]
+    else:
+        raise AcadError("action must be front, back, above, below, hatches_to_back or text_to_front")
+    lisp.evaluate(lisp.command(*args), doc=doc, timeout=300)
+    return {"action": verb, "count": len(handles)}
+
+
+@tool(description=(
+    "Move entities between model space and paper space through a layout "
+    "viewport (CHSPACE), keeping their apparent position and scale. The layout "
+    "must have a viewport; give its handle to choose which one."
+))
+def entity_change_space(
+    handles: list[str],
+    to: str = "paper",
+    layout: str | None = None,
+    viewport: str | None = None,
+    drawing: str | None = None,
+) -> dict[str, Any]:
+    if not handles:
+        raise AcadError("no handles given")
+    target = str(to).strip().lower()
+    if target not in ("paper", "model"):
+        raise AcadError("to must be 'paper' or 'model'")
+
+    def prepare() -> str:
+        doc = com.find_doc(drawing)
+        if layout:
+            from .layout import _find_layout
+
+            doc.ActiveLayout = _find_layout(doc, str(layout))
+        if str(doc.ActiveLayout.Name).lower() == "model":
+            raise AcadError("switch to a paper-space layout first (layout_manage activate)")
+        if viewport:
+            doc.ActivePViewport = com.by_handle(doc, str(viewport))
+        vp = com.quiet(lambda: doc.ActivePViewport)
+        if vp is None:
+            raise AcadError("this layout has no viewport to move objects through")
+        # CHSPACE moves from the space that is current: floating model space
+        # for model -> paper, paper space itself for paper -> model
+        doc.MSpace = target == "paper"
+        return str(doc.ActiveLayout.Name)
+
+    name = com.run_com(prepare, timeout=120)
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    lisp.evaluate(lisp.command("_.CHSPACE", lisp.ss_from(handles), ""), doc=doc, timeout=300)
+    com.run_com(lambda: setattr(com.find_doc(drawing), "MSpace", False), timeout=60)
+    return {"moved": len(handles), "to": target, "layout": name}
