@@ -5,6 +5,8 @@ from __future__ import annotations
 import math
 from typing import Any
 
+import win32com.client
+
 from .. import com, lisp, util
 from ..errors import AcadError
 from ..registry import tool
@@ -728,6 +730,8 @@ def entity_stretch(
     else:
         raise AcadError("give a displacement, or both from_point and to_point")
     doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    # a crossing window only finds what is on screen, exactly like picking it
+    com.run_com(lambda: com.quiet(lambda: com.app().ZoomExtents()), timeout=60)
     count = lisp.evaluate(
         lisp.raw(
             f"(progn (setq amx-sel {_ss_crossing(crossing[0], crossing[1], handles)}) "
@@ -1060,8 +1064,9 @@ def draw_order(
 
 @tool(description=(
     "Move entities between model space and paper space through a layout "
-    "viewport (CHSPACE), keeping their apparent position and scale. The layout "
-    "must have a viewport; give its handle to choose which one."
+    "viewport (what CHSPACE does), keeping their apparent position and size "
+    "on the sheet. The layout must have a viewport; give its handle to choose "
+    "which one (the newest is used otherwise)."
 ))
 def entity_change_space(
     handles: list[str],
@@ -1070,32 +1075,72 @@ def entity_change_space(
     viewport: str | None = None,
     drawing: str | None = None,
 ) -> dict[str, Any]:
+    """Done with COM rather than the CHSPACE command, which will not take a
+    selection set from a script in this release (it sits at Select objects
+    until Esc). Copy into the other space, then scale and move through the
+    viewport's transform - the same maths CHSPACE applies."""
     if not handles:
         raise AcadError("no handles given")
     target = str(to).strip().lower()
     if target not in ("paper", "model"):
         raise AcadError("to must be 'paper' or 'model'")
 
-    def prepare() -> str:
+    def work() -> dict[str, Any]:
         doc = com.find_doc(drawing)
         if layout:
             from .layout import _find_layout
 
             doc.ActiveLayout = _find_layout(doc, str(layout))
-        if str(doc.ActiveLayout.Name).lower() == "model":
+        page = doc.ActiveLayout
+        if str(page.Name).lower() == "model":
             raise AcadError("switch to a paper-space layout first (layout_manage activate)")
+        block = page.Block
+        vps = [block.Item(i) for i in range(int(block.Count)) if util.dxf_type(block.Item(i)) == "VIEWPORT"]
         if viewport:
-            doc.ActivePViewport = com.by_handle(doc, str(viewport))
-        vp = com.quiet(lambda: doc.ActivePViewport)
-        if vp is None:
-            raise AcadError("this layout has no viewport to move objects through")
-        # CHSPACE moves from the space that is current: floating model space
-        # for model -> paper, paper space itself for paper -> model
-        doc.MSpace = target == "paper"
-        return str(doc.ActiveLayout.Name)
+            vp = com.by_handle(doc, str(viewport))
+        elif len(vps) >= 2:
+            vp = vps[-1]            # the first VIEWPORT is the sheet itself
+        else:
+            raise AcadError("this layout has no viewport to move objects through (viewport_create)")
+        scale = float(vp.CustomScale)
+        if scale <= 0:
+            raise AcadError("the viewport has no usable scale")
+        twist = float(com.quiet(lambda: vp.TwistAngle, 0.0) or 0.0)
+        if abs(twist) > 1e-9:
+            raise AcadError("the viewport view is twisted; this only handles untwisted views")
+        # a paper-space viewport has no ViewCenter: Target is the model point
+        # shown at its centre (for an untwisted top view)
+        vcenter = util.round_pt(vp.Target)
+        pcenter = util.round_pt(vp.Center)          # where that is on the sheet
+        ents = com.by_handles(doc, [str(h) for h in handles])
+        owner = doc.PaperSpace if target == "paper" else doc.ModelSpace
+        # CopyObjects has an [in,out] IDPairs argument, so pywin32 hands back
+        # (objects, idpairs); take the objects whichever shape comes back
+        raw = com.unwrap(com.retry(lambda: doc.CopyObjects(com.objects(ents), owner))) or []
+        if raw and isinstance(raw[0], list):
+            raw = raw[0]
+        # the copies come back as bare IDispatch pointers; wrap them
+        made = [
+            win32com.client.Dispatch(o)
+            for o in raw
+            if not isinstance(o, (list, int, float, str))
+        ]
+        for obj in made:
+            if target == "paper":
+                obj.ScaleEntity(com.pt(vcenter), scale)
+                obj.Move(com.pt(vcenter), com.pt(pcenter))
+            else:
+                obj.ScaleEntity(com.pt(pcenter), 1.0 / scale)
+                obj.Move(com.pt(pcenter), com.pt(vcenter))
+        for e in ents:
+            com.quiet(lambda e=e: e.Delete())
+        return {
+            "moved": len(made),
+            "created": [str(o.Handle) for o in made],
+            "to": target,
+            "layout": str(page.Name),
+            "viewport": str(vp.Handle),
+            "scale": f"1:{round(1.0 / scale, 4):g}",
+        }
 
-    name = com.run_com(prepare, timeout=120)
-    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
-    lisp.evaluate(lisp.command("_.CHSPACE", lisp.ss_from(handles), ""), doc=doc, timeout=300)
-    com.run_com(lambda: setattr(com.find_doc(drawing), "MSpace", False), timeout=60)
-    return {"moved": len(handles), "to": target, "layout": name}
+    return com.run_com(work, timeout=300)

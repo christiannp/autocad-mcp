@@ -299,7 +299,7 @@ def block_edit(
     return com.run_com(work, timeout=180)
 
 
-@tool(description="Write entities (or a whole block) out to a separate .dwg file - the WBLOCK command.")
+@tool(undo_group=False, description="Write entities (or a whole block) out to a separate .dwg file - the WBLOCK command.")
 def block_export(
     path: str,
     handles: list[str] | None = None,
@@ -342,18 +342,23 @@ def xref(
         doc = com.find_doc(drawing)
 
         if verb == "list":
-            rows = []
-            for i in range(int(doc.Blocks.Count)):
-                block = doc.Blocks.Item(i)
-                if not com.quiet(lambda: block.IsXRef, False):
-                    continue
-                rows.append(
-                    {
-                        "name": str(block.Name),
-                        "path": str(com.quiet(lambda: block.Path, "") or ""),
-                        "found": os.path.isfile(str(com.quiet(lambda: block.Path, "") or "")),
-                    }
-                )
+            def scan() -> list[dict[str, Any]]:
+                rows = []
+                for i in range(int(doc.Blocks.Count)):
+                    block = doc.Blocks.Item(i)
+                    if not com.quiet(lambda: block.IsXRef, False):
+                        continue
+                    rows.append(
+                        {
+                            "name": str(block.Name),
+                            "path": str(com.quiet(lambda: block.Path, "") or ""),
+                            "found": os.path.isfile(str(com.quiet(lambda: block.Path, "") or "")),
+                        }
+                    )
+                return rows
+
+            # straight after WBLOCK or a block edit AutoCAD is briefly busy
+            rows = com.retry(scan, timeout=30, attr_is_busy=True, context="listing xrefs")
             return {"count": len(rows), "xrefs": rows}
 
         if verb == "attach":

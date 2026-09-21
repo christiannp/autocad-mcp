@@ -14,6 +14,10 @@ from acadmcp import com, lisp, winui  # noqa: E402
 
 winui.press_escape(2)
 
+# needs an open drawing; make one if AutoCAD has none
+if com.run_com(com.doc_count) == 0:
+    com.run_com(lambda: com.active_doc(create_if_none=True))
+
 SAMPLES = {
     "zh-hant": "屋頂太陽能",       # roof solar
     "mixed": "PV-模組 A/1",                     # PV-module A/1

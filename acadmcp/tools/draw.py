@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import math
-from typing import Any, Sequence
+from typing import Any
 
 from .. import com, lisp, util
 from ..errors import AcadError
@@ -485,8 +485,9 @@ def draw_polygon(
 
 @tool(description=(
     "Draw a revision cloud (REVCLOUD): around an existing closed object "
-    "(handle), as a rectangle (two corners), or through a list of points. "
-    "arc_length sets the size of the bumps; style normal or calligraphy."
+    "(handle - the object is replaced by the cloud), as a rectangle (two "
+    "corners), or through a list of points. arc_length sets the size of the "
+    "bumps; style normal or calligraphy."
 ))
 def draw_revcloud(
     handle: str | None = None,
@@ -494,47 +495,48 @@ def draw_revcloud(
     points: list[list[float]] | None = None,
     arc_length: float | None = None,
     style: str | None = None,
-    keep_object: bool = False,
     layer: str | None = None,
     drawing: str | None = None,
 ) -> dict[str, Any]:
-    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
-    steps: list[Any] = []
-    if arc_length is not None:
-        steps.append(lisp.command("_.REVCLOUD", "_Arc", float(arc_length), float(arc_length), lisp.raw("(command)")))
+    """REVCLOUD's freehand mode follows the mouse and cannot be scripted, and
+    this release's command-line prompt offers only Arc length / Object / Style
+    (no Rectangular or Polygonal keywords - those live in the ribbon). So the
+    outline is drawn as a polyline first and converted with the Object option,
+    which is exactly what the ribbon's rectangular cloud does underneath.
+    """
     if style:
         key = str(style).strip().lower()
         if key not in ("normal", "calligraphy"):
             raise AcadError("style must be normal or calligraphy")
-        steps.append(lisp.command("_.REVCLOUD", "_Style", "_Normal" if key == "normal" else "_Calligraphy", lisp.raw("(command)")))
     if handle:
-        body = lisp.command("_.REVCLOUD", "_Object", lisp.entity(str(handle)), "_No")
-        mode = "object"
+        source, mode = str(handle), "object"
     elif rectangle:
         if len(rectangle) != 2:
             raise AcadError("rectangle needs two corner points")
-        body = lisp.command("_.REVCLOUD", "_Rectangular", rectangle[0], rectangle[1])
+        source = draw_rectangle(rectangle[0], rectangle[1], layer=layer, drawing=drawing)["handle"]
         mode = "rectangle"
     elif points:
         if len(points) < 3:
             raise AcadError("a polygonal cloud needs at least three points")
-        body = lisp.command("_.REVCLOUD", "_Polygonal", *points, "")
+        source = draw_polyline(points, closed=True, layer=layer, drawing=drawing)["handle"]
         mode = "polygonal"
     else:
         raise AcadError("give a handle, a rectangle or points")
-    if layer:
-        steps.append(lisp.raw(f'(setvar "CLAYER" {lisp.lstr(str(layer))})'))
-        com.run_com(lambda: util.ensure_layer(com.find_doc(drawing), str(layer)), timeout=60)
-    steps.append(body)
-    _, created = lisp.capture(
-        lisp.pushed({"CLAYER": lisp.raw('(getvar "CLAYER")')}, lisp.progn(*steps)) if layer else lisp.progn(*steps),
-        doc=doc,
-        timeout=180,
-    )
-    out: dict[str, Any] = {"created": created, "mode": mode}
-    if handle and not keep_object:
-        out["note"] = "REVCLOUD replaces the source object with the cloud"
-    return out
+
+    args: list[Any] = ["_.REVCLOUD"]
+    if arc_length is not None:
+        # asks for a minimum and a maximum; the maximum may not exceed 3x the minimum
+        args += ["_Arc", float(arc_length), float(arc_length)]
+    if style:
+        args += ["_Style", "_Normal" if key == "normal" else "_Calligraphy"]
+    args += ["_Object", lisp.entity(source), "_No"]       # "Reverse direction?"
+    doc = com.run_com(lambda: com.find_doc(drawing), timeout=60) if drawing else None
+    _, created = lisp.capture(lisp.command(*args), doc=doc, timeout=120)
+    if layer and created:
+        from .modify import entity_properties
+
+        entity_properties(created, layer=str(layer), drawing=drawing)
+    return {"created": created, "mode": mode, "replaced": source}
 
 
 @tool(description=(

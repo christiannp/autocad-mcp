@@ -185,21 +185,54 @@ def visible_dialogs() -> list[str]:
     return titles
 
 
-def press_escape(times: int = 3, focus: bool = True) -> bool:
-    """Focus AutoCAD and press Esc. Returns False if no window was found."""
+WM_KEYDOWN = 0x0100
+WM_KEYUP = 0x0101
+
+
+def post_escape(times: int = 2) -> bool:
+    """Post Esc straight to AutoCAD's windows - no focus needed.
+
+    PostMessage delivers the keystroke to AutoCAD's own message queue, so it
+    works while the user is in another application, while the screen is
+    locked, or while nobody is at the machine at all - which is exactly when a
+    parked command has to be cancelled and SendInput would be refused. It
+    cannot reach any other application, either.
+    """
     hwnd = _acad_hwnd()
     if not hwnd:
         return False
-    if focus:
-        user32.ShowWindow(hwnd, SW_RESTORE)
-        user32.SetForegroundWindow(hwnd)
-        time.sleep(0.4)
-    if not foreground_is_autocad():
-        # Esc is harmless anywhere, but sending input to someone else's window
-        # is not something this should ever do on purpose.
-        return False
+    targets: list[int] = [hwnd]
+
+    @ctypes.WINFUNCTYPE(wt.BOOL, wt.HWND, wt.LPARAM)
+    def cb(child, _lparam):  # noqa: ANN001
+        if user32.IsWindowVisible(child):
+            targets.append(child)
+        return True
+
+    user32.EnumChildWindows(hwnd, cb, 0)
     for _ in range(max(1, times)):
-        _send_escape()
+        for h in targets:
+            user32.PostMessageW(h, WM_KEYDOWN, VK_ESCAPE, 0x00010001)
+            user32.PostMessageW(h, WM_KEYUP, VK_ESCAPE, 0xC0010001)
         time.sleep(0.25)
-    time.sleep(0.5)
+    time.sleep(0.4)
+    return True
+
+
+def press_escape(times: int = 3, focus: bool = True) -> bool:
+    """Cancel whatever AutoCAD is waiting on. Returns False if no window was found.
+
+    Esc is posted to AutoCAD's windows first (works without focus - see
+    post_escape). If AutoCAD happens to be the foreground window already, a
+    real keystroke follows as well, for the few prompts that only take input
+    from the active window.
+    """
+    posted = post_escape(times)
+    if not posted:
+        return False
+    if foreground_is_autocad():
+        for _ in range(max(1, times)):
+            _send_escape()
+            time.sleep(0.25)
+        time.sleep(0.3)
     return True
