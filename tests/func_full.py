@@ -39,7 +39,7 @@ from acadmcp.tools.query import data_extract, drawing_info, screenshot  # noqa: 
 from acadmcp.tools.select import entity_select  # noqa: E402
 from acadmcp.tools.session import doc_close, doc_new, doc_save, sysvar  # noqa: E402
 
-OUT = Path(r"C:\Users\Wanda\Documents\AI Companion\autocad-mcp\testout")
+OUT = Path(__file__).resolve().parent.parent / "testout"
 if OUT.exists():
     shutil.rmtree(OUT, ignore_errors=True)
 OUT.mkdir(parents=True, exist_ok=True)

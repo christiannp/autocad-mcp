@@ -11384,7 +11384,7 @@
    "in_ui": true,
    "ui_references": 2,
    "prompts": [
-    "Enter file name <C:\\Users\\Wanda\\AppData\\Local\\Temp\\acadmcp_probe\\scratch.bmp>:"
+    "Enter file name <%LOCALAPPDATA%\\Temp\\acadmcp_probe\\scratch.bmp>:"
    ],
    "interactive": false,
    "description": "Saves selected objects to a file in device-independent bitmap format",
@@ -13807,7 +13807,7 @@
    "in_ui": true,
    "ui_references": 2,
    "prompts": [
-    "Enter DXF file name <C:\\Users\\Wanda\\AppData\\Local\\Temp\\acadmcp_probe\\scratch.dxf>:"
+    "Enter DXF file name <%LOCALAPPDATA%\\Temp\\acadmcp_probe\\scratch.dxf>:"
    ],
    "interactive": false,
    "tool": "export",
@@ -14034,7 +14034,7 @@
     "EXP"
    ],
    "prompts": [
-    "Enter file name (extension defines export type) <C:\\Users\\Wanda\\AppData\\Local\\Temp\\acadmcp_probe\\scratch.dwf>:"
+    "Enter file name (extension defines export type) <%LOCALAPPDATA%\\Temp\\acadmcp_probe\\scratch.dwf>:"
    ],
    "interactive": false,
    "command_line_twin": "-EXPORT",
@@ -18107,7 +18107,7 @@
    "in_ui": true,
    "ui_references": 2,
    "prompts": [
-    "Enter file name <C:\\Users\\Wanda\\AppData\\Local\\Temp\\acadmcp_probe\\scratch.png>:"
+    "Enter file name <%LOCALAPPDATA%\\Temp\\acadmcp_probe\\scratch.png>:"
    ],
    "interactive": false,
    "description": "Export as a png file",
@@ -20983,7 +20983,7 @@
    "in_ui": true,
    "ui_references": 1,
    "prompts": [
-    "150 objects in C:\\Users\\Wanda\\AppData\\Local\\Temp\\acadmcp_probe\\scratch.dwg",
+    "150 objects in %LOCALAPPDATA%\\Temp\\acadmcp_probe\\scratch.dwg",
     "Undo file size:       590 Bytes",
     "Model space limits are X:    0.0000   Y:    0.0000  (Off)",
     "Press ENTER to continue:",
@@ -23181,7 +23181,7 @@
    "in_ui": true,
    "ui_references": 2,
    "prompts": [
-    "Enter file name <C:\\Users\\Wanda\\AppData\\Local\\Temp\\acadmcp_probe\\scratch.wmf>:"
+    "Enter file name <%LOCALAPPDATA%\\Temp\\acadmcp_probe\\scratch.wmf>:"
    ],
    "interactive": false,
    "description": "Saves objects to a Windows metafile",

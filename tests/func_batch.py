@@ -20,7 +20,7 @@ from acadmcp.tools.draw import draw_circle, draw_rectangle  # noqa: E402
 from acadmcp.tools.layers import layer_set  # noqa: E402
 from acadmcp.tools.session import doc_close, doc_list, doc_new, doc_save  # noqa: E402
 
-OUT = Path(r"C:\Users\Wanda\Documents\AI Companion\autocad-mcp\testout\batchtest")
+OUT = Path(__file__).resolve().parent.parent / "testout" / "batchtest"
 shutil.rmtree(OUT, ignore_errors=True)
 (OUT / "in").mkdir(parents=True, exist_ok=True)
 

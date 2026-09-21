@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import sys
 import time
 from pathlib import Path
@@ -10,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from acadmcp import com  # noqa: E402
 
-TMP = Path("C:/Users/Wanda/AppData/Local/acadmcp/probe")
+TMP = Path(os.path.expandvars("%LOCALAPPDATA%/acadmcp/probe"))
 TMP.mkdir(parents=True, exist_ok=True)
 
 

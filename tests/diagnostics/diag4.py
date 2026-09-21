@@ -8,6 +8,7 @@ Candidates:
 
 from __future__ import annotations
 
+import os
 import sys
 import time
 from pathlib import Path
@@ -56,8 +57,8 @@ def main() -> None:
         temp = str(doc.GetVariable("TEMPPREFIX")).replace("\\", "/")
         candidates = {
             "temp dir": temp + "acadmcp_a.txt",
-            "documents": "C:/Users/Wanda/Documents/acadmcp_a.txt",
-            "appdata": "C:/Users/Wanda/AppData/Local/acadmcp/probe/acadmcp_a.txt",
+            "documents": os.path.expandvars("%USERPROFILE%/Documents/acadmcp_a.txt"),
+            "appdata": os.path.expandvars("%LOCALAPPDATA%/acadmcp/probe/acadmcp_a.txt"),
         }
         for label, path in candidates.items():
             Path(path).unlink(missing_ok=True)

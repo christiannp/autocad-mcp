@@ -4871,7 +4871,7 @@
  "BMPOUT": {
   "exists_headless": true,
   "output": [
-   "Enter file name <C:\\Users\\Wanda\\AppData\\Local\\Temp\\acadmcp_probe\\scratch.bmp>:"
+   "Enter file name <%LOCALAPPDATA%\\Temp\\acadmcp_probe\\scratch.bmp>:"
   ]
  },
  "BOUNDARY": {
@@ -5740,7 +5740,7 @@
  "DXFOUT": {
   "exists_headless": true,
   "output": [
-   "Enter DXF file name <C:\\Users\\Wanda\\AppData\\Local\\Temp\\acadmcp_probe\\scratch.dxf>:"
+   "Enter DXF file name <%LOCALAPPDATA%\\Temp\\acadmcp_probe\\scratch.dxf>:"
   ]
  },
  "EATTEDIT": {
@@ -5825,7 +5825,7 @@
  "EXPORT": {
   "exists_headless": true,
   "output": [
-   "Enter file name (extension defines export type) <C:\\Users\\Wanda\\AppData\\Local\\Temp\\acadmcp_probe\\scratch.dwf>:"
+   "Enter file name (extension defines export type) <%LOCALAPPDATA%\\Temp\\acadmcp_probe\\scratch.dwf>:"
   ]
  },
  "EXPORTDWF": {
@@ -7196,7 +7196,7 @@
  "PNGOUT": {
   "exists_headless": true,
   "output": [
-   "Enter file name <C:\\Users\\Wanda\\AppData\\Local\\Temp\\acadmcp_probe\\scratch.png>:"
+   "Enter file name <%LOCALAPPDATA%\\Temp\\acadmcp_probe\\scratch.png>:"
   ]
  },
  "POINT": {
@@ -8642,7 +8642,7 @@
  "WMFOUT": {
   "exists_headless": true,
   "output": [
-   "Enter file name <C:\\Users\\Wanda\\AppData\\Local\\Temp\\acadmcp_probe\\scratch.wmf>:"
+   "Enter file name <%LOCALAPPDATA%\\Temp\\acadmcp_probe\\scratch.wmf>:"
   ]
  },
  "WSCURRENT": {
@@ -10926,7 +10926,7 @@
  "STATUS": {
   "exists_headless": true,
   "output": [
-   "150 objects in C:\\Users\\Wanda\\AppData\\Local\\Temp\\acadmcp_probe\\scratch.dwg",
+   "150 objects in %LOCALAPPDATA%\\Temp\\acadmcp_probe\\scratch.dwg",
    "Undo file size:       590 Bytes",
    "Model space limits are X:    0.0000   Y:    0.0000  (Off)",
    "Press ENTER to continue:",

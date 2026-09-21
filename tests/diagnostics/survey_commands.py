@@ -7,6 +7,7 @@ set of commands reachable from the UI is exactly what we can pull out of them.
 
 from __future__ import annotations
 
+import os
 import re
 import shutil
 import zipfile
@@ -14,12 +15,12 @@ from collections import Counter
 from pathlib import Path
 
 SUPPORT = [
-    Path(r"C:\Users\Wanda\AppData\Roaming\Autodesk\AutoCAD 2025\R25.0\enu\Support"),
+    Path(os.path.expandvars(r"%APPDATA%\Autodesk\AutoCAD 2025\R25.0\enu\Support")),
     Path(r"C:\Program Files\Autodesk\AutoCAD 2025\UserDataCache\Support"),
     Path(r"C:\Program Files\Autodesk\AutoCAD 2025\Support"),
 ]
 
-WORK = Path(r"C:\Users\Wanda\AppData\Local\Temp\acadmcp_cui")
+WORK = Path(os.path.expandvars(r"%LOCALAPPDATA%\Temp\acadmcp_cui"))
 shutil.rmtree(WORK, ignore_errors=True)
 WORK.mkdir(parents=True, exist_ok=True)
 

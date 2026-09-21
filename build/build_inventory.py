@@ -11,6 +11,7 @@ Sources, in order of authority:
 from __future__ import annotations
 
 import json
+import os
 import re
 import shutil
 import zipfile
@@ -18,12 +19,18 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-WORK = Path(r"C:\Users\Wanda\AppData\Local\Temp\acadmcp_cui")
+WORK = Path(os.environ["LOCALAPPDATA"]) / "Temp" / "acadmcp_cui"
+
+# AutoCAD's own support folders, roaming (customised) first: a CUIX the user has
+# edited lives there and shadows the shipped one.
+RELEASE = os.environ.get("ACADMCP_ACAD_RELEASE", "AutoCAD 2025")
+VERSION = os.environ.get("ACADMCP_ACAD_VERSION", "R25.0")
+LANG = os.environ.get("ACADMCP_ACAD_LANG", "enu")
 
 SUPPORT = [
-    Path(r"C:\Users\Wanda\AppData\Roaming\Autodesk\AutoCAD 2025\R25.0\enu\Support"),
-    Path(r"C:\Program Files\Autodesk\AutoCAD 2025\UserDataCache\Support"),
-    Path(r"C:\Program Files\Autodesk\AutoCAD 2025\Support"),
+    Path(os.environ["APPDATA"]) / "Autodesk" / RELEASE / VERSION / LANG / "Support",
+    Path(r"C:\Program Files\Autodesk") / RELEASE / "UserDataCache" / "Support",
+    Path(r"C:\Program Files\Autodesk") / RELEASE / "Support",
 ]
 PGP = SUPPORT[0] / "acad.pgp"
 

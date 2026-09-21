@@ -14,7 +14,7 @@ from acadmcp import com, lisp, winui  # noqa: E402
 winui.press_escape(3)
 com.run_com(lambda: com.ensure_responsive(), timeout=60)
 
-OUT = Path(r"C:\Users\Wanda\Documents\AI Companion\autocad-mcp\testout\fmt")
+OUT = Path(__file__).resolve().parents[2] / "testout" / "fmt"
 OUT.mkdir(parents=True, exist_ok=True)
 
 HEADERS = {

@@ -56,10 +56,21 @@ def layout_list(drawing: str | None = None) -> dict[str, Any]:
     def work() -> dict[str, Any]:
         doc = com.find_doc(drawing)
         active = str(com.quiet(lambda: doc.ActiveLayout.Name, ""))
-        rows = [
-            _layout_row(doc.Layouts.Item(i), active)
-            for i in range(int(doc.Layouts.Count))
-        ]
+
+        # Straight after a document switch or a layout create/delete, late
+        # binding can hand back a document whose .Layouts will not resolve
+        # ("AttributeError: <unknown>.Layouts"). It is transient - AutoCAD is
+        # still digesting the previous call - so read the collection through
+        # the same retry every other layout function uses.
+        def scan() -> list[dict[str, Any]]:
+            return [
+                _layout_row(doc.Layouts.Item(i), active)
+                for i in range(int(doc.Layouts.Count))
+            ]
+
+        rows = com.retry(
+            scan, timeout=30, attr_is_busy=True, context="reading the layouts"
+        )
         rows.sort(key=lambda r: (r.get("tab_order") or 0))
         return {"count": len(rows), "active": active, "layouts": rows}
 
