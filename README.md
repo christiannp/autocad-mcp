@@ -49,14 +49,25 @@ py -3.14 -m venv .venv
 pointing at this clone's venv and `run_server.py`. It backs the file up first and
 leaves every other setting alone. `install.py --remove` undoes it.
 
-Restart the Claude desktop app afterwards.
+**Quit the Claude desktop app before running `install.py`**, then start it
+again. The app keeps the config in memory and saves it back over the file for
+its own settings, so an entry written while it is open can vanish hours later
+— seen twice on one machine. Written while it was closed, the entry was read
+at startup and kept.
+
+If Claude is installed as an MSIX package (it lives under `C:\Program Files\WindowsApps\Claude_…`), its `%APPDATA%\Claude` is
+really `%LOCALAPPDATA%\Packages\Claude_<id>\LocalCache\Roaming\Claude`. Run
+`install.py` from a normal terminal with `APPDATA` pointed there:
+
+```powershell
+$env:APPDATA = "$env:LOCALAPPDATA\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming"
+.\.venv\Scripts\python.exe install.py
+```
 
 AutoCAD must be running. If it is not, the first call starts it.
 
-> **That config entry does not survive.** The Claude desktop app rewrites
-> `claude_desktop_config.json` for its own settings and drops the whole
-> `mcpServers` key when it does — seen twice on one machine, hours after
-> registering. Check with:
+> **If the config entry still disappears** (check with the same `APPDATA` as
+> above on an MSIX install):
 >
 > ```powershell
 > (Get-Content "$env:APPDATA\Claude\claude_desktop_config.json" -Raw |
@@ -70,11 +81,14 @@ AutoCAD must be running. If it is not, the first call starts it.
 > .\.venv\Scripts\python.exe install.py --mcpb
 > ```
 >
-> builds `dist\autocad-mcp.mcpb`. Double-click it (or Settings > Extensions >
-> Advanced > Install Extension) and approve the install. The bundle is only a
+> builds `dist\autocad-mcp.mcpb`. Install it from Settings > Extensions >
+> Advanced settings > Install Extension and approve (double-clicking works
+> only where `.mcpb` is associated with Claude). The bundle is only a
 > launcher pointing at this clone, so `git pull` updates the server with no
-> reinstall. The extension also shows up in Cowork sessions linked to the PC,
-> which a config-file entry does not.
+> reinstall. Use one route or the other, not both.
+>
+> Either route reaches Cowork sessions linked to the PC as well as the
+> desktop chat.
 
 ---
 
