@@ -10,36 +10,59 @@ like to work on this machine.
 
 ---
 
-## The one thing that is broken right now
+## Registration — installed 2026-09-25 22:19
 
-**The server is not registered with the Claude desktop app.** Nothing is
-wrong with the code; there is simply no live registration.
+**The server is registered and running.** Installed by a Cowork session
+following the README's Install section (`install.py` + restart the app), at
+the owner's request. After the restart the app started two `run_server.py`
+instances, announced all **121 tools**,
+and a `command_search` call round-tripped. AutoCAD itself was not started.
+
+Check it is still there:
 
 ```powershell
 (Get-Content "$env:APPDATA\Claude\claude_desktop_config.json" -Raw |
   ConvertFrom-Json).mcpServers
 ```
 
-Empty. The desktop app has now wiped that key **twice** — it rewrites the
-file for its own settings and drops what it does not recognise.
+Run that from a Claude session (Desktop Commander / Cowork). From a normal
+terminal it finds nothing — see the MSIX note below.
 
-The fix is already built and sitting there unused:
+What was learned doing it:
 
-```
-dist\autocad-mcp.mcpb
-```
+- **The Claude app on this PC is an MSIX package** (`C:\Program
+  Files\WindowsApps\Claude_…`). Its `%APPDATA%\Claude` is virtualised: the
+  real folder is
+  `%LOCALAPPDATA%\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude`.
+  Processes the app starts (Desktop Commander, MCP servers) see it as
+  `%APPDATA%\Claude`; a process outside the package sees no
+  `%APPDATA%\Claude` at all. `install.py` run from a normal terminal would
+  most likely write a file the app never reads — set `APPDATA` to the package's
+  `LocalCache\Roaming` first (that is what the restart script does).
+- **Write the config while the app is closed.** The two earlier wipes were
+  both `install.py` runs made from Desktop Commander, i.e. while the app was
+  open; the app later saved its
+  in-memory copy over the file. Written with the app closed, the entry was
+  read at startup and still there afterwards. Likely cause, not proven —
+  if it disappears again, the `.mcpb` route below is the fallback.
+- **Config-file servers DO reach Cowork sessions linked to this PC.** The
+  tools arrived in the Cowork session as `mcp__remote-devices__autocad__*`.
+  The earlier note saying only extensions do was wrong.
+- **Restarting the app from inside a session:** everything Desktop Commander
+  runs lives in the app's process tree and dies with it. Launch the restart
+  from outside with `Invoke-CimMethod Win32_Process Create` (runs in the
+  user's desktop session, outside the package). `logs\restart_install.ps1`
+  (gitignored, machine-specific) kills the app by PID, runs `install.py`
+  against the package AppData, relaunches via
+  `shell:AppsFolder\Claude_pzs8sxrjxfjjc!Claude`, and logs to
+  `logs\restart_install.log`. The session's link to the PC drops for ~1 min.
 
-`install.py --mcpb` produced it. It is a thin launcher pointing at this
-clone's venv, so `git pull` updates the server without reinstalling, and it
-registers through the app's own installer, which survives the rewrites.
-
-**It has never been installed.** `%APPDATA%\Claude\Claude Extensions\` holds
-only Desktop Commander. Installing it means the user double-clicking the file
-and approving — not something to do on their behalf.
-
-So: first action next session is to ask the user to double-click that bundle,
-restart the app, and confirm the `autocad` tools appear. Until then the server
-runs only when a test script launches it directly.
+The `.mcpb` fallback (`dist\autocad-mcp.mcpb`, from `install.py --mcpb`) is
+still there, never installed. Two things about it: `.mcpb` has **no file
+association** on this PC, so double-clicking does nothing — use Settings >
+Extensions > Advanced settings > Install Extension; and computer use cannot
+drive the Claude app itself, so a person has to click Install. Do not install
+both routes at once — two `autocad` servers would both announce every tool.
 
 ---
 
@@ -53,10 +76,10 @@ documented from AutoCAD's own help strings, 2 unknown (`SCRIPT`, `VLISP`) —
 **99.8% covered**, all reachable through `cad_command`. 171 now point at a
 dedicated tool, 181 carry extracted option keywords.
 
-**Published:** https://github.com/christiannp/autocad-mcp — public, `main`
-at `43a09b4`, working tree clean, local and remote in sync.
+**Published:** https://github.com/christiannp/autocad-mcp — public. Code last
+changed at `43a09b4`; later commits are documentation only.
 
-Commit history:
+Commit history (code):
 
 ```
 43a09b4  Verified against live AutoCAD: undo per call, Esc without focus, ...
@@ -76,7 +99,10 @@ currently running.
 
 ## Open items
 
-**1. Install the .mcpb** — see above. Blocks everything else being useful.
+**1. ~~Install~~** — done 2026-09-25 via `install.py` (see Registration).
+Left open: confirm the entry is still in the config a day later, and try
+AutoCAD tools on a real drawing through the app (only `command_search`, which
+needs no AutoCAD, was called after the install).
 
 **2. No LICENSE file.** The repo is public but "all rights reserved" by
 default, which means nobody can legally use it, including the person it is
@@ -161,7 +187,10 @@ Three things do not travel with the repo:
 - **The command registry** — `docs/commands.json` was generated from *this*
   machine's CUIX files. Fine on a stock AutoCAD 2025; regenerate with the four
   `build/` scripts if the version or the ribbon customisation differs.
-- **The registration** — per machine, and use the `.mcpb` route.
+- **The registration** — per machine. `install.py` with the Claude app
+  closed (and, if the app is the MSIX/Store build, `APPDATA` pointed at the
+  package's `LocalCache\Roaming`), or the `.mcpb` through Settings >
+  Extensions. See Registration above.
 
 Paths everywhere are derived from `%LOCALAPPDATA%` / `%APPDATA%`, with
 `ACADMCP_ACAD_RELEASE` / `_VERSION` / `_LANG` overrides, so a clone runs
