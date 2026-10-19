@@ -2,8 +2,8 @@
 
 One-off scripts written while working out how AutoCAD 2025 actually behaves.
 They are kept because each one answers a question that is expensive to
-re-discover; the answers are summarised in the "Design notes" section of
-README.md.
+re-discover; the answers are summarised in
+[docs/design-notes.md](../../docs/design-notes.md).
 
 | script | question it answered |
 |---|---|

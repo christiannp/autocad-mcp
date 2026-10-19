@@ -3,17 +3,17 @@
 State of this project as of **2026-09-25**, for whoever picks it up next —
 a new Claude session, or the machine this gets handed to.
 
-The README is the manual: what the tools are, how to install, what AutoCAD
-does that surprised us. This file is only the things the README cannot tell
-you — where it actually stands right now, what is blocking, and what it is
-like to work on this machine.
+The README and `docs/` are the manual: what the tools are, how to install,
+what AutoCAD does that surprised us. This file is only the things the manual
+cannot tell you — where it actually stands right now, what is blocking, and
+what it is like to work on this machine.
 
 ---
 
 ## Registration — installed 2026-09-25 22:19
 
 **The server is registered and running.** Installed by a Cowork session
-following the README's Install section (`install.py` + restart the app), at
+following the install steps, now in `docs/install.md` (`install.py` + restart the app), at
 the owner's request. After the restart the app started two `run_server.py`
 instances, announced all **121 tools**,
 and a `command_search` call round-tripped. AutoCAD itself was not started.
@@ -180,7 +180,7 @@ up inside the captured probe data. The script is idempotent.
 
 ## Handing it to a different machine
 
-The README's "Setting it up on another machine" section is the procedure.
+"Setting it up on another machine" in `docs/install.md` is the procedure.
 Three things do not travel with the repo:
 
 - **The venv** — not committed, rebuild it.
@@ -206,8 +206,8 @@ needs to change.
 
 ## If you are a new session picking this up
 
-Read in this order: this file, then the README's "Design notes" and "Things
-worth knowing" — they hold roughly twenty AutoCAD behaviours that each cost
+Read in this order: this file, then `docs/design-notes.md` and "Things worth
+knowing" in `docs/tools.md` — they hold roughly twenty AutoCAD behaviours that each cost
 real time to discover, and re-discovering them is the main way to waste a
 session here.
 
